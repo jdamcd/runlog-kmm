@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RunLog</string>
+    <string name="activities_title">Training</string>
+    <string name="strava_view">View on Strava</string>
+    <string name="retry_button">Retry?</string>
+    <string name="sign_out">Sign out</string>
+</resources>
