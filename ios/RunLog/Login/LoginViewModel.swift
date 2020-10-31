@@ -35,7 +35,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
     }
     
     private func submitAuthCode(code: String) {
-        state = LoginState.loading
+        state = .loading
         strava.authenticate(code: code) { (result, _) in
             if result is LoginResult.Success {
                 print("Login success")

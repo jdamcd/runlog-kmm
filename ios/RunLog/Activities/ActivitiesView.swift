@@ -22,7 +22,7 @@ struct ActivitiesView: View {
                             activities: data.activities)
                 }
             }
-            .navigationBarTitle(Copy.activities_title, displayMode: .inline)
+            .navigationBarTitle(Copy.activities_title)
             .navigationBarItems(trailing:
                 Button(Copy.sign_out) {
                     userAuth.signOut()
