@@ -7,21 +7,50 @@ import kotlin.test.Test
 class MapperTest {
 
     @Test
-    fun mapsApiActivityToActivityCard() {
-        val apiModel = ApiSummaryActivity(
+    fun mapsDefaultActivity() {
+        Mapper.mapActivityRow(apiModel()) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = "Run",
-            distance = 10100.0,
-            moving_time = 2400L
-        )
-
-        Mapper.mapActivityRow(apiModel) shouldBe ActivityCard(
-            id = 123L,
-            name = "my activity",
-            type = "Run",
+            label = null,
             distance = "10.1k",
-            movingTime = "40:00"
+            time = "40:00"
+        )
+    }
+
+    @Test
+    fun mapsRaceActivityUsingElapsedTime() {
+        Mapper.mapActivityRow(apiModel(workout_type = 1)) shouldBe ActivityCard(
+            id = 123L,
+            name = "my activity",
+            type = "Run",
+            label = "Race",
+            distance = "10.1k",
+            time = "41:00"
+        )
+    }
+
+    @Test
+    fun mapsLongRunActivity() {
+        Mapper.mapActivityRow(apiModel(workout_type = 2)) shouldBe ActivityCard(
+            id = 123L,
+            name = "my activity",
+            type = "Run",
+            label = "Long",
+            distance = "10.1k",
+            time = "40:00"
+        )
+    }
+
+    @Test
+    fun mapsWorkoutActivity() {
+        Mapper.mapActivityRow(apiModel(workout_type = 3)) shouldBe ActivityCard(
+            id = 123L,
+            name = "my activity",
+            type = "Run",
+            label = "Workout",
+            distance = "10.1k",
+            time = "40:00"
         )
     }
 }

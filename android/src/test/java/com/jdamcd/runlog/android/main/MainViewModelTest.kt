@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.android.util.TestLifecycleOwner
-import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.android.util.activityCard
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.Strava
 import com.nhaarman.mockitokotlin2.inOrder
@@ -41,7 +41,7 @@ class MainViewModelTest {
     fun `load success emits loading then data`() {
         coroutineRule.testDispatcher.runBlockingTest {
             lifecycleOwner.onResume()
-            val activities = listOf(ActivityCard(123, "cool run", "run", "10.3k", "40:00"))
+            val activities = listOf(activityCard)
             whenever(strava.activities()).thenReturn(Result.Data(activities))
 
             viewModel.load()

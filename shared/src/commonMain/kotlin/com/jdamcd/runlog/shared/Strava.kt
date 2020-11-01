@@ -22,6 +22,7 @@ data class ActivityCard(
     val id: Long,
     val name: String,
     val type: String,
+    val label: String?,
     val distance: String,
-    val movingTime: String
+    val time: String
 )

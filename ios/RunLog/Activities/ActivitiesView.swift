@@ -46,7 +46,11 @@ private struct ActivitiesListView : View {
                     VStack(alignment: .leading) {
                         Text("\(activity.type): \(activity.name)")
                             .font(.headline)
-                        Text(activity.movingTime)
+                        if let label = activity.label {
+                            Text(label)
+                                .foregroundColor(Color.asset(.strava))
+                        }
+                        Text(activity.time)
                         Text(activity.distance)
                     }
                     Spacer()

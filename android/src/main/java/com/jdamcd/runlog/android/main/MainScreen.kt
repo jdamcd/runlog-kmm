@@ -58,7 +58,12 @@ fun ActivityFeed(
                         Image(
                             asset = vectorResource(id = R.drawable.vector_logo),
                             colorFilter = ColorFilter.tint(MaterialTheme.colors.primaryVariant),
-                            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 0.dp)
+                            modifier = Modifier.padding(
+                                top = 8.dp,
+                                bottom = 8.dp,
+                                start = 8.dp,
+                                end = 0.dp
+                            )
                         )
                     },
                     backgroundColor = MaterialTheme.colors.background,
@@ -99,10 +104,10 @@ private fun ActivitiesList(data: ActivityFeedState.Data, onItemClick: (Long) -> 
 }
 
 @Composable
-private fun ActivityListItem(activityCard: ActivityCard, onItemClick: (Long) -> Unit) {
+private fun ActivityListItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
     Column(
         modifier = Modifier
-            .clickable(onClick = { onItemClick(activityCard.id) })
+            .clickable(onClick = { onItemClick(activity.id) })
             .fillMaxWidth()
     ) {
         ConstraintLayout(
@@ -110,28 +115,32 @@ private fun ActivityListItem(activityCard: ActivityCard, onItemClick: (Long) -> 
                 .padding(vertical = 8.dp, horizontal = 16.dp)
                 .fillMaxWidth()
         ) {
-            val (title, time, distance, link) = createRefs()
-            Text(
-                text = "${activityCard.type}: ${activityCard.name}",
-                style = MaterialTheme.typography.subtitle2,
-                modifier = Modifier.constrainAs(title) {
-                    top.linkTo(parent.top)
+            val (mainColumn, link) = createRefs()
+            Column(
+                Modifier.constrainAs(mainColumn) {
+                    start.linkTo(parent.start)
                 }
-            )
-            Text(
-                text = activityCard.movingTime,
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.constrainAs(time) {
-                    top.linkTo(title.bottom)
+            ) {
+                Text(
+                    text = "${activity.type}: ${activity.name}",
+                    style = MaterialTheme.typography.subtitle2
+                )
+                activity.label?.let {
+                    Text(
+                        text = it,
+                        color = stravaBrand,
+                        style = MaterialTheme.typography.body2
+                    )
                 }
-            )
-            Text(
-                text = activityCard.distance,
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.constrainAs(distance) {
-                    top.linkTo(time.bottom)
-                }
-            )
+                Text(
+                    text = activity.time,
+                    style = MaterialTheme.typography.body2
+                )
+                Text(
+                    text = activity.distance,
+                    style = MaterialTheme.typography.body2
+                )
+            }
             Text(
                 text = stringResource(R.string.strava_view),
                 style = MaterialTheme.typography.body2,
