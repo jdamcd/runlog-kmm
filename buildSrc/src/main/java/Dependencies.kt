@@ -6,7 +6,7 @@ object Version {
     // Native
     const val ktor = "1.4.1"
     const val coroutines = "1.3.9-native-mt-2"
-    const val kotlinSerialize = "1.0.0-RC2"
+    const val kotlinSerialize = "1.0.1"
     const val stately = "1.1.0"
     // Android
     const val hilt = "2.28-alpha"
@@ -31,7 +31,7 @@ object Dependency {
     const val ktorCore = "io.ktor:ktor-client-core:${Version.ktor}"
     const val ktorSerialize = "io.ktor:ktor-client-serialization:${Version.ktor}"
     const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
-    const val kotlinSerialize = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Version.kotlinSerialize}"
+    const val kotlinSerialize = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.kotlinSerialize}"
     const val stately = "co.touchlab:stately-common:${Version.stately}"
     const val statelyConcurrency = "co.touchlab:stately-concurrency:${Version.stately}"
     // Android
