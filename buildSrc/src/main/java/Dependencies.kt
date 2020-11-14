@@ -11,7 +11,7 @@ object Version {
     // Android
     const val hilt = "2.28-alpha"
     const val hiltAndroid = "1.0.0-alpha02"
-    const val compose = "1.0.0-alpha05"
+    const val compose = "1.0.0-alpha07"
     const val appCompat = "1.2.0"
     const val material = "1.2.1"
     const val ktxCore = "1.3.2"

@@ -2,21 +2,20 @@ package com.jdamcd.runlog.android.login
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ConstraintLayout
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradient
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -80,11 +79,8 @@ private fun ConnectLoadable(
     Box(modifier = modifier.height(50.dp)) {
         when (state) {
             is LoginState.Idle -> {
-                Button(
-                    contentPadding = PaddingValues(0.dp),
-                    backgroundColor = Color.Transparent,
-                    elevation = 0.dp,
-                    onClick = connectClick
+                Row(
+                    Modifier.clickable(onClick = connectClick)
                 ) {
                     Image(asset = vectorResource(id = R.drawable.vector_strava_connect))
                 }
