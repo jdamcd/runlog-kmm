@@ -79,7 +79,7 @@
 		7555FF9C242A565B00829871 /* RunLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FFA0242A565B00829871 /* RunLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLogUITests.swift; sourceTree = "<group>"; };
 		7555FFA2242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7555FFB1242A642300829871 /* RunLogShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RunLogShared.framework; path = "../shared/build/xcode-frameworks/RunLogShared.framework"; sourceTree = "<group>"; };
+		7555FFB1242A642300829871 /* RunLogShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RunLogShared.framework; path = "../shared/main/build/xcode-frameworks/RunLogShared.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,7 +550,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"RunLog/Preview Content\"";
 				DEVELOPMENT_TEAM = 5SCQUH4Y8L;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/main/build/xcode-frameworks";
 				INFOPLIST_FILE = RunLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,7 +571,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"RunLog/Preview Content\"";
 				DEVELOPMENT_TEAM = 5SCQUH4Y8L;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/main/build/xcode-frameworks";
 				INFOPLIST_FILE = RunLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
