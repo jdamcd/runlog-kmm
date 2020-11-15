@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import RunLogShared
 
 struct LoginView: View {
     

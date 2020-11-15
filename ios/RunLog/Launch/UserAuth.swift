@@ -1,5 +1,5 @@
 import Foundation
-import shared
+import RunLogShared
 
 class UserAuth: ObservableObject {
     

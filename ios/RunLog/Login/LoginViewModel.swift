@@ -1,6 +1,6 @@
 import Foundation
 import AuthenticationServices
-import shared
+import RunLogShared
 
 class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
     

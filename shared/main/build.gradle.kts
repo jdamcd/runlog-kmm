@@ -17,7 +17,7 @@ kotlin {
     ios {
         binaries {
             framework {
-                baseName = "shared"
+                baseName = "RunLogShared"
             }
         }
     }
