@@ -1,7 +1,7 @@
 object Version {
     // Build
     const val kotlin = "1.4.10"
-    const val androidGradle = "4.2.0-alpha15"
+    const val androidGradle = "4.2.0-alpha16"
     const val buildKonfig = "0.7.0"
     // Native
     const val ktor = "1.4.1"
