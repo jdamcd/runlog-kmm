@@ -9,7 +9,7 @@ group = "com.jdamcd.runlog"
 version = AppVersion.name
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(project(":shared:main"))
     implementation(Dependency.ktxCore)
     implementation(Dependency.ktxActvitiy)
     implementation(Dependency.viewModel)

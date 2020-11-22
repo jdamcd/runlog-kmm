@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import RunLogShared
 
 @main
 struct RunLogApp: App {

@@ -17,4 +17,7 @@ rootProject.name = "RunLog"
 enableFeaturePreview("GRADLE_METADATA")
 
 include(":android")
-include(":shared")
+
+include(":shared:main")
+include(":shared:api")
+include(":shared:utils")
