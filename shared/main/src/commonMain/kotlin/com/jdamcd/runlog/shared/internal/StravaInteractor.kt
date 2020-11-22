@@ -27,7 +27,7 @@ internal class StravaInteractor(
             }
             Result.Data(activities)
         } catch (error: Throwable) {
-            Result.Error(error, error !is AuthException)
+            Result.Error(error, recoverable = error !is AuthException)
         }
     }
 

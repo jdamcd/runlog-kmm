@@ -19,5 +19,5 @@ enableFeaturePreview("GRADLE_METADATA")
 include(":android")
 
 include(":shared:main")
-include(":shared:utils")
 include(":shared:api")
+include(":shared:utils")

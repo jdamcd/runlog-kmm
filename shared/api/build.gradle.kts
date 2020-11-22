@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -77,16 +80,14 @@ buildkonfig {
 
     defaultConfigs {
         buildConfigField(
-            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            FieldSpec.Type.STRING,
             "CLIENT_ID",
-            com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
-                .getProperty("com.jdamcd.runlog.client_id", "")
+            gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.client_id", "")
         )
         buildConfigField(
-            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            FieldSpec.Type.STRING,
             "CLIENT_SECRET",
-            com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
-                .getProperty("com.jdamcd.runlog.client_secret", "")
+            gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.client_secret", "")
         )
     }
 }
