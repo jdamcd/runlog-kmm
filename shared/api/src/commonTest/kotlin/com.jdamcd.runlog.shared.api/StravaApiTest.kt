@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.api
 
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test

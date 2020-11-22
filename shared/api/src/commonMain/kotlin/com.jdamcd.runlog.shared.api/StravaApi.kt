@@ -1,19 +1,21 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.api
 
 import co.touchlab.stately.concurrency.AtomicReference
 import co.touchlab.stately.concurrency.value
 import co.touchlab.stately.ensureNeverFrozen
-import com.jdamcd.runlog.shared.UserState
+import com.jdamcd.runlog.shared.util.Logger
 import io.ktor.client.HttpClient
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLBuilder
 import kotlinx.serialization.json.Json
 
-internal class StravaApi(state: UserState) {
+class StravaApi(tokenProvider: TokenProvider) {
 
     private val client = HttpClient {
         install(JsonFeature) {
@@ -25,11 +27,11 @@ internal class StravaApi(state: UserState) {
             )
         }
         install(Authorizer) {
-            this.userState = state
+            this.tokenProvider = tokenProvider
         }
     }
 
-    private val atom = AtomicReference(state)
+    private val atom = AtomicReference(tokenProvider)
 
     init {
         ensureNeverFrozen()
@@ -47,7 +49,19 @@ internal class StravaApi(state: UserState) {
     }
 
     suspend fun activities(): List<ApiSummaryActivity> {
-        return client.get("$BASE_URL/athlete/activities")
+        return try {
+            client.get("$BASE_URL/athlete/activities")
+        } catch (error: Throwable) {
+            throw if (isAuthError(error)) {
+                Logger.debug("Unhandled 401 fetching activities")
+                AuthException("Unhandled 401", error)
+            } else error
+        }
+    }
+
+    private fun isAuthError(error: Throwable): Boolean {
+        return error is ClientRequestException &&
+            error.response.status == HttpStatusCode.Unauthorized
     }
 
     companion object {
@@ -68,3 +82,8 @@ internal class StravaApi(state: UserState) {
         fun linkUrl(id: Long) = "https://strava.com/activities/$id"
     }
 }
+
+class AuthException(
+    override val message: String,
+    override val cause: Throwable
+) : Throwable()

@@ -4,9 +4,8 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.Strava
-import com.jdamcd.runlog.shared.util.Logger
-import io.ktor.client.features.ClientRequestException
-import io.ktor.http.HttpStatusCode
+import com.jdamcd.runlog.shared.api.AuthException
+import com.jdamcd.runlog.shared.api.StravaApi
 
 internal class StravaInteractor(
     private val stravaApi: StravaApi
@@ -28,9 +27,7 @@ internal class StravaInteractor(
             }
             Result.Data(activities)
         } catch (error: Throwable) {
-            val authError = error is ClientRequestException && error.response.status == HttpStatusCode.Unauthorized
-            Logger.debug("${error.message}")
-            Result.Error(error, !authError)
+            Result.Error(error, error !is AuthException)
         }
     }
 

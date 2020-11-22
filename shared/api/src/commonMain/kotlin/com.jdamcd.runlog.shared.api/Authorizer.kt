@@ -1,6 +1,5 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.api
 
-import com.jdamcd.runlog.shared.UserState
 import io.ktor.client.HttpClient
 import io.ktor.client.call.HttpClientCall
 import io.ktor.client.features.HttpClientFeature
@@ -16,21 +15,21 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.util.AttributeKey
 
 internal class Authorizer(
-    private val userState: UserState,
+    private val tokenProvider: TokenProvider,
 ) {
     class Config {
-        lateinit var userState: UserState
+        lateinit var tokenProvider: TokenProvider
     }
 
     companion object Feature : HttpClientFeature<Config, Authorizer> {
 
         override fun prepare(block: Config.() -> Unit): Authorizer {
             val config = Config().apply(block)
-            return Authorizer(config.userState)
+            return Authorizer(config.tokenProvider)
         }
 
         override fun install(feature: Authorizer, scope: HttpClient) {
-            val state = feature.userState
+            val state = feature.tokenProvider
             scope.requestPipeline.intercept(HttpRequestPipeline.State) {
                 if (state.isLoggedIn()) {
                     context.headers[HEADER_AUTH] = "$TYPE_BEARER ${state.accessToken}"
@@ -57,7 +56,7 @@ internal class Authorizer(
 
         override val key: AttributeKey<Authorizer> = AttributeKey("Authorizer")
 
-        private suspend fun updateTokens(scope: HttpClient, state: UserState) {
+        private suspend fun updateTokens(scope: HttpClient, state: TokenProvider) {
             val apiToken = refreshCall(scope, state.refreshToken)
             state.accessToken = apiToken.access_token
             state.refreshToken = apiToken.refresh_token

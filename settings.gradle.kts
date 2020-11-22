@@ -20,3 +20,4 @@ include(":android")
 
 include(":shared:main")
 include(":shared:utils")
+include(":shared:api")

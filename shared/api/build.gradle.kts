@@ -1,28 +1,25 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("android.extensions")
+    id("kotlinx-serialization")
+    id("com.codingfeline.buildkonfig")
 }
 group = "com.jdamcd.runlog"
 version = AppVersion.name
 
 kotlin {
     android()
-    ios {
-        binaries {
-            framework {
-                baseName = "RunLogShared"
-            }
-        }
-    }
+    ios()
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":shared:api"))
                 implementation(project(":shared:utils"))
+                implementation(Dependency.ktorCore)
+                implementation(Dependency.ktorSerialize)
                 implementation(Dependency.kotlinCoroutines)
+                implementation(Dependency.kotlinSerialize)
+                implementation(Dependency.stately)
+                implementation(Dependency.statelyConcurrency)
             }
         }
         val commonTest by getting {
@@ -36,21 +33,19 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.ktxCore)
+                implementation(Dependency.ktorAndroid)
             }
         }
         val androidTest by getting {
-            dependencies {
-                implementation(Dependency.kotestAssert)
-            }
-        }
-        val iosMain by getting {
             dependencies {}
         }
-        val iosTest by getting {
+        val iosMain by getting {
             dependencies {
-                implementation(Dependency.kotestAssert)
+                implementation(Dependency.ktoriOS)
             }
+        }
+        val iosTest by getting {
+            dependencies {}
         }
     }
 }
@@ -71,22 +66,27 @@ android {
     }
 }
 
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-}
-tasks.getByName("build").dependsOn(packForXcode)
-
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+buildkonfig {
+    packageName = "com.jdamcd.runlog.shared.api"
+
+    defaultConfigs {
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "CLIENT_ID",
+            com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
+                .getProperty("com.jdamcd.runlog.client_id", "")
+        )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "CLIENT_SECRET",
+            com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
+                .getProperty("com.jdamcd.runlog.client_secret", "")
+        )
     }
 }

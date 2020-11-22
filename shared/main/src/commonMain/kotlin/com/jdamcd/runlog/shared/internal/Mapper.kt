@@ -1,9 +1,9 @@
 package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.formatDuration
 import com.jdamcd.runlog.shared.formatKm
-import kotlinx.serialization.Serializable
 
 internal object Mapper {
 
@@ -38,20 +38,3 @@ internal object Mapper {
         }
     }
 }
-
-@Serializable
-data class ApiToken(
-    val access_token: String,
-    val refresh_token: String,
-)
-
-@Serializable
-data class ApiSummaryActivity(
-    val id: Long,
-    val name: String,
-    val type: String,
-    val workout_type: Int?,
-    val distance: Double,
-    val moving_time: Long,
-    val elapsed_time: Long
-)
