@@ -9,6 +9,6 @@ enum AssetColor: String {
 
 extension Color {
     static func asset(_ name: AssetColor) -> Color {
-        return Color(name.rawValue)
+        Color(name.rawValue)
     }
 }

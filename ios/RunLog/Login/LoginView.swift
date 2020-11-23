@@ -1,18 +1,17 @@
-import SwiftUI
 import RunLogShared
+import SwiftUI
 
 struct LoginView: View {
-    
     @ObservedObject var viewModel = LoginViewModel()
     @EnvironmentObject var userAuth: UserAuth
-    
+
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(
-                            colors: [.asset(.primary), .asset(.dark)]),
-                           startPoint: .top, endPoint: .bottom)
+                colors: [.asset(.primary), .asset(.dark)]),
+            startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
-            
+
             VStack {
                 Spacer()
                 Image("Logo")

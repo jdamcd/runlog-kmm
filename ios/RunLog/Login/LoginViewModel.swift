@@ -1,13 +1,12 @@
-import Foundation
 import AuthenticationServices
+import Foundation
 import RunLogShared
 
 class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
-    
     @Published var state: LoginState = .idle
-    
+
     private let strava: Strava
-    
+
     init(strava: Strava = SharedModule().buildStrava(userState: UserState())) {
         self.strava = strava
     }
@@ -17,7 +16,8 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         let loginUrl = URL(string: strava.loginUrl)!
         let session = ASWebAuthenticationSession(
             url: loginUrl,
-            callbackURLScheme: strava.authRedirect) { (result, error) in
+            callbackURLScheme: strava.authRedirect
+        ) { result, error in
             if let result = result {
                 if let code = result.paramValue("code") {
                     self.submitAuthCode(code: code)
@@ -33,10 +33,10 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         session.prefersEphemeralWebBrowserSession = false
         session.start()
     }
-    
+
     private func submitAuthCode(code: String) {
         state = .loading
-        strava.authenticate(code: code) { (result, _) in
+        strava.authenticate(code: code) { result, _ in
             if result is LoginResult.Success {
                 print("Login success")
                 self.state = .success
@@ -45,9 +45,9 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
             }
         }
     }
-    
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return ASPresentationAnchor()
+
+    func presentationAnchor(for _: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        ASPresentationAnchor()
     }
 }
 

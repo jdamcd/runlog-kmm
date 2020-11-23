@@ -1,7 +1,6 @@
 import XCTest
 
 class RunLogUITests: XCTestCase {
-
     override func setUp() {
         continueAfterFailure = false
     }
@@ -12,7 +11,6 @@ class RunLogUITests: XCTestCase {
 
     func testLaunchPerformance() {
         if #available(iOS 14.0, *) {
-        
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
             }

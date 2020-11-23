@@ -1,25 +1,25 @@
-import SwiftUI
 import RunLogShared
+import SwiftUI
 
 struct ActivitiesView: View {
-    
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var viewModel = ActivitiesViewModel()
-    
+
     var body: some View {
         NavigationView {
             ZStack {
                 switch viewModel.state {
-                    case .loading:
-                        ProgressView()
-                    case .error:
-                        Button(action: viewModel.load, label: {
-                            Text(Copy.retry)
-                        })
-                    case .data(let data):
-                        ActivitiesListView(
-                            viewModel: viewModel,
-                            activities: data.activities)
+                case .loading:
+                    ProgressView()
+                case .error:
+                    Button(action: viewModel.load, label: {
+                        Text(Copy.retry)
+                    })
+                case let .data(data):
+                    ActivitiesListView(
+                        viewModel: viewModel,
+                        activities: data.activities
+                    )
                 }
             }
             .navigationBarTitle(Copy.activities_title)
@@ -35,10 +35,10 @@ struct ActivitiesView: View {
     }
 }
 
-private struct ActivitiesListView : View {
+private struct ActivitiesListView: View {
     var viewModel: ActivitiesViewModel
-    var activities: Array<ActivityCard>
-    
+    var activities: [ActivityCard]
+
     var body: some View {
         List(activities, id: \.id) { activity in
             Link(destination: viewModel.linkUrl(id: activity.id)) {
