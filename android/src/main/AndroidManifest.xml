@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".app.LaunchActivity"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:theme="@android:style/Theme.NoDisplay"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +26,8 @@
 
         <activity android:name=".login.LoginActivity"
             android:noHistory="true"
-            android:theme="@style/LoginTheme">
+            android:theme="@style/LoginTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

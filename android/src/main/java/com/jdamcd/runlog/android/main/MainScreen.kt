@@ -1,14 +1,15 @@
 package com.jdamcd.runlog.android.main
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ConstraintLayout
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
@@ -25,9 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
@@ -54,30 +53,19 @@ fun ActivityFeed(
                             fontWeight = FontWeight.Bold
                         )
                     },
-                    navigationIcon = {
-                        Image(
-                            asset = vectorResource(id = R.drawable.vector_logo),
-                            colorFilter = ColorFilter.tint(MaterialTheme.colors.primaryVariant),
-                            modifier = Modifier.padding(
-                                top = 8.dp,
-                                bottom = 8.dp,
-                                start = 8.dp,
-                                end = 0.dp
-                            )
-                        )
-                    },
                     backgroundColor = MaterialTheme.colors.background,
                     actions = {
                         IconButton(onClick = onSignOutClick) {
                             Icon(
-                                asset = Icons.Outlined.ExitToApp,
+                                imageVector = Icons.Outlined.ExitToApp,
+                                contentDescription = "",
                                 tint = MaterialTheme.colors.primaryVariant
                             )
                         }
                     }
                 )
             },
-            bodyContent = { MainContent(liveData, onItemClick, onRetryClick) }
+            content = { MainContent(liveData, onItemClick, onRetryClick) }
         )
     }
 }
@@ -98,8 +86,13 @@ private fun MainContent(
 
 @Composable
 private fun ActivitiesList(data: ActivityFeedState.Data, onItemClick: (Long) -> Unit) {
-    LazyColumnFor(items = data.activityCards) { activity ->
-        ActivityListItem(activity, onItemClick)
+    LazyColumn {
+        items(
+            items = data.activityCards,
+            itemContent = { activity ->
+                ActivityListItem(activity = activity, onItemClick = onItemClick)
+            }
+        )
     }
 }
 
@@ -110,16 +103,15 @@ private fun ActivityListItem(activity: ActivityCard, onItemClick: (Long) -> Unit
             .clickable(onClick = { onItemClick(activity.id) })
             .fillMaxWidth()
     ) {
-        ConstraintLayout(
+        Row(
             modifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 16.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            val (mainColumn, link) = createRefs()
             Column(
-                Modifier.constrainAs(mainColumn) {
-                    start.linkTo(parent.start)
-                }
+                modifier = Modifier.fillMaxWidth(0.6f)
             ) {
                 Text(
                     text = "${activity.type}: ${activity.name}",
@@ -144,12 +136,7 @@ private fun ActivityListItem(activity: ActivityCard, onItemClick: (Long) -> Unit
             Text(
                 text = stringResource(R.string.strava_view),
                 style = MaterialTheme.typography.body2,
-                color = stravaBrand,
-                modifier = Modifier.constrainAs(link) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    end.linkTo(parent.end)
-                }
+                color = stravaBrand
             )
         }
         Divider(modifier = Modifier.padding(horizontal = 16.dp))

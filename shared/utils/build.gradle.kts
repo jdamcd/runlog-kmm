@@ -36,8 +36,6 @@ android {
     defaultConfig {
         minSdkVersion(AndroidVersion.minimum)
         targetSdkVersion(AndroidVersion.target)
-        versionCode = AppVersion.code
-        versionName = AppVersion.name
     }
     buildTypes {
         getByName("release") {

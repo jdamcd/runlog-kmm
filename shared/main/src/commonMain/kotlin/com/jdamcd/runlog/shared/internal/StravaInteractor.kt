@@ -33,7 +33,7 @@ internal class StravaInteractor(
 
     override val loginUrl = StravaApi.loginUrl()
 
-    override val authRedirect = StravaApi.AUTH_REDIRECT
+    override val authScheme = StravaApi.AUTH_SCHEME
 
     override fun linkUrl(id: Long) = StravaApi.linkUrl(id)
 }

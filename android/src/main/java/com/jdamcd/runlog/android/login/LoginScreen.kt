@@ -1,10 +1,11 @@
 package com.jdamcd.runlog.android.login
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ConstraintLayout
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,9 +16,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.LinearGradient
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.jdamcd.runlog.android.R
@@ -28,41 +31,32 @@ fun Login(liveData: LiveData<LoginState>, onConnectClick: () -> Unit) {
     RunLogTheme {
         Box {
             GradientBackground()
-            ConstraintLayout(
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(
+                        start = 16.dp,
+                        top = 96.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    ),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val (logo, connectButton, attribution) = createRefs()
                 Image(
-                    asset = vectorResource(id = R.drawable.vector_logo),
+                    painter = painterResource(id = R.drawable.vector_logo),
+                    contentDescription = stringResource(id = R.string.app_name),
                     modifier = Modifier
                         .width(200.dp)
                         .height(200.dp)
-                        .constrainAs(logo) {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(connectButton.top)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
                 )
                 ConnectLoadable(
                     liveData = liveData,
-                    connectClick = onConnectClick,
-                    modifier = Modifier.constrainAs(connectButton) {
-                        top.linkTo(logo.bottom)
-                        bottom.linkTo(attribution.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
+                    connectClick = onConnectClick
                 )
                 Image(
-                    asset = vectorResource(id = R.drawable.vector_strava_powered),
-                    modifier = Modifier.constrainAs(attribution) {
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
+                    painter = painterResource(id = R.drawable.vector_strava_powered),
+                    contentDescription = stringResource(id = R.string.strava_view)
                 )
             }
         }
@@ -82,7 +76,10 @@ private fun ConnectLoadable(
                 Row(
                     Modifier.clickable(onClick = connectClick)
                 ) {
-                    Image(asset = vectorResource(id = R.drawable.vector_strava_connect))
+                    Image(
+                        painter = painterResource(id = R.drawable.vector_strava_connect),
+                        contentDescription = stringResource(id = R.string.strava_connect)
+                    )
                 }
             }
             is LoginState.Loading, LoginState.Success -> {
@@ -94,20 +91,16 @@ private fun ConnectLoadable(
 
 @Composable
 fun GradientBackground() {
-    val start = MaterialTheme.colors.primary
-    val end = MaterialTheme.colors.primaryVariant
-    Canvas(
-        modifier = Modifier.fillMaxSize(),
-        onDraw = {
-            drawRect(
-                LinearGradient(
-                    colors = listOf(start, end),
-                    startX = 0f,
-                    startY = 0f,
-                    endX = 0f,
-                    endY = size.height
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MaterialTheme.colors.primary,
+                        MaterialTheme.colors.primaryVariant
+                    )
                 )
             )
-        }
     )
 }

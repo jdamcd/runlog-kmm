@@ -25,6 +25,7 @@ dependencies {
 
     // Compose
     implementation(Dependency.composeUi)
+    implementation(Dependency.composeActivity)
     implementation(Dependency.composeTooling)
     implementation(Dependency.composeFoundation)
     implementation(Dependency.composeMaterial)
@@ -37,7 +38,6 @@ dependencies {
     testImplementation(Dependency.mockitoKotlin)
     testImplementation(Dependency.coroutinesTest)
     testImplementation(Dependency.archTest)
-    androidTestImplementation(Dependency.composeTest)
 }
 android {
     compileSdkVersion(AndroidVersion.target)

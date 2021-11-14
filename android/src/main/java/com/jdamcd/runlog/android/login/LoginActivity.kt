@@ -3,9 +3,9 @@ package com.jdamcd.runlog.android.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.setContent
 import com.jdamcd.runlog.android.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 

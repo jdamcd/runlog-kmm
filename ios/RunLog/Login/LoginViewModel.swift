@@ -16,7 +16,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         let loginUrl = URL(string: strava.loginUrl)!
         let session = ASWebAuthenticationSession(
             url: loginUrl,
-            callbackURLScheme: strava.authRedirect
+            callbackURLScheme: strava.authScheme
         ) { result, error in
             if let result = result {
                 if let code = result.paramValue("code") {

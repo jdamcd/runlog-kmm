@@ -3,7 +3,6 @@ package com.jdamcd.runlog.android.login
 import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,9 +11,12 @@ import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.Strava
 import com.jdamcd.runlog.shared.UserState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val strava: Strava,
     private val userState: UserState
 ) : ViewModel(), LifecycleObserver {

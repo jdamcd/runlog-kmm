@@ -14,8 +14,6 @@ pluginManagement {
 }
 rootProject.name = "RunLog"
 
-enableFeaturePreview("GRADLE_METADATA")
-
 include(":android")
 
 include(":shared:main")

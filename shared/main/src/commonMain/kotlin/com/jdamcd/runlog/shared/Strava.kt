@@ -4,7 +4,7 @@ interface Strava {
     suspend fun authenticate(code: String): LoginResult
     suspend fun activities(): Result<List<ActivityCard>>
     val loginUrl: String
-    val authRedirect: String
+    val authScheme: String
     fun linkUrl(id: Long): String
 }
 
