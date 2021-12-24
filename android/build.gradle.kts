@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    kotlin("android.extensions")
     id("dagger.hilt.android.plugin")
 }
 group = "com.jdamcd.runlog"
@@ -40,11 +39,11 @@ dependencies {
     testImplementation(Dependency.archTest)
 }
 android {
-    compileSdkVersion(AndroidVersion.target)
+    compileSdk = AndroidVersion.target
     defaultConfig {
         applicationId = "com.jdamcd.runlog.android"
-        minSdkVersion(AndroidVersion.minimum)
-        targetSdkVersion(AndroidVersion.target)
+        minSdk = AndroidVersion.minimum
+        targetSdk = AndroidVersion.target
         versionCode = AppVersion.code
         versionName = AppVersion.name
     }
@@ -62,13 +61,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        useIR = true
     }
     composeOptions {
-        kotlinCompilerVersion = Version.kotlin
         kotlinCompilerExtensionVersion = Version.compose
     }
-    lintOptions {
+    lint {
         isAbortOnError = false
     }
 }

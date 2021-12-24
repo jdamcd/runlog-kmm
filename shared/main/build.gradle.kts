@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("android.extensions")
 }
 group = "com.jdamcd.runlog"
 version = AppVersion.name
@@ -56,11 +55,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(AndroidVersion.target)
+    compileSdk = AndroidVersion.target
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(AndroidVersion.minimum)
-        targetSdkVersion(AndroidVersion.target)
+        minSdk = AndroidVersion.minimum
+        targetSdk = AndroidVersion.target
     }
     buildTypes {
         getByName("release") {
