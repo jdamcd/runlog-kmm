@@ -42,6 +42,7 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.jdamcd.runlog.shared.utils"
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {

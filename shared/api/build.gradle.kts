@@ -54,17 +54,18 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(AndroidVersion.target)
+    compileSdk = AndroidVersion.target
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(AndroidVersion.minimum)
-        targetSdkVersion(AndroidVersion.target)
+        minSdk = AndroidVersion.minimum
+        targetSdk = AndroidVersion.target
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.jdamcd.runlog.shared.api"
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {

@@ -66,6 +66,7 @@ android {
         kotlinCompilerExtensionVersion = Version.compose
     }
     lint {
-        isAbortOnError = false
+        abortOnError = false
     }
+    namespace = "com.jdamcd.runlog.android"
 }

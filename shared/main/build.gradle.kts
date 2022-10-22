@@ -66,6 +66,7 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.jdamcd.runlog.shared"
 }
 
 val packForXcode by tasks.creating(Sync::class) {
