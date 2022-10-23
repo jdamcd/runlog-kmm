@@ -13,13 +13,10 @@ dependencies {
     implementation(Dependency.ktxActvitiy)
     implementation(Dependency.viewModel)
     implementation(Dependency.liveData)
-    implementation(Dependency.lifecycleExtensions)
     implementation(Dependency.material)
     implementation(Dependency.appCompat)
     implementation(Dependency.hilt)
-    implementation(Dependency.hiltViewModel)
     kapt(Dependency.hiltCompiler)
-    kapt(Dependency.hiltAndroidCompiler)
     kapt(Dependency.lifecycleCompiler)
 
     // Compose
@@ -63,7 +60,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        kotlinCompilerExtensionVersion = Version.composeCompiler
     }
     lint {
         abortOnError = false
