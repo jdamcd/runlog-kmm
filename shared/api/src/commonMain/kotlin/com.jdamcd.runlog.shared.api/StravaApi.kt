@@ -1,59 +1,84 @@
 package com.jdamcd.runlog.shared.api
 
-import co.touchlab.stately.concurrency.AtomicReference
-import co.touchlab.stately.concurrency.value
-import co.touchlab.stately.ensureNeverFrozen
-import com.jdamcd.runlog.shared.util.Logger
+import com.jdamcd.runlog.shared.util.MultiLog
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ClientRequestException
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLBuilder
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class StravaApi(tokenProvider: TokenProvider) {
+class StravaApi(private val tokenProvider: TokenProvider) {
 
     private val client = HttpClient {
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(
+        install(ContentNegotiation) {
+            json(
                 Json {
                     isLenient = true
                     ignoreUnknownKeys = true
                 }
             )
         }
-        install(Authorizer) {
-            this.tokenProvider = tokenProvider
+        install(Logging) {
+            level = LogLevel.ALL
+            logger = object : Logger {
+                override fun log(message: String) {
+                    MultiLog.debug(message)
+                }
+            }
+        }
+        install(Auth) {
+            bearer {
+                loadTokens {
+                    BearerTokens(tokenProvider.accessToken, tokenProvider.refreshToken)
+                }
+                refreshTokens {
+                    val apiToken = refreshCall(tokenProvider.refreshToken)
+                    tokenProvider.accessToken = apiToken.access_token
+                    tokenProvider.refreshToken = apiToken.refresh_token
+                    BearerTokens(apiToken.access_token, apiToken.refresh_token)
+                }
+            }
         }
     }
 
-    private val atom = AtomicReference(tokenProvider)
-
-    init {
-        ensureNeverFrozen()
+    private suspend fun refreshCall(refreshToken: String): ApiToken {
+        return client.post("$BASE_URL/oauth/token") {
+            parameter("refresh_token", refreshToken)
+            parameter("client_id", BuildKonfig.CLIENT_ID)
+            parameter("client_secret", BuildKonfig.CLIENT_SECRET)
+            parameter("grant_type", "refresh_token")
+        }.body()
     }
 
     suspend fun tokenExchange(code: String) {
-        val tokens = client.post<ApiToken>("$BASE_URL/oauth/token") {
+        val tokens = client.post("$BASE_URL/oauth/token") {
             parameter("code", code)
             parameter("client_id", BuildKonfig.CLIENT_ID)
             parameter("client_secret", BuildKonfig.CLIENT_SECRET)
             parameter("grant_type", "authorization_code")
-        }
-        atom.value.accessToken = tokens.access_token
-        atom.value.refreshToken = tokens.refresh_token
+        }.body<ApiToken>()
+        tokenProvider.accessToken = tokens.access_token
+        tokenProvider.refreshToken = tokens.refresh_token
     }
 
     suspend fun activities(): List<ApiSummaryActivity> {
         return try {
-            client.get("$BASE_URL/athlete/activities")
+            client.get("$BASE_URL/athlete/activities").body()
         } catch (error: Throwable) {
             throw if (isAuthError(error)) {
-                Logger.debug("Unhandled 401 fetching activities")
+                MultiLog.debug("Unhandled 401 fetching activities")
                 AuthException("Unhandled 401", error)
             } else error
         }

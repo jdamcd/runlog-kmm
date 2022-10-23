@@ -1,16 +1,11 @@
 package com.jdamcd.runlog.shared
 
-import co.touchlab.stately.freeze
 import platform.Foundation.NSUserDefaults
 import platform.Foundation.setValue
 
 actual class UserState {
 
     private val defaults: NSUserDefaults = NSUserDefaults(suiteName = DEFAULTS_NAME)
-
-    init {
-        freeze()
-    }
 
     actual var accessToken: String
         get() = defaults.stringForKey(ACCESS_TOKEN) ?: ""

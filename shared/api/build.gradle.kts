@@ -18,11 +18,11 @@ kotlin {
             dependencies {
                 implementation(project(":shared:utils"))
                 implementation(Dependency.ktorCore)
+                implementation(Dependency.ktorContentNegotiation)
+                implementation(Dependency.ktorAuth)
+                implementation(Dependency.ktorLog)
                 implementation(Dependency.ktorSerialize)
                 implementation(Dependency.kotlinCoroutines)
-                implementation(Dependency.kotlinSerialize)
-                implementation(Dependency.stately)
-                implementation(Dependency.statelyConcurrency)
             }
         }
         val commonTest by getting {

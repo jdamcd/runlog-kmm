@@ -1,6 +1,6 @@
 package com.jdamcd.runlog.shared.util
 
-object Logger {
+object MultiLog {
 
     private const val TAG = "RunLog"
     private val output = LogOutput()
