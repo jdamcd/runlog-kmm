@@ -21,9 +21,9 @@ object Version {
 
     // Test
     const val junit = "4.13.2"
-    const val kotest = "4.6.3"
-    const val mockito = "4.0.0"
-    const val mockitoKotlin = "2.2.0"
+    const val kotest = "5.5.2"
+    const val mockito = "4.8.1"
+    const val mockitoKotlin = "4.0.0"
     const val archTest = "2.1.0"
     const val coroutinesTest = "1.6.4"
 }
@@ -64,7 +64,7 @@ object Dependency {
     const val junit = "junit:junit:${Version.junit}"
     const val kotestAssert = "io.kotest:kotest-assertions-core:${Version.kotest}"
     const val mockito = "org.mockito:mockito-inline:${Version.mockito}"
-    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Version.mockitoKotlin}"
+    const val mockitoKotlin = "org.mockito.kotlin:mockito-kotlin:${Version.mockitoKotlin}"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutinesTest}"
     const val archTest = "androidx.arch.core:core-testing:${Version.archTest}"
 }

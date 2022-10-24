@@ -7,16 +7,16 @@ import com.jdamcd.runlog.android.util.TestLifecycleOwner
 import com.jdamcd.runlog.android.util.activityCard
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.Strava
-import com.nhaarman.mockitokotlin2.inOrder
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.kotlin.inOrder
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class MainViewModelTest {
@@ -40,7 +40,7 @@ class MainViewModelTest {
 
     @Test
     fun `load success emits loading then data`() {
-        coroutineRule.testDispatcher.runBlockingTest {
+        runTest(coroutineRule.testDispatcher) {
             lifecycleOwner.onResume()
             val activities = listOf(activityCard)
             whenever(strava.activities()).thenReturn(Result.Data(activities))
@@ -57,7 +57,7 @@ class MainViewModelTest {
 
     @Test
     fun `load failure emits loading then error`() {
-        coroutineRule.testDispatcher.runBlockingTest {
+        runTest(coroutineRule.testDispatcher) {
             lifecycleOwner.onResume()
             whenever(strava.activities()).thenReturn(Result.Error(Throwable(), recoverable = true))
 

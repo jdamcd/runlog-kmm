@@ -7,16 +7,16 @@ import com.jdamcd.runlog.android.util.TestLifecycleOwner
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.Strava
 import com.jdamcd.runlog.shared.UserState
-import com.nhaarman.mockitokotlin2.inOrder
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.kotlin.inOrder
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class LoginViewModelTest {
@@ -43,7 +43,7 @@ class LoginViewModelTest {
 
     @Test
     fun `submitAuthCode success emits loading then success`() {
-        coroutineRule.testDispatcher.runBlockingTest {
+        runTest(coroutineRule.testDispatcher) {
             lifecycleOwner.onResume()
             whenever(strava.authenticate(code)).thenReturn(LoginResult.Success)
 
@@ -59,7 +59,7 @@ class LoginViewModelTest {
 
     @Test
     fun `submitAuthCode error emits loading then idle`() {
-        coroutineRule.testDispatcher.runBlockingTest {
+        runTest(coroutineRule.testDispatcher) {
             lifecycleOwner.onResume()
             whenever(strava.authenticate(code)).thenReturn(LoginResult.Error(Throwable()))
 
