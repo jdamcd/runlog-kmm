@@ -22,6 +22,7 @@ import org.junit.Test
 class MainViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
+
     @get:Rule val executorRule = InstantTaskExecutorRule()
 
     private val observer: Observer<ActivityFeedState> = mock()

@@ -3,9 +3,11 @@ object Version {
     const val kotlin = "1.7.20"
     const val androidGradle = "7.3.1"
     const val buildKonfig = "0.13.3"
+
     // Native
     const val ktor = "2.1.2"
     const val coroutines = "1.6.4-native-mt"
+
     // Android
     const val hilt = "2.44"
     const val compose = "1.2.1"
@@ -16,6 +18,7 @@ object Version {
     const val ktxCore = "1.9.0"
     const val ktxActivity = "1.6.0"
     const val lifecycle = "2.5.1"
+
     // Test
     const val junit = "4.13.2"
     const val kotest = "4.6.3"
@@ -33,6 +36,7 @@ object Dependency {
     const val ktorLog = "io.ktor:ktor-client-logging:${Version.ktor}"
     const val ktorSerialize = "io.ktor:ktor-serialization-kotlinx-json:${Version.ktor}"
     const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
+
     // Android
     const val ktorAndroid = "io.ktor:ktor-client-android:${Version.ktor}"
     const val ktxCore = "androidx.core:core-ktx:${Version.ktxCore}"
@@ -52,8 +56,10 @@ object Dependency {
     const val composeIcons = "androidx.compose.material:material-icons-core:${Version.compose}"
     const val composeIconsExtended = "androidx.compose.material:material-icons-extended:${Version.compose}"
     const val composeLiveData = "androidx.compose.runtime:runtime-livedata:${Version.compose}"
+
     // iOS
     const val ktoriOS = "io.ktor:ktor-client-ios:${Version.ktor}"
+
     // Test
     const val junit = "junit:junit:${Version.junit}"
     const val kotestAssert = "io.kotest:kotest-assertions-core:${Version.kotest}"

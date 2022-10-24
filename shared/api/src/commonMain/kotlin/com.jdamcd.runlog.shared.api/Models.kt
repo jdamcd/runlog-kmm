@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ApiToken(
     val access_token: String,
-    val refresh_token: String,
+    val refresh_token: String
 )
 
 @Serializable

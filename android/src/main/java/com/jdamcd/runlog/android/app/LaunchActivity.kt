@@ -17,8 +17,11 @@ class LaunchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         startActivity(
-            if (userState.isLoggedIn()) MainActivity.create(this)
-            else LoginActivity.create(this)
+            if (userState.isLoggedIn()) {
+                MainActivity.create(this)
+            } else {
+                LoginActivity.create(this)
+            }
         )
         finish()
     }

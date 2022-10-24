@@ -80,7 +80,9 @@ class StravaApi(private val tokenProvider: TokenProvider) {
             throw if (isAuthError(error)) {
                 MultiLog.debug("Unhandled 401 fetching activities")
                 AuthException("Unhandled 401", error)
-            } else error
+            } else {
+                error
+            }
         }
     }
 

@@ -16,7 +16,7 @@ group = "com.jdamcd.runlog"
 version = AppVersion.name
 
 plugins {
-    id("com.diffplug.spotless") version "5.6.1"
+    id("com.diffplug.spotless") version "6.11.0"
 }
 
 allprojects {
@@ -29,13 +29,14 @@ allprojects {
     apply(plugin = "com.diffplug.spotless")
 
     spotless {
+        val ktlintVersion = "0.47.1"
         kotlin {
             target("**/*.kt")
-            ktlint("0.39.0")
+            ktlint(ktlintVersion)
         }
         kotlinGradle {
             target("*.gradle.kts", "additionalScripts/*.gradle.kts")
-            ktlint("0.39.0")
+            ktlint(ktlintVersion)
         }
     }
 }
