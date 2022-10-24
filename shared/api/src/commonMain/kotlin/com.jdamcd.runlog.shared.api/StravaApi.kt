@@ -1,5 +1,6 @@
 package com.jdamcd.runlog.shared.api
 
+import com.jdamcd.runlog.shared.util.DebugConfig
 import com.jdamcd.runlog.shared.util.MultiLog
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -30,14 +31,6 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                 }
             )
         }
-        install(Logging) {
-            level = LogLevel.ALL
-            logger = object : Logger {
-                override fun log(message: String) {
-                    MultiLog.debug(message)
-                }
-            }
-        }
         install(Auth) {
             bearer {
                 loadTokens {
@@ -48,6 +41,16 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                     tokenProvider.accessToken = apiToken.access_token
                     tokenProvider.refreshToken = apiToken.refresh_token
                     BearerTokens(apiToken.access_token, apiToken.refresh_token)
+                }
+            }
+        }
+        if (DebugConfig.isDebug) {
+            install(Logging) {
+                level = LogLevel.ALL
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        MultiLog.debug(message)
+                    }
                 }
             }
         }
