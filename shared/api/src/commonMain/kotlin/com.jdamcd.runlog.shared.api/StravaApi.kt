@@ -38,8 +38,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                 }
                 refreshTokens {
                     val apiToken = refreshCall(tokenProvider.refreshToken)
-                    tokenProvider.accessToken = apiToken.access_token
-                    tokenProvider.refreshToken = apiToken.refresh_token
+                    tokenProvider.store(apiToken.access_token, apiToken.refresh_token)
                     BearerTokens(apiToken.access_token, apiToken.refresh_token)
                 }
             }
@@ -66,14 +65,12 @@ class StravaApi(private val tokenProvider: TokenProvider) {
     }
 
     suspend fun tokenExchange(code: String) {
-        val tokens = client.post("$BASE_URL/oauth/token") {
+        client.post("$BASE_URL/oauth/token") {
             parameter("code", code)
             parameter("client_id", BuildKonfig.CLIENT_ID)
             parameter("client_secret", BuildKonfig.CLIENT_SECRET)
             parameter("grant_type", "authorization_code")
-        }.body<ApiToken>()
-        tokenProvider.accessToken = tokens.access_token
-        tokenProvider.refreshToken = tokens.refresh_token
+        }.body<ApiToken>().let { tokenProvider.store(it.access_token, it.refresh_token) }
     }
 
     suspend fun activities(): List<ApiSummaryActivity> {
