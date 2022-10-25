@@ -24,4 +24,9 @@ class FormatTest {
     fun formatsDurationMoreThanAnHour() {
         3660L.formatDuration() shouldBe "1:01:00"
     }
+
+    @Test
+    fun formatsDateWithPattern() {
+        "2022-10-25T17:58:50Z".formatDate("dd MMM, k:mm") shouldBe "25 Oct, 17:58"
+    }
 }

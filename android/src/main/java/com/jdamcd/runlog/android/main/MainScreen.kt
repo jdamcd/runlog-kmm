@@ -125,11 +125,15 @@ private fun ActivityListItem(activity: ActivityCard, onItemClick: (Long) -> Unit
                     )
                 }
                 Text(
-                    text = activity.time,
+                    text = activity.duration,
                     style = MaterialTheme.typography.body2
                 )
                 Text(
                     text = activity.distance,
+                    style = MaterialTheme.typography.body2
+                )
+                Text(
+                    text = activity.start,
                     style = MaterialTheme.typography.body2
                 )
             }

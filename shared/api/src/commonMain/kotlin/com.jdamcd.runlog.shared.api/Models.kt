@@ -16,5 +16,6 @@ data class ApiSummaryActivity(
     val workout_type: Int?,
     val distance: Double,
     val moving_time: Long,
-    val elapsed_time: Long
+    val elapsed_time: Long,
+    val start_date_local: String
 )

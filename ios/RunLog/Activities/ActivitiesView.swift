@@ -50,8 +50,9 @@ private struct ActivitiesListView: View {
                             Text(label)
                                 .foregroundColor(Color.asset(.strava))
                         }
-                        Text(activity.time)
+                        Text(activity.duration)
                         Text(activity.distance)
+                        Text(activity.start)
                     }
                     Spacer()
                     Text(Copy.strava_view)

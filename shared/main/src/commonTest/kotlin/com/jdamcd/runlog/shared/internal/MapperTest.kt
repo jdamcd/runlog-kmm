@@ -14,7 +14,8 @@ class MapperTest {
             type = "Run",
             label = null,
             distance = "10.1k",
-            time = "40:00"
+            duration = "40:00",
+            start = "Tuesday 25 Oct @ 5:58pm"
         )
     }
 
@@ -26,7 +27,8 @@ class MapperTest {
             type = "Run",
             label = "Race",
             distance = "10.1k",
-            time = "41:00"
+            duration = "41:00",
+            start = "Tuesday 25 Oct @ 5:58pm"
         )
     }
 
@@ -38,7 +40,8 @@ class MapperTest {
             type = "Run",
             label = "Long",
             distance = "10.1k",
-            time = "40:00"
+            duration = "40:00",
+            start = "Tuesday 25 Oct @ 5:58pm"
         )
     }
 
@@ -50,7 +53,8 @@ class MapperTest {
             type = "Run",
             label = "Workout",
             distance = "10.1k",
-            time = "40:00"
+            duration = "40:00",
+            start = "Tuesday 25 Oct @ 5:58pm"
         )
     }
 }

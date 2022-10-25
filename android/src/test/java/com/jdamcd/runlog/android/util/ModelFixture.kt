@@ -8,5 +8,6 @@ val activityCard = ActivityCard(
     type = "run",
     label = null,
     distance = "10.3k",
-    time = "40:00"
+    duration = "40:00",
+    start = "Tuesday 25 Oct @ 5:58pm"
 )

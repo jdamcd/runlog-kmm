@@ -4,6 +4,6 @@ object AppVersion {
 }
 
 object AndroidVersion {
-    const val minimum = 24
+    const val minimum = 26
     const val target = 33
 }
