@@ -20,6 +20,7 @@ dependencies {
     kapt(Dependency.lifecycleCompiler)
 
     // Compose
+    implementation(platform(Dependency.composeBom))
     implementation(Dependency.composeUi)
     implementation(Dependency.composeActivity)
     implementation(Dependency.composeTooling)
