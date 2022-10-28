@@ -19,3 +19,30 @@ data class ApiSummaryActivity(
     val elapsed_time: Long,
     val start_date_local: String
 )
+
+@Serializable
+data class ApiAthlete(
+    val id: Long,
+    val username: String,
+    val firstname: String,
+    val country: String,
+    val lastname: String,
+    val profile: String
+)
+
+@Serializable
+data class ApiAthleteStats(
+    val ytd_run_totals: ApiStatsBlock,
+    val all_run_totals: ApiStatsBlock,
+    val ytd_ride_totals: ApiStatsBlock,
+    val all_ride_totals: ApiStatsBlock
+)
+
+@Serializable
+data class ApiStatsBlock(
+    val count: Int,
+    val distance: Long,
+    val moving_time: Long,
+    val elapsed_time: Long,
+    val elevation_gain: Int
+)

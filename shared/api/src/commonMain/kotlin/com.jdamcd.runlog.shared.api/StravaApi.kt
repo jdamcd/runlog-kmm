@@ -5,6 +5,7 @@ import com.jdamcd.runlog.shared.util.MultiLog
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
@@ -43,6 +44,15 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                 }
             }
         }
+        HttpResponseValidator {
+            handleResponseExceptionWithRequest { exception, _ ->
+                val clientException = exception as? ClientRequestException ?: return@handleResponseExceptionWithRequest
+                if (clientException.response.status == HttpStatusCode.Unauthorized) {
+                    MultiLog.debug("Unhandled 401")
+                    throw AuthException("Unhandled 401", clientException)
+                }
+            }
+        }
         if (DebugConfig.isDebug) {
             install(Logging) {
                 level = LogLevel.ALL
@@ -73,23 +83,14 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }.body<ApiToken>().let { tokenProvider.store(it.access_token, it.refresh_token) }
     }
 
-    suspend fun activities(): List<ApiSummaryActivity> {
-        return try {
-            client.get("$BASE_URL/athlete/activities").body()
-        } catch (error: Throwable) {
-            throw if (isAuthError(error)) {
-                MultiLog.debug("Unhandled 401 fetching activities")
-                AuthException("Unhandled 401", error)
-            } else {
-                error
-            }
-        }
-    }
+    suspend fun activities(): List<ApiSummaryActivity> =
+        client.get("$BASE_URL/athlete/activities").body()
 
-    private fun isAuthError(error: Throwable): Boolean {
-        return error is ClientRequestException &&
-            error.response.status == HttpStatusCode.Unauthorized
-    }
+    suspend fun athlete(): ApiAthlete =
+        client.get("$BASE_URL/athlete").body()
+
+    suspend fun athleteStats(id: Long): ApiAthleteStats =
+        client.get("$BASE_URL/athletes/$id/stats").body()
 
     companion object {
         const val BASE_URL = "https://www.strava.com/api/v3"
