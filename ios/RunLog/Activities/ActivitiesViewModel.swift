@@ -21,14 +21,20 @@ class ActivitiesViewModel: ObservableObject {
                 let itemsArray = items.data as! [ActivityCard]
                 let update = ActivitiesState.data(
                     ActivitiesState.Data(activities: itemsArray))
-                self.state = update
+                self.updateState(to: update)
             } else if let error = result as? ResultError {
                 if error.recoverable {
-                    self.state = .error
+                    self.updateState(to: .error)
                 } else {
                     self.signOut()
                 }
             }
+        }
+    }
+
+    private func updateState(to: ActivitiesState) {
+        DispatchQueue.main.async {
+            self.state = to
         }
     }
 

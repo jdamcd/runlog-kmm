@@ -22,11 +22,11 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
                 if let code = result.paramValue("code") {
                     self.submitAuthCode(code: code)
                 } else {
-                    self.state = .idle
+                    self.updateState(to: LoginState.idle)
                 }
             }
             if error != nil {
-                self.state = .idle
+                self.updateState(to: .idle)
             }
         }
         session.presentationContextProvider = self
@@ -39,10 +39,16 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         strava.authenticate(code: code) { result, _ in
             if result is LoginResult.Success {
                 print("Login success")
-                self.state = .success
+                self.updateState(to: .success)
             } else {
-                self.state = .idle
+                self.updateState(to: .idle)
             }
+        }
+    }
+
+    private func updateState(to: LoginState) {
+        DispatchQueue.main.async {
+            self.state = to
         }
     }
 

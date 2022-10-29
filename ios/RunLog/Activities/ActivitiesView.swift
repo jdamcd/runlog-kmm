@@ -24,8 +24,10 @@ struct ActivitiesView: View {
             }
             .navigationBarTitle(Copy.activities_title)
             .navigationBarItems(trailing:
-                Button(Copy.sign_out) {
-                    userAuth.signOut()
+                NavigationLink(destination: ProfileView()) {
+                    Image(systemName: "person.circle.fill")
+                        .renderingMode(.template)
+                        .foregroundColor(.black)
                 }
             )
             .onAppear(perform: {

@@ -15,6 +15,7 @@
 		4972406E2542162A008C760B /* Copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972406D2542162A008C760B /* Copy.swift */; };
 		497240732542368F008C760B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 497240752542368F008C760B /* Localizable.strings */; };
 		498FBBEF2535D01F00FEDDA2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498FBBEE2535D01F00FEDDA2 /* Colors.swift */; };
+		49978A92290C9B9400F1FBCD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49978A91290C9B9400F1FBCD /* ProfileView.swift */; };
 		49FB92C5253ECB68008C9736 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB92C4253ECB68008C9736 /* UserAuth.swift */; };
 		49FB92CB253ECBA0008C9736 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB92CA253ECBA0008C9736 /* LaunchView.swift */; };
 		7555FF83242A565900829871 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* LoginView.swift */; };
@@ -66,6 +67,7 @@
 		4972406D2542162A008C760B /* Copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copy.swift; sourceTree = "<group>"; };
 		497240742542368F008C760B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		498FBBEE2535D01F00FEDDA2 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		49978A91290C9B9400F1FBCD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		49FB92C4253ECB68008C9736 /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		49FB92CA253ECBA0008C9736 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* RunLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,14 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		49978A90290C9B5D00F1FBCD /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				49978A91290C9B9400F1FBCD /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		49CACD5B253826F300F79A06 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +178,7 @@
 		7555FF7D242A565900829871 /* RunLog */ = {
 			isa = PBXGroup;
 			children = (
+				49978A90290C9B5D00F1FBCD /* Profile */,
 				4972406C25421607008C760B /* UI */,
 				49FB92C3253EC947008C9736 /* Launch */,
 				494EACF8253E1E8E00BBE267 /* Activities */,
@@ -378,6 +389,7 @@
 				494EACF1253E0FF300BBE267 /* App.swift in Sources */,
 				49FB92CB253ECBA0008C9736 /* LaunchView.swift in Sources */,
 				4972406E2542162A008C760B /* Copy.swift in Sources */,
+				49978A92290C9B9400F1FBCD /* ProfileView.swift in Sources */,
 				7555FF83242A565900829871 /* LoginView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
