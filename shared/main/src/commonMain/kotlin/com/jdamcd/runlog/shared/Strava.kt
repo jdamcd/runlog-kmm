@@ -3,6 +3,7 @@ package com.jdamcd.runlog.shared
 interface Strava {
     suspend fun authenticate(code: String): LoginResult
     suspend fun activities(): Result<List<ActivityCard>>
+    suspend fun profile(): Result<AthleteProfile>
     val loginUrl: String
     val authScheme: String
     fun linkUrl(id: Long): String
@@ -26,4 +27,11 @@ data class ActivityCard(
     val distance: String,
     val duration: String,
     val start: String
+)
+
+data class AthleteProfile(
+    val id: Long,
+    val name: String,
+    val imageUrl: String,
+    val yearRunDistance: String
 )

@@ -1,6 +1,9 @@
 package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.AthleteProfile
+import com.jdamcd.runlog.shared.api.ApiAthlete
+import com.jdamcd.runlog.shared.api.ApiAthleteStats
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.formatDate
 import com.jdamcd.runlog.shared.formatDuration
@@ -10,16 +13,25 @@ internal object Mapper {
 
     private const val DATE_PATTERN = "EEEE dd MMM @ h:mma"
 
-    fun mapActivityRow(input: ApiSummaryActivity): ActivityCard {
-        val type = WorkoutType.map(input.workout_type ?: 0)
+    fun mapActivityRow(activity: ApiSummaryActivity): ActivityCard {
+        val type = WorkoutType.map(activity.workout_type ?: 0)
         return ActivityCard(
-            id = input.id,
-            name = input.name,
-            type = input.type,
+            id = activity.id,
+            name = activity.name,
+            type = activity.type,
             label = type.label,
-            distance = input.distance.formatKm(),
-            duration = pickDuration(input, type).formatDuration(),
-            start = input.start_date_local.formatDate(DATE_PATTERN)
+            distance = activity.distance.formatKm(),
+            duration = pickDuration(activity, type).formatDuration(),
+            start = activity.start_date_local.formatDate(DATE_PATTERN)
+        )
+    }
+
+    fun mapProfile(athlete: ApiAthlete, athleteStats: ApiAthleteStats): AthleteProfile {
+        return AthleteProfile(
+            id = athlete.id,
+            name = "${athlete.firstname} ${athlete.lastname}".trim(),
+            imageUrl = athlete.profile,
+            yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm()
         )
     }
 

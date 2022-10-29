@@ -2,7 +2,6 @@ import RunLogShared
 import SwiftUI
 
 struct ActivitiesView: View {
-    @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var viewModel = ActivitiesViewModel()
 
     var body: some View {

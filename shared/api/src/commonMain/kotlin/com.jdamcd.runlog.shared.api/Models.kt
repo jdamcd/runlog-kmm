@@ -41,7 +41,7 @@ data class ApiAthleteStats(
 @Serializable
 data class ApiStatsBlock(
     val count: Int,
-    val distance: Long,
+    val distance: Double,
     val moving_time: Long,
     val elapsed_time: Long,
     val elevation_gain: Int
