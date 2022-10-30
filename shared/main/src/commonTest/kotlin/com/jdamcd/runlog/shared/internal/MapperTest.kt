@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.AthleteProfile
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
@@ -8,7 +9,7 @@ class MapperTest {
 
     @Test
     fun mapsDefaultActivity() {
-        Mapper.mapActivityRow(apiModel()) shouldBe ActivityCard(
+        Mapper.mapActivityRow(activityModel()) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = "Run",
@@ -21,7 +22,7 @@ class MapperTest {
 
     @Test
     fun mapsRaceActivityUsingElapsedTime() {
-        Mapper.mapActivityRow(apiModel(workout_type = 1)) shouldBe ActivityCard(
+        Mapper.mapActivityRow(activityModel(workout_type = 1)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = "Run",
@@ -34,7 +35,7 @@ class MapperTest {
 
     @Test
     fun mapsLongRunActivity() {
-        Mapper.mapActivityRow(apiModel(workout_type = 2)) shouldBe ActivityCard(
+        Mapper.mapActivityRow(activityModel(workout_type = 2)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = "Run",
@@ -47,7 +48,7 @@ class MapperTest {
 
     @Test
     fun mapsWorkoutActivity() {
-        Mapper.mapActivityRow(apiModel(workout_type = 3)) shouldBe ActivityCard(
+        Mapper.mapActivityRow(activityModel(workout_type = 3)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = "Run",
@@ -55,6 +56,19 @@ class MapperTest {
             distance = "10.1k",
             duration = "40:00",
             start = "Tuesday 25 Oct @ 5:58pm"
+        )
+    }
+
+    @Test
+    fun mapsAthleteAndStatsToProfile() {
+        Mapper.mapProfile(athleteModel(), athleteStatsModel()) shouldBe AthleteProfile(
+            id = 123L,
+            username = "jdamcd",
+            name = "Jamie McDonald",
+            imageUrl = "image.url",
+            fourWeekRunDistance = "100k",
+            yearRunDistance = "1,000k",
+            allTimeRunDistance = "5,000k"
         )
     }
 }

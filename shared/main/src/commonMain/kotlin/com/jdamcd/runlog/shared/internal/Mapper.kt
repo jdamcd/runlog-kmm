@@ -29,9 +29,12 @@ internal object Mapper {
     fun mapProfile(athlete: ApiAthlete, athleteStats: ApiAthleteStats): AthleteProfile {
         return AthleteProfile(
             id = athlete.id,
+            username = athlete.username,
             name = "${athlete.firstname} ${athlete.lastname}".trim(),
             imageUrl = athlete.profile,
-            yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm()
+            fourWeekRunDistance = athleteStats.recent_run_totals.distance.formatKm(),
+            yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm(),
+            allTimeRunDistance = athleteStats.all_run_totals.distance.formatKm()
         )
     }
 

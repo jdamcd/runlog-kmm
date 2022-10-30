@@ -3,6 +3,8 @@ package com.jdamcd.runlog.shared
 import platform.Foundation.NSDateFormatter
 import platform.Foundation.NSISO8601DateFormatter
 import platform.Foundation.NSLocale
+import platform.Foundation.NSNumber
+import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSString
 import platform.Foundation.NSTimeZone
 import platform.Foundation.autoupdatingCurrentLocale
@@ -10,7 +12,9 @@ import platform.Foundation.localTimeZone
 import platform.Foundation.stringWithFormat
 
 actual fun Double.formatKm(): String {
-    return NSString.stringWithFormat("%.1fk", this / 1000)
+    val nf = NSNumberFormatter()
+    nf.positiveFormat = "#,##0.#"
+    return "${ nf.stringFromNumber(NSNumber(this / 1000))}k"
 }
 
 actual fun Long.formatDuration(): String {

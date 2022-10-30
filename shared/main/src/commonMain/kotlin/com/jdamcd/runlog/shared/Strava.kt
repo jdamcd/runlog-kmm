@@ -31,7 +31,10 @@ data class ActivityCard(
 
 data class AthleteProfile(
     val id: Long,
+    val username: String,
     val name: String,
     val imageUrl: String,
-    val yearRunDistance: String
+    val fourWeekRunDistance: String,
+    val yearRunDistance: String,
+    val allTimeRunDistance: String
 )

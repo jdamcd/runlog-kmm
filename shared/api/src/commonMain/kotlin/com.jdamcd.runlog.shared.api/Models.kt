@@ -25,17 +25,16 @@ data class ApiAthlete(
     val id: Long,
     val username: String,
     val firstname: String,
-    val country: String,
     val lastname: String,
+    val country: String,
     val profile: String
 )
 
 @Serializable
 data class ApiAthleteStats(
+    val recent_run_totals: ApiStatsBlock,
     val ytd_run_totals: ApiStatsBlock,
-    val all_run_totals: ApiStatsBlock,
-    val ytd_ride_totals: ApiStatsBlock,
-    val all_ride_totals: ApiStatsBlock
+    val all_run_totals: ApiStatsBlock
 )
 
 @Serializable

@@ -11,6 +11,11 @@ class FormatTest {
     }
 
     @Test
+    fun formatsRoundKmsWithNoDecimal() {
+        10_000.0.formatKm() shouldBe "10k"
+    }
+
+    @Test
     fun formatDurationLessThan10Mins() {
         540L.formatDuration() shouldBe "09:00"
     }

@@ -1,10 +1,11 @@
 package com.jdamcd.runlog.shared
 
+import java.text.DecimalFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 actual fun Double.formatKm(): String {
-    return "%.1fk".format(this / 1000)
+    return "${DecimalFormat("#,##0.#").format(this / 1000)}k"
 }
 
 actual fun Long.formatDuration(): String {
