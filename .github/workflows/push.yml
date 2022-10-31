@@ -1,0 +1,16 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup JDK
+      uses: actions/setup-java@v2.1.0
+      with:
+       distribution: 'adopt'
+       java-version: '11'
+    - name: Assemble
+      run: ./gradlew assembleDebug
