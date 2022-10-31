@@ -1,8 +1,8 @@
 buildscript {
     repositories {
-        gradlePluginPortal()
-        google()
         mavenCentral()
+        google()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
@@ -21,9 +21,9 @@ plugins {
 
 allprojects {
     repositories {
-        gradlePluginPortal()
-        google()
         mavenCentral()
+        google()
+        gradlePluginPortal()
     }
 
     apply(plugin = "com.diffplug.spotless")
