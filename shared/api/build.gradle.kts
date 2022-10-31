@@ -68,12 +68,6 @@ android {
     namespace = "com.jdamcd.runlog.shared.api"
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-}
-
 buildkonfig {
     packageName = "com.jdamcd.runlog.shared.api"
 

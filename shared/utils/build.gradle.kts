@@ -44,9 +44,3 @@ android {
     }
     namespace = "com.jdamcd.runlog.shared.utils"
 }
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-}
