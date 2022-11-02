@@ -18,7 +18,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
             url: loginUrl,
             callbackURLScheme: strava.authScheme
         ) { result, error in
-            if let result = result {
+            if let result {
                 if let code = result.paramValue("code") {
                     self.submitAuthCode(code: code)
                 } else {
