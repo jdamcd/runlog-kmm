@@ -32,7 +32,6 @@ internal object Mapper {
             username = athlete.username,
             name = "${athlete.firstname} ${athlete.lastname}".trim(),
             imageUrl = athlete.profile,
-            fourWeekRunDistance = athleteStats.recent_run_totals.distance.formatKm(),
             yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm(),
             allTimeRunDistance = athleteStats.all_run_totals.distance.formatKm()
         )

@@ -32,7 +32,6 @@ data class ApiAthlete(
 
 @Serializable
 data class ApiAthleteStats(
-    val recent_run_totals: ApiStatsBlock,
     val ytd_run_totals: ApiStatsBlock,
     val all_run_totals: ApiStatsBlock
 )

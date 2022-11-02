@@ -34,7 +34,6 @@ data class AthleteProfile(
     val username: String,
     val name: String,
     val imageUrl: String,
-    val fourWeekRunDistance: String,
     val yearRunDistance: String,
     val allTimeRunDistance: String
 )
