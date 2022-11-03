@@ -11,7 +11,7 @@ import com.jdamcd.runlog.shared.formatKm
 
 internal object Mapper {
 
-    private const val DATE_PATTERN = "EEEE dd MMM @ h:mma"
+    private const val DATE_PATTERN = "EEEE dd MMM @ H:mm"
 
     fun mapActivityRow(activity: ApiSummaryActivity): ActivityCard {
         val type = WorkoutType.map(activity.workout_type ?: 0)

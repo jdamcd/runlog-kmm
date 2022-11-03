@@ -26,7 +26,6 @@ fun athleteModel() = ApiAthlete(
 )
 
 fun athleteStatsModel() = ApiAthleteStats(
-    recent_run_totals = statsBlock(distance = 100_000.0),
     ytd_run_totals = statsBlock(distance = 1000_000.0),
     all_run_totals = statsBlock(distance = 5000_000.0)
 )

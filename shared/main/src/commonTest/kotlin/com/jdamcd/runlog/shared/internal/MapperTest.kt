@@ -16,7 +16,7 @@ class MapperTest {
             label = null,
             distance = "10.1k",
             duration = "40:00",
-            start = "Tuesday 25 Oct @ 5:58pm"
+            start = "Tuesday 25 Oct @ 17:58"
         )
     }
 
@@ -29,7 +29,7 @@ class MapperTest {
             label = "Race",
             distance = "10.1k",
             duration = "41:00",
-            start = "Tuesday 25 Oct @ 5:58pm"
+            start = "Tuesday 25 Oct @ 17:58"
         )
     }
 
@@ -42,7 +42,7 @@ class MapperTest {
             label = "Long",
             distance = "10.1k",
             duration = "40:00",
-            start = "Tuesday 25 Oct @ 5:58pm"
+            start = "Tuesday 25 Oct @ 17:58"
         )
     }
 
@@ -55,7 +55,7 @@ class MapperTest {
             label = "Workout",
             distance = "10.1k",
             duration = "40:00",
-            start = "Tuesday 25 Oct @ 5:58pm"
+            start = "Tuesday 25 Oct @ 17:58"
         )
     }
 
@@ -66,7 +66,6 @@ class MapperTest {
             username = "jdamcd",
             name = "Jamie McDonald",
             imageUrl = "image.url",
-            fourWeekRunDistance = "100k",
             yearRunDistance = "1,000k",
             allTimeRunDistance = "5,000k"
         )
