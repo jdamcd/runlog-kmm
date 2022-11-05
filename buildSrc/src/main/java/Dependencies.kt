@@ -17,6 +17,7 @@ object Version {
     const val ktxCore = "1.9.0"
     const val ktxActivity = "1.6.0"
     const val lifecycle = "2.5.1"
+    const val navigationCompose = "2.5.3"
 
     // Test
     const val junit = "4.13.2"
@@ -47,6 +48,7 @@ object Dependency {
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val hilt = "com.google.dagger:hilt-android:${Version.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
+    const val composeNavigation = "androidx.navigation:navigation-compose:${Version.navigationCompose}"
     const val composeBom = "androidx.compose:compose-bom:${Version.composeBom}"
     const val composeUi = "androidx.compose.ui:ui"
     const val composeFoundation = "androidx.compose.foundation:foundation"

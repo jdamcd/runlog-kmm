@@ -29,6 +29,7 @@ dependencies {
     implementation(Dependency.composeIcons)
     implementation(Dependency.composeIconsExtended)
     implementation(Dependency.composeLiveData)
+    implementation(Dependency.composeNavigation)
 
     // Tests
     testImplementation(Dependency.mockito)

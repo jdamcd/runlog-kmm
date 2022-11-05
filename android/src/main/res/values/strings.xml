@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">RunLog</string>
     <string name="activities_title">Training</string>
+    <string name="profile_title">Profile</string>
     <string name="strava_view">View on Strava</string>
     <string name="strava_connect">Connect with Strava</string>
     <string name="strava_powered">Powered by Strava</string>

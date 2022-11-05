@@ -38,10 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUi() {
         setContent {
-            ActivityFeed(
-                liveData = viewModel.uiModel,
-                onItemClick = { id -> viewModel.openLink(this, id) },
-                onRetryClick = { viewModel.load() },
+            CoreNavigation(
+                viewModel = viewModel,
+                onActivityClick = { viewModel.openLink(this, it) },
                 onSignOutClick = { signOut() }
             )
         }
