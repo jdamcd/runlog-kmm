@@ -16,6 +16,7 @@ dependencies {
     implementation(Dependency.material)
     implementation(Dependency.appCompat)
     implementation(Dependency.hilt)
+    implementation(Dependency.hiltCompose)
     kapt(Dependency.hiltCompiler)
     kapt(Dependency.lifecycleCompiler)
 

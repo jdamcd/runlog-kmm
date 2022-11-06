@@ -10,6 +10,7 @@ object Version {
 
     // Android
     const val hilt = "2.44"
+    const val hiltCompose = "1.0.0"
     const val composeBom = "2022.10.00"
     const val composeCompiler = "1.3.2"
     const val appCompat = "1.5.1"
@@ -48,6 +49,7 @@ object Dependency {
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val hilt = "com.google.dagger:hilt-android:${Version.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
+    const val hiltCompose = "androidx.hilt:hilt-navigation-compose:${Version.hiltCompose}"
     const val composeNavigation = "androidx.navigation:navigation-compose:${Version.navigationCompose}"
     const val composeBom = "androidx.compose:compose-bom:${Version.composeBom}"
     const val composeUi = "androidx.compose.ui:ui"

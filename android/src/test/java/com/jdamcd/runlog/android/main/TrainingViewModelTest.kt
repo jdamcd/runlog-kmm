@@ -2,6 +2,8 @@ package com.jdamcd.runlog.android.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.jdamcd.runlog.android.training.TrainingState
+import com.jdamcd.runlog.android.training.TrainingViewModel
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.android.util.TestLifecycleOwner
 import com.jdamcd.runlog.android.util.activityCard
@@ -19,22 +21,22 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class MainViewModelTest {
+class TrainingViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
     @get:Rule val executorRule = InstantTaskExecutorRule()
 
-    private val observer: Observer<ActivityFeedState> = mock()
+    private val observer: Observer<TrainingState> = mock()
     private val strava: Strava = mock()
 
     private lateinit var lifecycleOwner: TestLifecycleOwner
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: TrainingViewModel
 
     @Before
     fun setUp() {
         lifecycleOwner = TestLifecycleOwner().apply { onCreate() }
-        viewModel = MainViewModel(strava)
+        viewModel = TrainingViewModel(strava)
         viewModel.uiModel.observe(lifecycleOwner, observer)
     }
 
@@ -49,8 +51,8 @@ class MainViewModelTest {
 
             verify(strava).activities()
             inOrder(observer) {
-                verify(observer).onChanged(ActivityFeedState.Loading)
-                verify(observer).onChanged(ActivityFeedState.Data(activities))
+                verify(observer).onChanged(TrainingState.Loading)
+                verify(observer).onChanged(TrainingState.Data(activities))
             }
         }
     }
@@ -65,8 +67,8 @@ class MainViewModelTest {
 
             verify(strava).activities()
             inOrder(observer) {
-                verify(observer).onChanged(ActivityFeedState.Loading)
-                verify(observer).onChanged(ActivityFeedState.Error(recoverable = true))
+                verify(observer).onChanged(TrainingState.Loading)
+                verify(observer).onChanged(TrainingState.Error(recoverable = true))
             }
         }
     }
