@@ -28,7 +28,6 @@ dependencies {
     implementation(Dependency.composeMaterial)
     implementation(Dependency.composeIcons)
     implementation(Dependency.composeIconsExtended)
-    implementation(Dependency.composeLiveData)
     implementation(Dependency.composeNavigation)
 
     // Tests

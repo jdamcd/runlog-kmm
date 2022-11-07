@@ -59,7 +59,6 @@ object Dependency {
     const val composeMaterial = "androidx.compose.material:material"
     const val composeIcons = "androidx.compose.material:material-icons-core"
     const val composeIconsExtended = "androidx.compose.material:material-icons-extended"
-    const val composeLiveData = "androidx.compose.runtime:runtime-livedata"
 
     // iOS
     const val ktoriOS = "io.ktor:ktor-client-ios:${Version.ktor}"
