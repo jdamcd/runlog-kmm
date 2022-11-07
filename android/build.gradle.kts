@@ -16,6 +16,7 @@ dependencies {
     implementation(Dependency.appCompat)
     implementation(Dependency.hilt)
     implementation(Dependency.hiltCompose)
+    implementation(Dependency.coil)
     kapt(Dependency.hiltCompiler)
     kapt(Dependency.lifecycleCompiler)
 

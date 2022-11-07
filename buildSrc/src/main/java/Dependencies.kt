@@ -19,6 +19,7 @@ object Version {
     const val ktxActivity = "1.6.0"
     const val lifecycle = "2.5.1"
     const val navigationCompose = "2.5.3"
+    const val coil = "2.2.2"
 
     // Test
     const val junit = "4.13.2"
@@ -59,6 +60,7 @@ object Dependency {
     const val composeMaterial = "androidx.compose.material:material"
     const val composeIcons = "androidx.compose.material:material-icons-core"
     const val composeIconsExtended = "androidx.compose.material:material-icons-extended"
+    const val coil = "io.coil-kt:coil-compose:${Version.coil}"
 
     // iOS
     const val ktoriOS = "io.ktor:ktor-client-ios:${Version.ktor}"
