@@ -12,16 +12,16 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.lifecycle.LiveData
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.shared.AthleteProfile
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ProfileScreen(
@@ -52,7 +52,7 @@ fun ProfileScreen(
         },
         content = { padding ->
             ProfileStates(
-                liveData = viewModel.init(),
+                stateFlow = viewModel.flow.also { viewModel.load() },
                 modifier = Modifier.padding(padding),
                 onRetryClick = { viewModel.load() }
             )
@@ -62,12 +62,12 @@ fun ProfileScreen(
 
 @Composable
 private fun ProfileStates(
-    liveData: LiveData<ProfileState>,
+    stateFlow: StateFlow<ProfileState>,
     modifier: Modifier,
     onRetryClick: () -> Unit
 ) {
     Box(modifier = modifier) {
-        val state: ProfileState by liveData.observeAsState(initial = ProfileState.Loading)
+        val state: ProfileState by stateFlow.collectAsState()
         when (state) {
             is ProfileState.Loading -> LoadingScreen()
             is ProfileState.Error -> RetryScreen(onRetryClick)

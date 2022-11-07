@@ -14,20 +14,23 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.RunLogTheme
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun Login(liveData: LiveData<LoginState>, onConnectClick: () -> Unit) {
+fun Login(
+    viewModel: LoginViewModel,
+    onOpenLink: (String) -> Unit
+) {
     RunLogTheme {
         Box {
             GradientBackground()
@@ -51,8 +54,11 @@ fun Login(liveData: LiveData<LoginState>, onConnectClick: () -> Unit) {
                         .height(200.dp)
                 )
                 ConnectLoadable(
-                    liveData = liveData,
-                    connectClick = onConnectClick
+                    stateFlow = viewModel.flow,
+                    onConnectClick = {
+                        val url = viewModel.startLogin()
+                        onOpenLink(url)
+                    }
                 )
                 Image(
                     painter = painterResource(id = R.drawable.vector_strava_powered),
@@ -65,16 +71,16 @@ fun Login(liveData: LiveData<LoginState>, onConnectClick: () -> Unit) {
 
 @Composable
 private fun ConnectLoadable(
-    liveData: LiveData<LoginState>,
-    connectClick: () -> Unit,
+    stateFlow: StateFlow<LoginState>,
+    onConnectClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val state: LoginState by liveData.observeAsState(initial = LoginState.Idle)
+    val state: LoginState by stateFlow.collectAsState()
     Box(modifier = modifier.height(50.dp)) {
         when (state) {
             is LoginState.Idle -> {
                 Row(
-                    Modifier.clickable(onClick = connectClick)
+                    Modifier.clickable(onClick = onConnectClick)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.vector_strava_connect),

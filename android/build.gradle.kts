@@ -12,7 +12,6 @@ dependencies {
     implementation(Dependency.ktxCore)
     implementation(Dependency.ktxActvitiy)
     implementation(Dependency.viewModel)
-    implementation(Dependency.liveData)
     implementation(Dependency.material)
     implementation(Dependency.appCompat)
     implementation(Dependency.hilt)
@@ -35,8 +34,10 @@ dependencies {
     // Tests
     testImplementation(Dependency.mockito)
     testImplementation(Dependency.mockitoKotlin)
+    testImplementation(Dependency.kotestAssert)
     testImplementation(Dependency.coroutinesTest)
     testImplementation(Dependency.archTest)
+    testImplementation(Dependency.turbine)
 }
 android {
     compileSdk = AndroidVersion.target

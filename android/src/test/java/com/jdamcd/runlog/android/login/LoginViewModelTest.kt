@@ -1,19 +1,16 @@
 package com.jdamcd.runlog.android.login
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
-import com.jdamcd.runlog.android.util.TestLifecycleOwner
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.Strava
 import com.jdamcd.runlog.shared.UserState
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.inOrder
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -23,53 +20,57 @@ class LoginViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
-    @get:Rule val executorRule = InstantTaskExecutorRule()
-
-    private val observer: Observer<LoginState> = mock()
     private val strava: Strava = mock()
     private val userState: UserState = mock()
 
-    private lateinit var lifecycleOwner: TestLifecycleOwner
     private lateinit var viewModel: LoginViewModel
 
     private val code = "123"
 
     @Before
     fun setUp() {
-        lifecycleOwner = TestLifecycleOwner().apply { onCreate() }
         viewModel = LoginViewModel(strava, userState)
-        viewModel.uiModel.observe(lifecycleOwner, observer)
     }
 
     @Test
-    fun `submitAuthCode success emits loading then success`() {
-        runTest(coroutineRule.testDispatcher) {
-            lifecycleOwner.onResume()
-            whenever(strava.authenticate(code)).thenReturn(LoginResult.Success)
+    fun `startLogin emits loading`() = runTest {
+        viewModel.flow.test {
+            awaitItem() shouldBe LoginState.Idle
 
-            viewModel.submitAuthCode(code)
+            viewModel.startLogin()
 
-            verify(strava).authenticate(code)
-            inOrder(observer) {
-                verify(observer).onChanged(LoginState.Loading)
-                verify(observer).onChanged(LoginState.Success)
-            }
+            awaitItem() shouldBe LoginState.Loading
+            cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
-    fun `submitAuthCode error emits loading then idle`() {
-        runTest(coroutineRule.testDispatcher) {
-            lifecycleOwner.onResume()
-            whenever(strava.authenticate(code)).thenReturn(LoginResult.Error(Throwable()))
+    fun `submitAuthCode success emits loading then success`() = runTest {
+        whenever(strava.authenticate(code)).thenReturn(LoginResult.Success)
+
+        viewModel.flow.test {
+            awaitItem() shouldBe LoginState.Idle
 
             viewModel.submitAuthCode(code)
 
-            verify(strava).authenticate(code)
-            inOrder(observer) {
-                verify(observer).onChanged(LoginState.Loading)
-                verify(observer).onChanged(LoginState.Idle)
-            }
+            awaitItem() shouldBe LoginState.Loading
+            awaitItem() shouldBe LoginState.Success
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `submitAuthCode error emits loading then idle`() = runTest {
+        whenever(strava.authenticate(code)).thenReturn(LoginResult.Error(Throwable()))
+
+        viewModel.flow.test {
+            awaitItem() shouldBe LoginState.Idle
+
+            viewModel.submitAuthCode(code)
+
+            awaitItem() shouldBe LoginState.Loading
+            awaitItem() shouldBe LoginState.Idle
+            cancelAndConsumeRemainingEvents()
         }
     }
 
@@ -78,10 +79,5 @@ class LoginViewModelTest {
         viewModel.signOut()
 
         verify(userState).clear()
-    }
-
-    @After
-    fun tearDown() {
-        lifecycleOwner.onDestroy()
     }
 }

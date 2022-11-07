@@ -19,19 +19,19 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityCard
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun TrainingScreen(
@@ -63,7 +63,7 @@ fun TrainingScreen(
         },
         content = { padding ->
             TrainingList(
-                liveData = viewModel.init(),
+                stateFlow = viewModel.flow.also { viewModel.load() },
                 modifier = Modifier.padding(padding),
                 onItemClick = { onOpenLink(viewModel.generateLink(it)) },
                 onRetryClick = { viewModel.load() }
@@ -74,13 +74,13 @@ fun TrainingScreen(
 
 @Composable
 private fun TrainingList(
-    liveData: LiveData<TrainingState>,
+    stateFlow: StateFlow<TrainingState>,
     modifier: Modifier,
     onItemClick: (Long) -> Unit,
     onRetryClick: () -> Unit
 ) {
     Box(modifier = modifier) {
-        val state: TrainingState by liveData.observeAsState(initial = TrainingState.Loading)
+        val state: TrainingState by stateFlow.collectAsState()
         when (state) {
             is TrainingState.Loading -> LoadingScreen()
             is TrainingState.Error -> RetryScreen(onRetryClick)

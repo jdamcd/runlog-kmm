@@ -6,8 +6,13 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.jdamcd.runlog.android.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -19,23 +24,24 @@ class LoginActivity : AppCompatActivity() {
         if (intent.extras?.containsKey(EXTRA_CLEAR_USER) == true) {
             viewModel.signOut()
         }
-        setupUi()
+        setContent {
+            Login(
+                viewModel = viewModel,
+                onOpenLink = { openLink(this, it) }
+            )
+        }
         listenForSuccess()
     }
 
-    private fun setupUi() {
-        setContent {
-            Login(viewModel.uiModel) {
-                viewModel.startLogin(this)
-            }
-        }
-    }
-
     private fun listenForSuccess() {
-        viewModel.uiModel.observe(this) {
-            if (it is LoginState.Success) {
-                startActivity(MainActivity.create(this))
-                finish()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.flow.collect {
+                    if (it is LoginState.Success) {
+                        startActivity(MainActivity.create(this@LoginActivity))
+                        finish()
+                    }
+                }
             }
         }
     }
@@ -53,6 +59,11 @@ class LoginActivity : AppCompatActivity() {
             viewModel.submitAuthCode(it)
             intent.data = null
         }
+    }
+
+    private fun openLink(context: Context, url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+        context.startActivity(intent)
     }
 
     companion object {

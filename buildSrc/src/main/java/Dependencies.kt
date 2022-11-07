@@ -25,6 +25,7 @@ object Version {
     const val kotest = "5.5.2"
     const val mockito = "4.8.1"
     const val mockitoKotlin = "4.0.0"
+    const val turbine = "0.12.1"
     const val archTest = "2.1.0"
     const val coroutinesTest = "1.6.4"
 }
@@ -43,7 +44,6 @@ object Dependency {
     const val ktxCore = "androidx.core:core-ktx:${Version.ktxCore}"
     const val ktxActvitiy = "androidx.activity:activity-ktx:${Version.ktxActivity}"
     const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycle}"
-    const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycle}"
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-common-java8:${Version.lifecycle}"
     const val material = "com.google.android.material:material:${Version.material}"
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
@@ -69,6 +69,7 @@ object Dependency {
     const val kotestAssert = "io.kotest:kotest-assertions-core:${Version.kotest}"
     const val mockito = "org.mockito:mockito-inline:${Version.mockito}"
     const val mockitoKotlin = "org.mockito.kotlin:mockito-kotlin:${Version.mockitoKotlin}"
+    const val turbine = "app.cash.turbine:turbine:${Version.turbine}"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutinesTest}"
     const val archTest = "androidx.arch.core:core-testing:${Version.archTest}"
 }

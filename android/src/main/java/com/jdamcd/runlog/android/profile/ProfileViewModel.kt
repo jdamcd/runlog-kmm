@@ -1,14 +1,14 @@
 package com.jdamcd.runlog.android.profile
 
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.Strava
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,23 +17,18 @@ class ProfileViewModel @Inject constructor(
     private val strava: Strava
 ) : ViewModel(), LifecycleObserver {
 
-    private val liveData = MutableLiveData<ProfileState>()
-    private val uiModel = liveData as LiveData<ProfileState>
-
-    fun init(): LiveData<ProfileState> {
-        load()
-        return uiModel
-    }
+    private val _mutableFlow = MutableStateFlow<ProfileState>(ProfileState.Loading)
+    val flow = _mutableFlow as StateFlow<ProfileState>
 
     fun load() {
-        liveData.value = ProfileState.Loading
+        _mutableFlow.value = ProfileState.Loading
         viewModelScope.launch {
             when (val result = strava.profile()) {
                 is Result.Data -> {
-                    liveData.value = ProfileState.Data(result.data)
+                    _mutableFlow.value = ProfileState.Data(result.data)
                 }
                 is Result.Error -> {
-                    liveData.value = ProfileState.Error(result.recoverable)
+                    _mutableFlow.value = ProfileState.Error(result.recoverable)
                 }
             }
         }

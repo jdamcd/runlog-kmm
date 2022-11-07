@@ -1,17 +1,14 @@
 package com.jdamcd.runlog.android.login
 
-import android.content.Context
-import android.content.Intent
-import androidx.core.net.toUri
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.Strava
 import com.jdamcd.runlog.shared.UserState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,21 +18,20 @@ class LoginViewModel @Inject constructor(
     private val userState: UserState
 ) : ViewModel(), LifecycleObserver {
 
-    private val liveData = MutableLiveData<LoginState>(LoginState.Idle)
-    val uiModel = liveData as LiveData<LoginState>
+    private val _mutableFlow = MutableStateFlow<LoginState>(LoginState.Idle)
+    val flow = _mutableFlow as StateFlow<LoginState>
 
-    fun startLogin(context: Context) {
-        liveData.value = LoginState.Loading
-        val intent = Intent(Intent.ACTION_VIEW, strava.loginUrl.toUri())
-        context.startActivity(intent)
+    fun startLogin(): String {
+        _mutableFlow.value = LoginState.Loading
+        return strava.loginUrl
     }
 
     fun submitAuthCode(code: String) {
-        liveData.value = LoginState.Loading
+        _mutableFlow.value = LoginState.Loading
         viewModelScope.launch {
             when (strava.authenticate(code)) {
-                is LoginResult.Success -> liveData.value = LoginState.Success
-                is LoginResult.Error -> liveData.value = LoginState.Idle
+                is LoginResult.Success -> _mutableFlow.value = LoginState.Success
+                is LoginResult.Error -> _mutableFlow.value = LoginState.Idle
             }
         }
     }
