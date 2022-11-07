@@ -52,7 +52,7 @@ fun ProfileScreen(
         },
         content = { padding ->
             ProfileStates(
-                stateFlow = viewModel.flow.also { viewModel.load() },
+                stateFlow = viewModel.flow,
                 modifier = Modifier.padding(padding),
                 onRetryClick = { viewModel.load() }
             )

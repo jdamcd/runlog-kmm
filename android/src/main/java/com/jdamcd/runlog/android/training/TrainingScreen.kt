@@ -63,7 +63,7 @@ fun TrainingScreen(
         },
         content = { padding ->
             TrainingList(
-                stateFlow = viewModel.flow.also { viewModel.load() },
+                stateFlow = viewModel.flow,
                 modifier = Modifier.padding(padding),
                 onItemClick = { onOpenLink(viewModel.generateLink(it)) },
                 onRetryClick = { viewModel.load() }

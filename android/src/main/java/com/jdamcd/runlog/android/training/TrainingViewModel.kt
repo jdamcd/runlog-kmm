@@ -20,6 +20,10 @@ class TrainingViewModel @Inject constructor(
     private val _mutableFlow = MutableStateFlow<TrainingState>(TrainingState.Loading)
     val flow = _mutableFlow as StateFlow<TrainingState>
 
+    init {
+        load()
+    }
+
     fun load() {
         _mutableFlow.value = TrainingState.Loading
         viewModelScope.launch {

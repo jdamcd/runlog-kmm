@@ -20,6 +20,10 @@ class ProfileViewModel @Inject constructor(
     private val _mutableFlow = MutableStateFlow<ProfileState>(ProfileState.Loading)
     val flow = _mutableFlow as StateFlow<ProfileState>
 
+    init {
+        load()
+    }
+
     fun load() {
         _mutableFlow.value = ProfileState.Loading
         viewModelScope.launch {
