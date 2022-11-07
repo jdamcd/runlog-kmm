@@ -10,8 +10,8 @@
 		493412E3253CDD7300B15E2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493412E2253CDD7300B15E2E /* Extensions.swift */; };
 		4948ECE625378A0D008CE3EE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948ECE525378A0D008CE3EE /* LoginViewModel.swift */; };
 		494EACF1253E0FF300BBE267 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494EACF0253E0FF300BBE267 /* App.swift */; };
-		494EACFA253E1EA200BBE267 /* ActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494EACF9253E1EA200BBE267 /* ActivitiesView.swift */; };
-		494EAD00253E1EB500BBE267 /* ActivitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494EACFF253E1EB500BBE267 /* ActivitiesViewModel.swift */; };
+		494EACFA253E1EA200BBE267 /*  TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494EACF9253E1EA200BBE267 /*  TrainingView.swift */; };
+		494EAD00253E1EB500BBE267 /*  TrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494EACFF253E1EB500BBE267 /*  TrainingViewModel.swift */; };
 		4972406E2542162A008C760B /* Copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972406D2542162A008C760B /* Copy.swift */; };
 		497240732542368F008C760B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 497240752542368F008C760B /* Localizable.strings */; };
 		498FBBEF2535D01F00FEDDA2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498FBBEE2535D01F00FEDDA2 /* Colors.swift */; };
@@ -63,8 +63,8 @@
 		493412E2253CDD7300B15E2E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4948ECE525378A0D008CE3EE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		494EACF0253E0FF300BBE267 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		494EACF9253E1EA200BBE267 /* ActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesView.swift; sourceTree = "<group>"; };
-		494EACFF253E1EB500BBE267 /* ActivitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesViewModel.swift; sourceTree = "<group>"; };
+		494EACF9253E1EA200BBE267 /*  TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " TrainingView.swift"; sourceTree = "<group>"; };
+		494EACFF253E1EB500BBE267 /*  TrainingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " TrainingViewModel.swift"; sourceTree = "<group>"; };
 		4972406D2542162A008C760B /* Copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copy.swift; sourceTree = "<group>"; };
 		497240742542368F008C760B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		498FBBEE2535D01F00FEDDA2 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -112,13 +112,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		494EACF8253E1E8E00BBE267 /* Activities */ = {
+		494EACF8253E1E8E00BBE267 /* Training */ = {
 			isa = PBXGroup;
 			children = (
-				494EACF9253E1EA200BBE267 /* ActivitiesView.swift */,
-				494EACFF253E1EB500BBE267 /* ActivitiesViewModel.swift */,
+				494EACF9253E1EA200BBE267 /*  TrainingView.swift */,
+				494EACFF253E1EB500BBE267 /*  TrainingViewModel.swift */,
 			);
-			path = Activities;
+			path = Training;
 			sourceTree = "<group>";
 		};
 		4972406C25421607008C760B /* UI */ = {
@@ -184,7 +184,7 @@
 				49978A90290C9B5D00F1FBCD /* Profile */,
 				4972406C25421607008C760B /* UI */,
 				49FB92C3253EC947008C9736 /* Launch */,
-				494EACF8253E1E8E00BBE267 /* Activities */,
+				494EACF8253E1E8E00BBE267 /* Training */,
 				49CACD5B253826F300F79A06 /* Login */,
 				7555FF84242A565B00829871 /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -386,9 +386,9 @@
 				493412E3253CDD7300B15E2E /* Extensions.swift in Sources */,
 				498FBBEF2535D01F00FEDDA2 /* Colors.swift in Sources */,
 				49FB92C5253ECB68008C9736 /* UserAuth.swift in Sources */,
-				494EAD00253E1EB500BBE267 /* ActivitiesViewModel.swift in Sources */,
+				494EAD00253E1EB500BBE267 /*  TrainingViewModel.swift in Sources */,
 				4948ECE625378A0D008CE3EE /* LoginViewModel.swift in Sources */,
-				494EACFA253E1EA200BBE267 /* ActivitiesView.swift in Sources */,
+				494EACFA253E1EA200BBE267 /*  TrainingView.swift in Sources */,
 				49978A96290D7CAC00F1FBCD /* ProfileViewModel.swift in Sources */,
 				494EACF1253E0FF300BBE267 /* App.swift in Sources */,
 				49FB92CB253ECBA0008C9736 /* LaunchView.swift in Sources */,

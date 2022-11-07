@@ -1,8 +1,8 @@
 import Foundation
 import RunLogShared
 
-class ActivitiesViewModel: ObservableObject {
-    @Published var state: ActivitiesState = .loading
+class TrainingViewModel: ObservableObject {
+    @Published var state: TrainingState = .loading
 
     private let user: UserState
     private let strava: Strava
@@ -19,8 +19,8 @@ class ActivitiesViewModel: ObservableObject {
         strava.activities { result, _ in
             if let items = result as? ResultData<NSArray> {
                 let itemsArray = items.data as! [ActivityCard]
-                let update = ActivitiesState.data(
-                    ActivitiesState.Data(activities: itemsArray))
+                let update = TrainingState.data(
+                    TrainingState.Data(activities: itemsArray))
                 self.updateState(to: update)
             } else if let error = result as? ResultError {
                 if error.recoverable {
@@ -32,7 +32,7 @@ class ActivitiesViewModel: ObservableObject {
         }
     }
 
-    private func updateState(to: ActivitiesState) {
+    private func updateState(to: TrainingState) {
         DispatchQueue.main.async {
             self.state = to
         }
@@ -47,7 +47,7 @@ class ActivitiesViewModel: ObservableObject {
     }
 }
 
-enum ActivitiesState {
+enum TrainingState {
     struct Data {
         let activities: [ActivityCard]
     }

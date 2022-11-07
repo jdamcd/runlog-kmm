@@ -1,8 +1,8 @@
 import RunLogShared
 import SwiftUI
 
-struct ActivitiesView: View {
-    @ObservedObject var viewModel = ActivitiesViewModel()
+struct TrainingView: View {
+    @ObservedObject var viewModel = TrainingViewModel()
 
     var body: some View {
         NavigationView {
@@ -37,7 +37,7 @@ struct ActivitiesView: View {
 }
 
 private struct ActivitiesListView: View {
-    var viewModel: ActivitiesViewModel
+    var viewModel: TrainingViewModel
     var activities: [ActivityCard]
 
     var body: some View {
@@ -68,6 +68,6 @@ private struct ActivitiesListView: View {
 
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesView(viewModel: ActivitiesViewModel())
+        TrainingView(viewModel: TrainingViewModel())
     }
 }

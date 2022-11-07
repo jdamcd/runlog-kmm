@@ -5,7 +5,7 @@ struct LaunchView: View {
 
     var body: some View {
         if userAuth.loggedIn {
-            ActivitiesView()
+            TrainingView()
         } else {
             LoginView()
         }
