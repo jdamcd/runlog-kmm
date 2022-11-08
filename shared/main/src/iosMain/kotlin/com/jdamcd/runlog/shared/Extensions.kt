@@ -8,8 +8,8 @@ import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSString
 import platform.Foundation.NSTimeZone
 import platform.Foundation.autoupdatingCurrentLocale
-import platform.Foundation.localTimeZone
 import platform.Foundation.stringWithFormat
+import platform.Foundation.timeZoneWithName
 
 actual fun Double.formatKm(): String {
     val nf = NSNumberFormatter()
@@ -31,7 +31,7 @@ actual fun Long.formatDuration(): String {
 actual fun String.formatDate(pattern: String): String {
     return NSISO8601DateFormatter().dateFromString(this)?.let {
         NSDateFormatter().apply {
-            this.timeZone = NSTimeZone.localTimeZone
+            this.timeZone = NSTimeZone.timeZoneWithName("UTC")!!
             this.locale = NSLocale.autoupdatingCurrentLocale
             this.dateFormat = pattern
         }.stringFromDate(it)
