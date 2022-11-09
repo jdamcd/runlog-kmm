@@ -83,8 +83,11 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }.body<ApiToken>().let { tokenProvider.store(it.access_token, it.refresh_token) }
     }
 
-    suspend fun activities(): List<ApiSummaryActivity> =
-        client.get("$BASE_URL/athlete/activities").body()
+    suspend fun activities(pageSize: Int = 200, page: Int = 1): List<ApiSummaryActivity> =
+        client.get("$BASE_URL/athlete/activities") {
+            parameter("per_page", pageSize)
+            parameter("page", page)
+        }.body()
 
     suspend fun athlete(): ApiAthlete =
         client.get("$BASE_URL/athlete").body()
