@@ -9,3 +9,6 @@ Register a new [Strava API application](https://strava.com/settings/api) and add
 - `com.jdamcd.runlog.client_secret` 
 
 The OAuth redirect is configured in `StravaApi.kt` as `runlog-auth://jdamcd.com`. Keep the scheme, but use whatever domain you configured for the "Authorization Callback Domain".
+
+You'll need a [Mapbox](https://www.mapbox.com) account to render map images. This API token is also configured in `local.properties`:
+- `com.jdamcd.runlog.mapbox_token`
