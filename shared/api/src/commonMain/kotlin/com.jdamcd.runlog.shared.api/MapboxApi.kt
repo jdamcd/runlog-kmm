@@ -11,11 +11,16 @@ object MapboxApi {
         height: Int = 160,
         accessToken: String = BuildKonfig.MAPBOX_TOKEN
     ): String {
-        return URLBuilder("https://api.mapbox.com/styles/v1/mapbox/light-v10/static").apply {
-            appendPathSegments("path($pathPolyline)", "auto", "${width}x$height@2x")
-            parameters.apply {
-                append("access_token", accessToken)
-            }
+        val base = "https://api.mapbox.com/styles/v1/mapbox"
+        return URLBuilder(base).apply {
+            appendPathSegments(
+                "light-v10",
+                "static",
+                "path($pathPolyline)",
+                "auto",
+                "${width}x$height@2x"
+            )
+            parameters.append("access_token", accessToken)
         }.buildString()
     }
 }

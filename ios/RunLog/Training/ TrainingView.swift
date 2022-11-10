@@ -63,8 +63,7 @@ private struct ActivitiesListView: View {
                     }
                     if let map = activity.mapUrl {
                         AsyncImage(url: URL(string: map)) { image in
-                            image
-                                .resizable()
+                            image.resizable()
                                 .aspectRatio(contentMode: ContentMode.fit)
                                 .transition(.opacity)
                         } placeholder: {

@@ -4,11 +4,13 @@ RunLog is a work-in-progress KMM (Kotlin Multiplatform Mobile) Strava client for
 
 ## Local builds
 
+### Strava
 Register a new [Strava API application](https://strava.com/settings/api) and add your OAuth client ID and secret to `local.properties` under the keys:
 - `com.jdamcd.runlog.client_id`
 - `com.jdamcd.runlog.client_secret` 
 
 The OAuth redirect is configured in `StravaApi.kt` as `runlog-auth://jdamcd.com`. Keep the scheme, but use whatever domain you configured for the "Authorization Callback Domain".
 
-You'll need a [Mapbox](https://www.mapbox.com) account to render map images. This API token is also configured in `local.properties`:
+### Mapbox
+Create a [Mapbox](https://www.mapbox.com) account for access to the static maps API. This token is also configured in `local.properties`:
 - `com.jdamcd.runlog.mapbox_token`
