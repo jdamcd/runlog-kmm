@@ -43,22 +43,34 @@ private struct ActivitiesListView: View {
     var body: some View {
         List(activities, id: \.id) { activity in
             Link(destination: viewModel.linkUrl(id: activity.id)) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("\(activity.type): \(activity.name)")
-                            .font(.headline)
-                        if let label = activity.label {
-                            Text(label)
-                                .foregroundColor(Color.asset(.strava))
+                VStack {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("\(activity.type): \(activity.name)")
+                                .font(.headline)
+                            if let label = activity.label {
+                                Text(label)
+                                    .foregroundColor(Color.asset(.strava))
+                            }
+                            Text(activity.duration)
+                            Text(activity.distance)
+                            Text(activity.start)
                         }
-                        Text(activity.duration)
-                        Text(activity.distance)
-                        Text(activity.start)
+                        Spacer()
+                        Text(Copy.strava_view)
+                            .font(.footnote)
+                            .foregroundColor(Color.asset(.strava))
                     }
-                    Spacer()
-                    Text(Copy.strava_view)
-                        .font(.footnote)
-                        .foregroundColor(Color.asset(.strava))
+                    if let map = activity.mapUrl {
+                        AsyncImage(url: URL(string: map)) { image in
+                            image.resizable()
+                                .aspectRatio(contentMode: ContentMode.fit)
+                                .transition(.opacity)
+                        } placeholder: {
+                            Color.white
+                                .aspectRatio(2.5, contentMode: ContentMode.fit)
+                        }
+                    }
                 }
             }
         }

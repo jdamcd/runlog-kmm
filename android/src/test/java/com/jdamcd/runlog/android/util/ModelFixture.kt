@@ -10,7 +10,8 @@ val activityCard = ActivityCard(
     label = null,
     distance = "10.3k",
     duration = "40:00",
-    start = "Tuesday 25 Oct @ 5:58pm"
+    start = "Tuesday 25 Oct @ 5:58pm",
+    mapUrl = "map.url/123"
 )
 
 val athleteProfile = AthleteProfile(

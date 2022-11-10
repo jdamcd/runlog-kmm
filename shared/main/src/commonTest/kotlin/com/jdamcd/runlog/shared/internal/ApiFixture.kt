@@ -13,7 +13,8 @@ fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
     distance = 10_100.0,
     moving_time = 2400L,
     elapsed_time = 2460L,
-    start_date_local = "2022-10-25T17:58:50Z"
+    start_date_local = "2022-10-25T17:58:50Z",
+    map = null
 )
 
 fun athleteModel() = ApiAthlete(

@@ -19,8 +19,10 @@ import io.ktor.client.request.post
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLBuilder
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
+@OptIn(ExperimentalSerializationApi::class)
 class StravaApi(private val tokenProvider: TokenProvider) {
 
     private val client = HttpClient {
@@ -29,6 +31,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                 Json {
                     isLenient = true
                     ignoreUnknownKeys = true
+                    explicitNulls = false
                 }
             )
         }
