@@ -17,7 +17,13 @@ data class ApiSummaryActivity(
     val distance: Double,
     val moving_time: Long,
     val elapsed_time: Long,
-    val start_date_local: String
+    val start_date_local: String,
+    val map: Map?
+)
+
+@Serializable
+data class Map(
+    val summary_polyline: String
 )
 
 @Serializable

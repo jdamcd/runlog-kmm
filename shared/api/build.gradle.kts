@@ -82,5 +82,10 @@ buildkonfig {
             "CLIENT_SECRET",
             gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.client_secret", "")
         )
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "MAPBOX_TOKEN",
+            gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.mapbox_token", "")
+        )
     }
 }
