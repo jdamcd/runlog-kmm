@@ -68,7 +68,8 @@ private struct ActivitiesListView: View {
                                 .aspectRatio(contentMode: ContentMode.fit)
                                 .transition(.opacity)
                         } placeholder: {
-                            ProgressView()
+                            Color.white
+                                .aspectRatio(2.5, contentMode: ContentMode.fit)
                         }
                     }
                 }
