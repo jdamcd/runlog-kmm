@@ -1,3 +1,4 @@
+import NukeUI
 import RunLogShared
 import SwiftUI
 
@@ -43,15 +44,9 @@ private struct ProfileDetailsView: View {
 
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: profile.imageUrl)) { image in
-                image
-                    .resizable()
-                    .transition(.opacity)
-            } placeholder: {
-                Color.white
-            }
-            .frame(width: 100, height: 100)
-            .clipShape(Circle())
+            LazyImage(url: URL(string: profile.imageUrl))
+                .frame(width: 100, height: 100)
+                .clipShape(Circle())
             Text(profile.name)
                 .font(.headline)
             Text(profile.yearRunDistance)

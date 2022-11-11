@@ -1,3 +1,4 @@
+import NukeUI
 import RunLogShared
 import SwiftUI
 
@@ -62,14 +63,8 @@ private struct ActivitiesListView: View {
                             .foregroundColor(Color.asset(.strava))
                     }
                     if let map = activity.mapUrl {
-                        AsyncImage(url: URL(string: map)) { image in
-                            image.resizable()
-                                .aspectRatio(contentMode: ContentMode.fit)
-                                .transition(.opacity)
-                        } placeholder: {
-                            Color.white
-                                .aspectRatio(2.5, contentMode: ContentMode.fit)
-                        }
+                        LazyImage(url: URL(string: map))
+                            .aspectRatio(2.5, contentMode: ContentMode.fit)
                     }
                 }
             }
