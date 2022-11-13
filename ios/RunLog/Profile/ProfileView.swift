@@ -16,10 +16,7 @@ struct ProfileView: View {
                     Text(Copy.retry)
                 })
             case let .data(data):
-                ProfileDetailsView(
-                    viewModel: viewModel,
-                    profile: data.profile
-                )
+                ProfileDetailsView(profile: data.profile)
             }
         }
         .navigationBarTitle(Copy.profile_title, displayMode: .inline)
@@ -39,7 +36,6 @@ struct ProfileView: View {
 }
 
 private struct ProfileDetailsView: View {
-    var viewModel: ProfileViewModel
     var profile: AthleteProfile
 
     var body: some View {
@@ -59,5 +55,15 @@ struct ProfileView_Previews: PreviewProvider {
         NavigationView {
             ProfileView()
         }
+
+        ProfileDetailsView(profile:
+            AthleteProfile(
+                id: 1,
+                username: "jdamcd",
+                name: "Jamie McDonald",
+                imageUrl: "example.com",
+                yearRunDistance: "1,234km",
+                allTimeRunDistance: "12,345km"
+            ))
     }
 }

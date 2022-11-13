@@ -17,8 +17,10 @@ struct TrainingView: View {
                     })
                 case let .data(data):
                     ActivitiesListView(
-                        viewModel: viewModel,
-                        activities: data.activities
+                        activities: data.activities,
+                        generateUrl: { id in
+                            viewModel.linkUrl(id: id)
+                        }
                     )
                 }
             }
@@ -38,12 +40,12 @@ struct TrainingView: View {
 }
 
 private struct ActivitiesListView: View {
-    var viewModel: TrainingViewModel
     var activities: [ActivityCard]
+    var generateUrl: (Int64) -> URL
 
     var body: some View {
         List(activities, id: \.id) { activity in
-            Link(destination: viewModel.linkUrl(id: activity.id)) {
+            Link(destination: generateUrl(activity.id)) {
                 VStack {
                     HStack {
                         VStack(alignment: .leading) {
@@ -76,5 +78,31 @@ private struct ActivitiesListView: View {
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
         TrainingView(viewModel: TrainingViewModel())
+
+        ActivitiesListView(
+            activities: [
+                ActivityCard(
+                    id: 1,
+                    name: "NYC Marathon",
+                    type: "Run",
+                    label: "Race",
+                    distance: "42.2km",
+                    duration: "2:59:59",
+                    start: "Sunday 6 Nov @ 9:11am",
+                    mapUrl: "example.com"
+                ),
+                ActivityCard(
+                    id: 2,
+                    name: "Morning Run",
+                    type: "Run",
+                    label: nil,
+                    distance: "12.3km",
+                    duration: "1:02:17",
+                    start: "Saturday 12 nov @ 8:37am",
+                    mapUrl: nil
+                ),
+            ],
+            generateUrl: { _ in URL(string: "example.com")! }
+        )
     }
 }
