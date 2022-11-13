@@ -27,6 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
@@ -87,16 +90,20 @@ private fun TrainingList(
         when (state) {
             is TrainingState.Loading -> LoadingScreen()
             is TrainingState.Error -> RetryScreen(onRetryClick)
-            is TrainingState.Data -> ActivityItems((state as TrainingState.Data), onItemClick)
+            is TrainingState.Data -> ActivityItems((state as TrainingState.Data).activityCards, onItemClick)
         }
     }
 }
 
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
-private fun ActivityItems(data: TrainingState.Data, onItemClick: (Long) -> Unit) {
+private fun ActivityItems(
+    @PreviewParameter(ActivityItemsProvider::class) data: List<ActivityCard>,
+    onItemClick: (Long) -> Unit = {}
+) {
     LazyColumn {
         items(
-            items = data.activityCards,
+            items = data,
             itemContent = { activity ->
                 ActivityItem(activity = activity, onItemClick = onItemClick)
             }
@@ -164,4 +171,32 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
         }
         Divider(modifier = Modifier.padding(horizontal = 16.dp))
     }
+}
+
+private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard>> {
+    override val values = sequenceOf(
+        listOf(
+            ActivityCard(
+                id = 1,
+                name = "NYC Marathon",
+                type = "Run",
+                label = "Race",
+                distance = "42.2km",
+                duration = "2:59:59",
+                start = "Sunday 6 Nov @ 9:11am",
+                mapUrl = "example.com"
+            ),
+            ActivityCard(
+                id = 2,
+                name = "Morning Run",
+                type = "Run",
+                label = null,
+                distance = "12.3km",
+                duration = "1:02:17",
+                start = "Saturday 12 nov @ 8:37am",
+                mapUrl = null
+
+            )
+        )
+    )
 }
