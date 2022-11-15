@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.api.ApiAthlete
 import com.jdamcd.runlog.shared.api.ApiAthleteStats
@@ -12,18 +13,18 @@ import com.jdamcd.runlog.shared.formatKm
 
 internal object Mapper {
 
-    private const val DATE_PATTERN = "EEEE dd MMM @ H:mm"
+    private const val DATE_PATTERN = "EEEE dd MMM @ h:mma"
 
     fun mapActivityRow(activity: ApiSummaryActivity): ActivityCard {
-        val type = WorkoutType.map(activity.workout_type ?: 0)
+        val type = ApiWorkoutType.map(activity.workout_type ?: 0)
         return ActivityCard(
             id = activity.id,
             name = activity.name,
-            type = activity.type,
-            label = type.label,
+            type = type.toActivityType(),
+            isRace = type.isRace(),
             distance = activity.distance.formatKm(),
             duration = pickDuration(activity, type).formatDuration(),
-            start = activity.start_date_local.formatDate(DATE_PATTERN),
+            start = activity.start_date_local.formatDate(DATE_PATTERN).uppercase(),
             mapUrl = activity.map?.let { MapboxApi.staticMap(it.summary_polyline) }
         )
     }
@@ -39,22 +40,26 @@ internal object Mapper {
         )
     }
 
-    private fun pickDuration(input: ApiSummaryActivity, type: WorkoutType) =
+    private fun pickDuration(input: ApiSummaryActivity, type: ApiWorkoutType) =
         if (type.isRace()) input.elapsed_time else input.moving_time
 
-    private enum class WorkoutType(val id: Int, val label: String?) {
-        RUN_DEFAULT(0, null),
-        RUN_RACE(1, "Race"),
-        RUN_LONG(2, "Long"),
-        RUN_WORKOUT(3, "Workout"),
-        RIDE_DEFAULT(10, null),
-        RIDE_RACE(11, "Race"),
-        RIDE_WORKOUT(12, "Workout");
+    private enum class ApiWorkoutType(val id: Int) {
+        RUN_DEFAULT(0),
+        RUN_RACE(1),
+        RUN_LONG(2),
+        RUN_WORKOUT(3),
+        RIDE_DEFAULT(10),
+        RIDE_RACE(11),
+        RIDE_WORKOUT(12);
 
         fun isRace() = this == RUN_RACE || this == RIDE_RACE
 
+        fun toActivityType(): ActivityType {
+            return ActivityType.RUN
+        }
+
         companion object {
-            fun map(id: Int): WorkoutType = values().first { it.id == id }
+            fun map(id: Int): ApiWorkoutType = values().first { it.id == id }
         }
     }
 }

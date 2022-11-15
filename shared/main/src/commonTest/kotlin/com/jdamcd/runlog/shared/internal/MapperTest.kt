@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test
@@ -12,11 +13,11 @@ class MapperTest {
         Mapper.mapActivityRow(activityModel()) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
-            type = "Run",
-            label = null,
+            type = ActivityType.RUN,
+            isRace = false,
             distance = "10.1k",
             duration = "40:00",
-            start = "Tuesday 25 Oct @ 17:58",
+            start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
     }
@@ -26,11 +27,11 @@ class MapperTest {
         Mapper.mapActivityRow(activityModel(workout_type = 1)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
-            type = "Run",
-            label = "Race",
+            type = ActivityType.RUN,
+            isRace = true,
             distance = "10.1k",
             duration = "41:00",
-            start = "Tuesday 25 Oct @ 17:58",
+            start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
     }
@@ -40,11 +41,11 @@ class MapperTest {
         Mapper.mapActivityRow(activityModel(workout_type = 2)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
-            type = "Run",
-            label = "Long",
+            type = ActivityType.RUN,
+            isRace = false,
             distance = "10.1k",
             duration = "40:00",
-            start = "Tuesday 25 Oct @ 17:58",
+            start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
     }
@@ -54,11 +55,11 @@ class MapperTest {
         Mapper.mapActivityRow(activityModel(workout_type = 3)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
-            type = "Run",
-            label = "Workout",
+            type = ActivityType.RUN,
+            isRace = false,
             distance = "10.1k",
             duration = "40:00",
-            start = "Tuesday 25 Oct @ 17:58",
+            start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
     }

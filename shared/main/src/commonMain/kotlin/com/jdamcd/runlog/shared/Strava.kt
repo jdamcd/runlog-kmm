@@ -22,13 +22,17 @@ sealed class Result<T> {
 data class ActivityCard(
     val id: Long,
     val name: String,
-    val type: String,
-    val label: String?,
+    val type: ActivityType,
+    val isRace: Boolean,
     val distance: String,
     val duration: String,
     val start: String,
     val mapUrl: String?
 )
+
+enum class ActivityType {
+    RUN, CYCLE, CROSS_TRAIN
+}
 
 data class AthleteProfile(
     val id: Long,

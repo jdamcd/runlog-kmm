@@ -49,24 +49,45 @@ private struct ActivitiesListView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(activity.type): \(activity.name)")
+                            Text(activity.name)
                                 .font(.headline)
-                            if let label = activity.label {
-                                Text(label)
-                                    .foregroundColor(Color.asset(.strava))
+                            HStack(alignment: .firstTextBaseline) {
+                                Text(activity.distance)
+                                    .font(.largeTitle)
+                                Text("·")
+                                Text(activity.duration)
                             }
-                            Text(activity.duration)
-                            Text(activity.distance)
                             Text(activity.start)
+                                .font(.footnote)
+                                .fontWeight(.light)
                         }
                         Spacer()
-                        Text(Copy.strava_view)
-                            .font(.footnote)
-                            .foregroundColor(Color.asset(.strava))
+                        VStack(alignment: .trailing) {
+                            HStack {
+                                switch activity.type {
+                                case .run:
+                                    Image(systemName: "figure.run")
+                                case .cycle:
+                                    Image(systemName: "figure.outdoor.cycle")
+                                default:
+                                    Image(systemName: "dumbbell")
+                                }
+                                if activity.isRace {
+                                    Image(systemName: "medal.fill")
+                                        .foregroundColor(Color.asset(.strava))
+                                }
+                            }.padding(.bottom)
+
+                            Text(Copy.strava_view)
+                                .font(.footnote)
+                                .foregroundColor(Color.asset(.strava))
+                                .padding(.top)
+                        }
                     }
                     if let map = activity.mapUrl {
                         LazyImage(url: URL(string: map))
                             .aspectRatio(2.5, contentMode: ContentMode.fit)
+                            .cornerRadius(6)
                     }
                 }
             }
@@ -84,21 +105,21 @@ struct ActivitiesView_Previews: PreviewProvider {
                 ActivityCard(
                     id: 1,
                     name: "NYC Marathon",
-                    type: "Run",
-                    label: "Race",
+                    type: ActivityType.run,
+                    isRace: true,
                     distance: "42.2km",
                     duration: "2:59:59",
-                    start: "Sunday 6 Nov @ 9:11am",
+                    start: "SUNDAY 6 NOV @ 9:11AM",
                     mapUrl: "example.com"
                 ),
                 ActivityCard(
                     id: 2,
                     name: "Morning Run",
-                    type: "Run",
-                    label: nil,
+                    type: ActivityType.run,
+                    isRace: false,
                     distance: "12.3km",
                     duration: "1:02:17",
-                    start: "Saturday 12 nov @ 8:37am",
+                    start: "SATURDAY 12 NOV @ 8:37AM",
                     mapUrl: nil
                 ),
             ],

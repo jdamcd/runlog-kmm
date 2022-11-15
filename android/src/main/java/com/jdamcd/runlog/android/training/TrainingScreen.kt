@@ -37,6 +37,7 @@ import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivityType
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -132,13 +133,6 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
                     text = "${activity.type}: ${activity.name}",
                     style = MaterialTheme.typography.subtitle2
                 )
-                activity.label?.let {
-                    Text(
-                        text = it,
-                        color = stravaBrand,
-                        style = MaterialTheme.typography.body2
-                    )
-                }
                 Text(
                     text = activity.duration,
                     style = MaterialTheme.typography.body2
@@ -179,21 +173,21 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
             ActivityCard(
                 id = 1,
                 name = "NYC Marathon",
-                type = "Run",
-                label = "Race",
+                type = ActivityType.RUN,
+                isRace = true,
                 distance = "42.2km",
                 duration = "2:59:59",
-                start = "Sunday 6 Nov @ 9:11am",
+                start = "SUNDAY 6 NOV @ 9:11AM",
                 mapUrl = "example.com"
             ),
             ActivityCard(
                 id = 2,
                 name = "Morning Run",
-                type = "Run",
-                label = null,
+                type = ActivityType.RUN,
+                isRace = false,
                 distance = "12.3km",
                 duration = "1:02:17",
-                start = "Saturday 12 nov @ 8:37am",
+                start = "SATURDAY 12 NOV @ 8:37AM",
                 mapUrl = null
 
             )

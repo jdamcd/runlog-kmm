@@ -1,16 +1,17 @@
 package com.jdamcd.runlog.android.util
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 
 val activityCard = ActivityCard(
     id = 123,
     name = "cool run",
-    type = "run",
-    label = null,
+    type = ActivityType.RUN,
+    isRace = true,
     distance = "10.3k",
     duration = "40:00",
-    start = "Tuesday 25 Oct @ 5:58pm",
+    start = "TUESDAY 25 OCT @ 5:58PM",
     mapUrl = "map.url/123"
 )
 
