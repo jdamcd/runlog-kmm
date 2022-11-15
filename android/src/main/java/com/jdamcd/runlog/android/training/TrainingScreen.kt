@@ -19,6 +19,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.DirectionsBike
+import androidx.compose.material.icons.rounded.DirectionsRun
+import androidx.compose.material.icons.rounded.FitnessCenter
+import androidx.compose.material.icons.rounded.SportsScore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -120,30 +124,39 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
             .fillMaxWidth()
     ) {
         Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom,
             modifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(0.6f)
+                modifier = Modifier.fillMaxWidth(0.65f)
             ) {
-                Text(
-                    text = "${activity.type}: ${activity.name}",
-                    style = MaterialTheme.typography.subtitle2
-                )
-                Text(
-                    text = activity.duration,
-                    style = MaterialTheme.typography.body2
-                )
-                Text(
-                    text = activity.distance,
-                    style = MaterialTheme.typography.body2
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ActivityLogo(type = activity.type, isRace = activity.isRace)
+                    Text(
+                        text = activity.name,
+                        style = MaterialTheme.typography.subtitle2
+                    )
+                }
+                Row {
+                    Text(
+                        text = activity.distance,
+                        style = MaterialTheme.typography.h4,
+                        modifier = Modifier.alignByBaseline()
+                    )
+                    Text(
+                        text = "  ·  ${activity.duration}",
+                        style = MaterialTheme.typography.body2,
+                        modifier = Modifier.alignByBaseline()
+                    )
+                }
                 Text(
                     text = activity.start,
-                    style = MaterialTheme.typography.body2
+                    style = MaterialTheme.typography.overline
                 )
             }
             Text(
@@ -167,6 +180,28 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
     }
 }
 
+@Composable
+private fun ActivityLogo(type: ActivityType, isRace: Boolean) {
+    Row {
+        if (isRace) {
+            Icon(
+                imageVector = Icons.Rounded.SportsScore,
+                contentDescription = null,
+                tint = stravaBrand
+            )
+        }
+        Icon(
+            imageVector = when (type) {
+                ActivityType.RUN -> Icons.Rounded.DirectionsRun
+                ActivityType.CYCLE -> Icons.Rounded.DirectionsBike
+                ActivityType.CROSS_TRAIN -> Icons.Rounded.FitnessCenter
+            },
+            contentDescription = null,
+            tint = MaterialTheme.colors.primaryVariant
+        )
+    }
+}
+
 private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard>> {
     override val values = sequenceOf(
         listOf(
@@ -175,7 +210,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 name = "NYC Marathon",
                 type = ActivityType.RUN,
                 isRace = true,
-                distance = "42.2km",
+                distance = "42.2k",
                 duration = "2:59:59",
                 start = "SUNDAY 6 NOV @ 9:11AM",
                 mapUrl = "example.com"
@@ -185,7 +220,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 name = "Morning Run",
                 type = ActivityType.RUN,
                 isRace = false,
-                distance = "12.3km",
+                distance = "12.3k",
                 duration = "1:02:17",
                 start = "SATURDAY 12 NOV @ 8:37AM",
                 mapUrl = null
