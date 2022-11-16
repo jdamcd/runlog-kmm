@@ -6,7 +6,7 @@ import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.api.ApiAthlete
 import com.jdamcd.runlog.shared.api.ApiAthleteStats
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
-import com.jdamcd.runlog.shared.api.MapboxApi
+import com.jdamcd.runlog.shared.api.MapboxStatic
 import com.jdamcd.runlog.shared.formatDate
 import com.jdamcd.runlog.shared.formatDuration
 import com.jdamcd.runlog.shared.formatKm
@@ -25,7 +25,7 @@ internal object Mapper {
             distance = activity.distance.formatKm(),
             duration = pickDuration(activity, type).formatDuration(),
             start = activity.start_date_local.formatDate(DATE_PATTERN).uppercase(),
-            mapUrl = activity.map?.let { MapboxApi.staticMap(it.summary_polyline) }
+            mapUrl = activity.map?.let { MapboxStatic.makeUrl(it.summary_polyline) }
         )
     }
 
