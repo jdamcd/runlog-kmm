@@ -13,6 +13,7 @@ object Version {
     const val hiltCompose = "1.0.0"
     const val composeBom = "2022.10.00"
     const val composeCompiler = "1.3.2"
+    const val constraintLayout = "1.0.1"
     const val appCompat = "1.5.1"
     const val material = "1.7.0"
     const val ktxCore = "1.9.0"
@@ -60,6 +61,7 @@ object Dependency {
     const val composeMaterial = "androidx.compose.material:material"
     const val composeIcons = "androidx.compose.material:material-icons-core"
     const val composeIconsExtended = "androidx.compose.material:material-icons-extended"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Version.constraintLayout}"
     const val coil = "io.coil-kt:coil-compose:${Version.coil}"
 
     // iOS

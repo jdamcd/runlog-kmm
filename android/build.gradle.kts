@@ -30,6 +30,7 @@ dependencies {
     implementation(Dependency.composeIcons)
     implementation(Dependency.composeIconsExtended)
     implementation(Dependency.composeNavigation)
+    implementation(Dependency.constraintLayout)
 
     // Tests
     testImplementation(Dependency.mockito)
