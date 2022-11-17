@@ -16,6 +16,11 @@ class FormatTest {
     }
 
     @Test
+    fun formatsPacePerKmFromSeconds() {
+        301.formatPace() shouldBe "5:01/k"
+    }
+
+    @Test
     fun formatDurationLessThan10Mins() {
         540L.formatDuration() shouldBe "09:00"
     }

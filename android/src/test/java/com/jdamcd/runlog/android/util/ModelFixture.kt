@@ -9,8 +9,9 @@ val activityCard = ActivityCard(
     name = "cool run",
     type = ActivityType.RUN,
     isRace = true,
-    distance = "10.3k",
+    distance = "10.1k",
     duration = "40:00",
+    pace = "3:58/k",
     start = "TUESDAY 25 OCT @ 5:58PM",
     mapUrl = "map.url/123"
 )

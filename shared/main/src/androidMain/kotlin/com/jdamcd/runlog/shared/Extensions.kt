@@ -8,6 +8,12 @@ actual fun Double.formatKm(): String {
     return "${DecimalFormat("#,##0.#").format(this / 1000)}k"
 }
 
+actual fun Int.formatPace(): String {
+    val mins = this / 60
+    val seconds = this % 60
+    return String.format("%d:%02d/k", mins, seconds)
+}
+
 actual fun Long.formatDuration(): String {
     val hours = this / 3600
     val mins = (this % 3600) / 60

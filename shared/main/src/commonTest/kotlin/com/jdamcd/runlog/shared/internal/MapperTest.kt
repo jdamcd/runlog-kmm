@@ -17,6 +17,7 @@ class MapperTest {
             isRace = false,
             distance = "10.1k",
             duration = "40:00",
+            pace = "3:58/k",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -31,6 +32,7 @@ class MapperTest {
             isRace = true,
             distance = "10.1k",
             duration = "41:00",
+            pace = "4:04/k",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -45,6 +47,7 @@ class MapperTest {
             isRace = false,
             distance = "10.1k",
             duration = "40:00",
+            pace = "3:58/k",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -59,6 +62,7 @@ class MapperTest {
             isRace = false,
             distance = "10.1k",
             duration = "40:00",
+            pace = "3:58/k",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )

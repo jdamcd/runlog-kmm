@@ -10,6 +10,8 @@ import com.jdamcd.runlog.shared.api.MapboxStatic
 import com.jdamcd.runlog.shared.formatDate
 import com.jdamcd.runlog.shared.formatDuration
 import com.jdamcd.runlog.shared.formatKm
+import com.jdamcd.runlog.shared.formatPace
+import kotlin.math.roundToInt
 
 internal object Mapper {
 
@@ -23,25 +25,28 @@ internal object Mapper {
             type = type.toActivityType(),
             isRace = type.isRace(),
             distance = activity.distance.formatKm(),
-            duration = pickDuration(activity, type).formatDuration(),
-            start = activity.start_date_local.formatDate(DATE_PATTERN).uppercase(),
+            duration = mapDuration(activity, type),
+            pace = mapPace(activity, type),
+            start = mapStartTime(activity),
             mapUrl = activity.map?.let { MapboxStatic.makeUrl(it.summary_polyline) }
         )
     }
 
-    fun mapProfile(athlete: ApiAthlete, athleteStats: ApiAthleteStats): AthleteProfile {
-        return AthleteProfile(
-            id = athlete.id,
-            username = athlete.username,
-            name = "${athlete.firstname} ${athlete.lastname}".trim(),
-            imageUrl = athlete.profile,
-            yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm(),
-            allTimeRunDistance = athleteStats.all_run_totals.distance.formatKm()
-        )
+    private fun mapDuration(activity: ApiSummaryActivity, type: ApiWorkoutType): String {
+        val time = if (type.isRace()) activity.elapsed_time else activity.moving_time
+        return time.formatDuration()
     }
 
-    private fun pickDuration(input: ApiSummaryActivity, type: ApiWorkoutType) =
-        if (type.isRace()) input.elapsed_time else input.moving_time
+    private fun mapPace(activity: ApiSummaryActivity, type: ApiWorkoutType): String {
+        val time = if (type.isRace()) activity.elapsed_time else activity.moving_time
+        val distanceKm = activity.distance / 1000
+        val pace = (time / distanceKm).roundToInt() // seconds per km
+        return pace.formatPace()
+    }
+
+    private fun mapStartTime(activity: ApiSummaryActivity): String {
+        return activity.start_date_local.formatDate(DATE_PATTERN).uppercase()
+    }
 
     private enum class ApiWorkoutType(val id: Int) {
         RUN_DEFAULT(0),
@@ -61,5 +66,16 @@ internal object Mapper {
         companion object {
             fun map(id: Int): ApiWorkoutType = values().first { it.id == id }
         }
+    }
+
+    fun mapProfile(athlete: ApiAthlete, athleteStats: ApiAthleteStats): AthleteProfile {
+        return AthleteProfile(
+            id = athlete.id,
+            username = athlete.username,
+            name = "${athlete.firstname} ${athlete.lastname}".trim(),
+            imageUrl = athlete.profile,
+            yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm(),
+            allTimeRunDistance = athleteStats.all_run_totals.distance.formatKm()
+        )
     }
 }

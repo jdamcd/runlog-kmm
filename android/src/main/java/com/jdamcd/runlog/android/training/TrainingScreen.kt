@@ -197,6 +197,11 @@ private fun ActivityStats(activity: ActivityCard, modifier: Modifier) {
                 style = MaterialTheme.typography.body2,
                 modifier = Modifier.alignByBaseline()
             )
+            Text(
+                text = "  ·  ${activity.pace}",
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.alignByBaseline()
+            )
         }
         Text(
             text = activity.start,
@@ -237,6 +242,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 isRace = true,
                 distance = "42.2k",
                 duration = "2:59:59",
+                pace = "4:16/k",
                 start = "SUNDAY 6 NOV @ 9:11AM",
                 mapUrl = "example.com"
             ),
@@ -247,6 +253,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 isRace = false,
                 distance = "12.3k",
                 duration = "1:02:17",
+                pace = "5:04/k",
                 start = "SATURDAY 12 NOV @ 8:37AM",
                 mapUrl = null
             )

@@ -14,7 +14,13 @@ import platform.Foundation.timeZoneWithName
 actual fun Double.formatKm(): String {
     val nf = NSNumberFormatter()
     nf.positiveFormat = "#,##0.#"
-    return "${ nf.stringFromNumber(NSNumber(this / 1000))}k"
+    return "${nf.stringFromNumber(NSNumber(this / 1000))}k"
+}
+
+actual fun Int.formatPace(): String {
+    val mins = this / 60
+    val seconds = this % 60
+    return NSString.stringWithFormat("%d:%02d/k", mins, seconds)
 }
 
 actual fun Long.formatDuration(): String {

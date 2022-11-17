@@ -26,6 +26,7 @@ data class ActivityCard(
     val isRace: Boolean,
     val distance: String,
     val duration: String,
+    val pace: String,
     val start: String,
     val mapUrl: String?
 )
