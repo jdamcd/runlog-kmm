@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -23,9 +24,13 @@ import androidx.compose.material.icons.rounded.DirectionsBike
 import androidx.compose.material.icons.rounded.DirectionsRun
 import androidx.compose.material.icons.rounded.FitnessCenter
 import androidx.compose.material.icons.rounded.SportsScore
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -79,26 +84,32 @@ fun TrainingScreen(
                 stateFlow = viewModel.flow,
                 modifier = Modifier.padding(padding),
                 onItemClick = { onOpenLink(viewModel.generateLink(it)) },
-                onRetryClick = { viewModel.load() }
+                onRetryClick = { viewModel.load() },
+                onPullRefresh = { viewModel.refresh() }
             )
         }
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun TrainingList(
     stateFlow: StateFlow<TrainingState>,
     modifier: Modifier,
     onItemClick: (Long) -> Unit,
-    onRetryClick: () -> Unit
+    onRetryClick: () -> Unit,
+    onPullRefresh: () -> Unit
 ) {
-    Box(modifier = modifier) {
-        val state: TrainingState by stateFlow.collectAsState()
+    val state: TrainingState by stateFlow.collectAsState()
+    val refreshState = rememberPullRefreshState(state.isRefreshing(), onPullRefresh)
+    Box(modifier = modifier.pullRefresh(refreshState)) {
         when (state) {
             is TrainingState.Loading -> LoadingScreen()
-            is TrainingState.Error -> RetryScreen(onRetryClick)
             is TrainingState.Data -> ActivityItems((state as TrainingState.Data).activityCards, onItemClick)
+            is TrainingState.Refreshing -> ActivityItems((state as TrainingState.Refreshing).activityCards, onItemClick)
+            is TrainingState.Error -> RetryScreen(onRetryClick)
         }
+        PullRefreshIndicator(state.isRefreshing(), refreshState, Modifier.align(Alignment.TopCenter))
     }
 }
 

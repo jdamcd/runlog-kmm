@@ -26,6 +26,20 @@ class TrainingViewModel @Inject constructor(
 
     fun load() {
         _mutableFlow.value = TrainingState.Loading
+        getActivities()
+    }
+
+    fun refresh() {
+        val state = _mutableFlow.value
+        if (state is TrainingState.Data) {
+            _mutableFlow.value = TrainingState.Refreshing(state.activityCards)
+        } else {
+            _mutableFlow.value = TrainingState.Loading
+        }
+        getActivities()
+    }
+
+    private fun getActivities() {
         viewModelScope.launch {
             when (val result = strava.activities()) {
                 is Result.Data -> {
@@ -44,5 +58,10 @@ class TrainingViewModel @Inject constructor(
 sealed class TrainingState {
     object Loading : TrainingState()
     data class Data(val activityCards: List<ActivityCard>) : TrainingState()
+    data class Refreshing(val activityCards: List<ActivityCard>) : TrainingState()
     data class Error(val recoverable: Boolean) : TrainingState()
+
+    fun isRefreshing(): Boolean {
+        return this is Refreshing
+    }
 }

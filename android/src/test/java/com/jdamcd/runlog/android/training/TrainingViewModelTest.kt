@@ -2,7 +2,8 @@ package com.jdamcd.runlog.android.training
 
 import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
-import com.jdamcd.runlog.android.util.activityCard
+import com.jdamcd.runlog.android.util.activityCard1
+import com.jdamcd.runlog.android.util.activityCard2
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.Strava
 import io.kotest.matchers.shouldBe
@@ -30,7 +31,7 @@ class TrainingViewModelTest {
 
     @Test
     fun `load success emits loading then data`() = runTest {
-        val activities = listOf(activityCard)
+        val activities = listOf(activityCard1)
         whenever(strava.activities()).thenReturn(Result.Data(activities))
 
         viewModel.flow.test {
@@ -51,6 +52,42 @@ class TrainingViewModelTest {
 
             awaitItem() shouldBe TrainingState.Loading
             awaitItem() shouldBe TrainingState.Error(recoverable = true)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `refresh replays current data then update`() = runTest {
+        val load = listOf(activityCard1)
+        val refresh = listOf(activityCard1, activityCard2)
+        whenever(strava.activities()).thenReturn(Result.Data(load), Result.Data(refresh))
+
+        viewModel.flow.test {
+            viewModel.load()
+
+            awaitItem() shouldBe TrainingState.Loading
+            awaitItem() shouldBe TrainingState.Data(load)
+
+            viewModel.refresh()
+
+            awaitItem() shouldBe TrainingState.Refreshing(load)
+            awaitItem() shouldBe TrainingState.Data(refresh)
+
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `refresh emits loading if no current data`() = runTest {
+        val activities = listOf(activityCard1)
+        whenever(strava.activities()).thenReturn(Result.Data(activities))
+
+        viewModel.flow.test {
+            viewModel.refresh()
+
+            awaitItem() shouldBe TrainingState.Loading
+            awaitItem() shouldBe TrainingState.Data(activities)
+
             cancelAndConsumeRemainingEvents()
         }
     }

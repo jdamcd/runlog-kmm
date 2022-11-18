@@ -20,6 +20,9 @@ struct TrainingView: View {
                         activities: data.activities,
                         generateUrl: { id in
                             viewModel.linkUrl(id: id)
+                        },
+                        refresh: {
+                            self.viewModel.refresh()
                         }
                     )
                 }
@@ -42,6 +45,7 @@ struct TrainingView: View {
 private struct ActivitiesListView: View {
     var activities: [ActivityCard]
     var generateUrl: (Int64) -> URL
+    var refresh: () -> Void
 
     var body: some View {
         List(activities, id: \.id) { activity in
@@ -93,6 +97,9 @@ private struct ActivitiesListView: View {
             }
         }
         .listStyle(PlainListStyle())
+        .refreshable {
+            refresh()
+        }
     }
 }
 
@@ -125,7 +132,8 @@ struct ActivitiesView_Previews: PreviewProvider {
                     mapUrl: nil
                 ),
             ],
-            generateUrl: { _ in URL(string: "example.com")! }
+            generateUrl: { _ in URL(string: "example.com")! },
+            refresh: {}
         )
     }
 }

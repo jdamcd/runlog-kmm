@@ -15,7 +15,15 @@ class TrainingViewModel: ObservableObject {
     }
 
     func load() {
-        state = .loading
+        updateState(to: .loading)
+        getActivities()
+    }
+
+    func refresh() {
+        getActivities()
+    }
+
+    private func getActivities() {
         strava.activities { result, _ in
             if let items = result as? ResultData<NSArray> {
                 let itemsArray = items.data as! [ActivityCard]
