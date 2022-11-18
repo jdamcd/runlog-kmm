@@ -15,8 +15,10 @@ class TrainingViewModel: ObservableObject {
     }
 
     func load() {
-        updateState(to: .loading)
-        getActivities()
+        if !state.isLoaded {
+            updateState(to: .loading)
+            getActivities()
+        }
     }
 
     func refresh() {
@@ -63,4 +65,11 @@ enum TrainingState {
     case loading
     case data(Data)
     case error
+
+    var isLoaded: Bool {
+        switch self {
+        case .data: return true
+        default: return false
+        }
+    }
 }
