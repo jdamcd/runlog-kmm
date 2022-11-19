@@ -51,24 +51,24 @@ private struct ProfileDetailsView: View {
             GeometryReader { geometry in
                 HStack {
                     Spacer()
-                    ProfileStatBox(
-                        title: Copy.profile_30d,
+                    ProfileStat(
+                        title: Copy.profile_stat_30d,
                         primary: profile.recentRuns.distance,
                         secondary: profile.recentRuns.pace
                     )
                     .frame(width: geometry.size.width * 0.25)
                     Divider()
                         .frame(height: 90)
-                    ProfileStatBox(
-                        title: Copy.profile_ytd,
+                    ProfileStat(
+                        title: Copy.profile_stat_year_to_date,
                         primary: profile.yearRuns.distance,
                         secondary: profile.yearRuns.pace
                     )
                     .frame(width: geometry.size.width * 0.25)
                     Divider()
                         .frame(height: 90)
-                    ProfileStatBox(
-                        title: Copy.profile_all_time,
+                    ProfileStat(
+                        title: Copy.profile_stat_all_time,
                         primary: profile.allRuns.distance,
                         secondary: profile.allRuns.pace
                     )
@@ -81,7 +81,7 @@ private struct ProfileDetailsView: View {
     }
 }
 
-private struct ProfileStatBox: View {
+private struct ProfileStat: View {
     var title: LocalizedStringKey
     var primary: String
     var secondary: String

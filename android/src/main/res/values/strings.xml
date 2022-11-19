@@ -3,6 +3,9 @@
     <string name="app_name">RunLog</string>
     <string name="activities_title">Training</string>
     <string name="profile_title">Profile</string>
+    <string name="profile_stat_30d">30D</string>
+    <string name="profile_stat_year_to_date">YTD</string>
+    <string name="profile_stat_all_time">All time</string>
     <string name="strava_view">View on Strava</string>
     <string name="strava_connect">Connect with Strava</string>
     <string name="strava_powered">Powered by Strava</string>

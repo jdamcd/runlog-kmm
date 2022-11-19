@@ -1,11 +1,16 @@
 package com.jdamcd.runlog.android.profile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -31,6 +36,8 @@ import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
+import com.jdamcd.runlog.android.ui.divider
+import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
 import kotlinx.coroutines.flow.StateFlow
@@ -88,15 +95,17 @@ private fun ProfileStates(
     }
 }
 
-@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
+@Preview(backgroundColor = 0xffffffff, showBackground = true)
 @Composable
 private fun ProfileContent(
     @PreviewParameter(ProfileContentProvider::class) profile: AthleteProfile
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 20.dp, start = 8.dp, end = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
         AsyncImage(
             model = profile.imageUrl,
@@ -111,10 +120,74 @@ private fun ProfileContent(
             modifier = Modifier.padding(top = 8.dp)
         )
         Text(
-            text = profile.yearRuns.distance,
+            text = profile.username,
             style = MaterialTheme.typography.body1
         )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ProfileStat(
+                title = stringResource(R.string.profile_stat_30d),
+                primary = profile.recentRuns.distance,
+                secondary = profile.recentRuns.pace
+            )
+            VerticalDivider()
+            ProfileStat(
+                title = stringResource(R.string.profile_stat_year_to_date),
+                primary = profile.yearRuns.distance,
+                secondary = profile.yearRuns.pace
+            )
+            VerticalDivider()
+            ProfileStat(
+                title = stringResource(R.string.profile_stat_all_time),
+                primary = profile.allRuns.distance,
+                secondary = profile.allRuns.pace
+            )
+        }
     }
+}
+
+@Composable
+private fun ProfileStat(
+    title: String,
+    primary: String,
+    secondary: String
+) {
+    Column(
+        modifier = Modifier.width(100.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Bold,
+            color = stravaBrand,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Text(
+            text = primary,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.body1
+        )
+        Text(
+            text = secondary,
+            style = MaterialTheme.typography.body2
+        )
+    }
+}
+
+@Composable
+private fun VerticalDivider() {
+    Box(
+        modifier = Modifier
+            .width(1.dp)
+            .height(60.dp)
+            .background(divider)
+    )
 }
 
 private class ProfileContentProvider : PreviewParameterProvider<AthleteProfile> {
