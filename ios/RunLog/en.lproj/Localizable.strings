@@ -1,5 +1,8 @@
 "activities_title" = "Training";
 "profile_title" = "Profile";
+"profile_stat_30d" = "30D";
+"profile_stat_year_to_date" = "YTD";
+"profile_stat_all_time" = "All time";
 "strava_view" = "View on Strava";
 "retry" = "Retry?";
 "sign_out" = "Sign out";

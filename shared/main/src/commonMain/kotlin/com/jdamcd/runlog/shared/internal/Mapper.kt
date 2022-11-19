@@ -3,8 +3,10 @@ package com.jdamcd.runlog.shared.internal
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
+import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.api.ApiAthlete
 import com.jdamcd.runlog.shared.api.ApiAthleteStats
+import com.jdamcd.runlog.shared.api.ApiStatsBlock
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.api.MapboxStatic
 import com.jdamcd.runlog.shared.formatDate
@@ -39,9 +41,7 @@ internal object Mapper {
 
     private fun mapPace(activity: ApiSummaryActivity, type: ApiWorkoutType): String {
         val time = if (type.isRace()) activity.elapsed_time else activity.moving_time
-        val distanceKm = activity.distance / 1000
-        val pace = (time / distanceKm).roundToInt() // seconds per km
-        return pace.formatPace()
+        return calculatePace(activity.distance, time)
     }
 
     private fun mapStartTime(activity: ApiSummaryActivity): String {
@@ -74,8 +74,22 @@ internal object Mapper {
             username = athlete.username,
             name = "${athlete.firstname} ${athlete.lastname}".trim(),
             imageUrl = athlete.profile,
-            yearRunDistance = athleteStats.ytd_run_totals.distance.formatKm(),
-            allTimeRunDistance = athleteStats.all_run_totals.distance.formatKm()
+            recentRuns = mapStats(athleteStats.recent_run_totals),
+            yearRuns = mapStats(athleteStats.ytd_run_totals),
+            allRuns = mapStats(athleteStats.all_run_totals)
         )
+    }
+
+    private fun mapStats(stats: ApiStatsBlock): AthleteStats {
+        return AthleteStats(
+            distance = stats.distance.formatKm(),
+            pace = calculatePace(stats.distance, stats.moving_time)
+        )
+    }
+
+    private fun calculatePace(distanceMetres: Double, timeSeconds: Long): String {
+        val distanceKm = distanceMetres / 1000
+        val pace = (timeSeconds / distanceKm).roundToInt() // seconds per km
+        return pace.formatPace()
     }
 }

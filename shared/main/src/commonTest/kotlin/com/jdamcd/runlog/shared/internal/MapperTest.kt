@@ -3,6 +3,7 @@ package com.jdamcd.runlog.shared.internal
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
+import com.jdamcd.runlog.shared.AthleteStats
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
@@ -75,8 +76,18 @@ class MapperTest {
             username = "jdamcd",
             name = "Jamie McDonald",
             imageUrl = "image.url",
-            yearRunDistance = "1,000k",
-            allTimeRunDistance = "5,000k"
+            recentRuns = AthleteStats(
+                distance = "100k",
+                pace = "5:33/k"
+            ),
+            yearRuns = AthleteStats(
+                distance = "1,000k",
+                pace = "5:33/k"
+            ),
+            allRuns = AthleteStats(
+                distance = "5,000k",
+                pace = "5:33/k"
+            ),
         )
     }
 }

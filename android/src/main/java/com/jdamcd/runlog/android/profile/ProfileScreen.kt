@@ -32,6 +32,7 @@ import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.shared.AthleteProfile
+import com.jdamcd.runlog.shared.AthleteStats
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -110,7 +111,7 @@ private fun ProfileContent(
             modifier = Modifier.padding(top = 8.dp)
         )
         Text(
-            text = profile.yearRunDistance,
+            text = profile.yearRuns.distance,
             style = MaterialTheme.typography.body1
         )
     }
@@ -123,8 +124,18 @@ private class ProfileContentProvider : PreviewParameterProvider<AthleteProfile> 
             username = "jdamcd",
             name = "Jamie McDonald",
             imageUrl = "example.com",
-            yearRunDistance = "1,234km",
-            allTimeRunDistance = "12,345km"
+            recentRuns = AthleteStats(
+                distance = "123.4k",
+                pace = "4:50/k"
+            ),
+            yearRuns = AthleteStats(
+                distance = "1,234k",
+                pace = "5:01/k",
+            ),
+            allRuns = AthleteStats(
+                distance = "12,345k",
+                pace = "5:25/k"
+            )
         )
     )
 }

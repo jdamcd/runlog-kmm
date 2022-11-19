@@ -49,6 +49,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }
         HttpResponseValidator {
             handleResponseExceptionWithRequest { exception, _ ->
+                MultiLog.error(exception.stackTraceToString())
                 val clientException = exception as? ClientRequestException ?: return@handleResponseExceptionWithRequest
                 if (clientException.response.status == HttpStatusCode.Unauthorized) {
                     MultiLog.debug("Unhandled 401")

@@ -32,12 +32,12 @@ data class ApiAthlete(
     val username: String,
     val firstname: String,
     val lastname: String,
-    val country: String,
     val profile: String
 )
 
 @Serializable
 data class ApiAthleteStats(
+    val recent_run_totals: ApiStatsBlock,
     val ytd_run_totals: ApiStatsBlock,
     val all_run_totals: ApiStatsBlock
 )
@@ -46,7 +46,5 @@ data class ApiAthleteStats(
 data class ApiStatsBlock(
     val count: Int,
     val distance: Double,
-    val moving_time: Long,
-    val elapsed_time: Long,
-    val elevation_gain: Int
+    val moving_time: Long
 )

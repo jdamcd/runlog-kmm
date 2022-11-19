@@ -3,6 +3,7 @@ package com.jdamcd.runlog.android.util
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
+import com.jdamcd.runlog.shared.AthleteStats
 
 val activityCard1 = ActivityCard(
     id = 123,
@@ -33,6 +34,16 @@ val athleteProfile = AthleteProfile(
     username = "jdamcd",
     name = "Jamie McDonald",
     imageUrl = "image.url/123",
-    yearRunDistance = "123km",
-    allTimeRunDistance = "1,234km"
+    recentRuns = AthleteStats(
+        distance = "123km",
+        pace = "5:00/k"
+    ),
+    yearRuns = AthleteStats(
+        distance = "1234km",
+        pace = "5:00/k"
+    ),
+    allRuns = AthleteStats(
+        distance = "12345km",
+        pace = "5:00/k"
+    )
 )

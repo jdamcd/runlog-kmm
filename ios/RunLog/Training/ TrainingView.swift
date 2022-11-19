@@ -38,7 +38,7 @@ struct TrainingView: View {
             .onAppear(perform: {
                 self.viewModel.load()
             })
-        }
+        }.accentColor(Color.asset(.strava))
     }
 }
 

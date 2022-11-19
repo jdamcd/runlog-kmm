@@ -43,9 +43,59 @@ private struct ProfileDetailsView: View {
             LazyImage(url: URL(string: profile.imageUrl))
                 .frame(width: 100, height: 100)
                 .clipShape(Circle())
+                .padding(.top)
             Text(profile.name)
                 .font(.headline)
-            Text(profile.yearRunDistance)
+            Text(profile.username)
+
+            GeometryReader { geometry in
+                HStack {
+                    Spacer()
+                    ProfileStatBox(
+                        title: Copy.profile_30d,
+                        primary: profile.recentRuns.distance,
+                        secondary: profile.recentRuns.pace
+                    )
+                    .frame(width: geometry.size.width * 0.25)
+                    Divider()
+                        .frame(height: 90)
+                    ProfileStatBox(
+                        title: Copy.profile_ytd,
+                        primary: profile.yearRuns.distance,
+                        secondary: profile.yearRuns.pace
+                    )
+                    .frame(width: geometry.size.width * 0.25)
+                    Divider()
+                        .frame(height: 90)
+                    ProfileStatBox(
+                        title: Copy.profile_all_time,
+                        primary: profile.allRuns.distance,
+                        secondary: profile.allRuns.pace
+                    )
+                    .frame(width: geometry.size.width * 0.25)
+                    Spacer()
+                }.padding(.top)
+            }
+            Spacer()
+        }
+    }
+}
+
+private struct ProfileStatBox: View {
+    var title: LocalizedStringKey
+    var primary: String
+    var secondary: String
+
+    var body: some View {
+        VStack {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.accentColor)
+                .padding(.bottom, 1)
+            Text(primary)
+                .font(.headline)
+            Text(secondary)
+                .fontWeight(.light)
         }
     }
 }
@@ -62,8 +112,18 @@ struct ProfileView_Previews: PreviewProvider {
                 username: "jdamcd",
                 name: "Jamie McDonald",
                 imageUrl: "example.com",
-                yearRunDistance: "1,234km",
-                allTimeRunDistance: "12,345km"
+                recentRuns: AthleteStats(
+                    distance: "123.4k",
+                    pace: "4:50/k"
+                ),
+                yearRuns: AthleteStats(
+                    distance: "1,234k",
+                    pace: "5:01/k"
+                ),
+                allRuns: AthleteStats(
+                    distance: "12,345k",
+                    pace: "5:25/k"
+                )
             ))
     }
 }
