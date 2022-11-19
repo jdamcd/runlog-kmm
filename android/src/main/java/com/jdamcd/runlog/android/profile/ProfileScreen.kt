@@ -130,7 +130,7 @@ private class ProfileContentProvider : PreviewParameterProvider<AthleteProfile> 
             ),
             yearRuns = AthleteStats(
                 distance = "1,234k",
-                pace = "5:01/k",
+                pace = "5:01/k"
             ),
             allRuns = AthleteStats(
                 distance = "12,345k",

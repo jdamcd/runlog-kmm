@@ -87,7 +87,7 @@ class MapperTest {
             allRuns = AthleteStats(
                 distance = "5,000k",
                 pace = "5:33/k"
-            ),
+            )
         )
     }
 }
