@@ -12,9 +12,10 @@ import platform.Foundation.stringWithFormat
 import platform.Foundation.timeZoneWithName
 
 actual fun Double.formatKm(): String {
+    val distanceKm = this / 1000
     val nf = NSNumberFormatter()
-    nf.positiveFormat = "#,##0.#"
-    return "${nf.stringFromNumber(NSNumber(this / 1000))}k"
+    nf.positiveFormat = if (distanceKm >= 1000) "#,##0" else "#,##0.#"
+    return "${nf.stringFromNumber(NSNumber(distanceKm))}k"
 }
 
 actual fun Int.formatPace(): String {

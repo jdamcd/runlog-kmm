@@ -16,6 +16,11 @@ class FormatTest {
     }
 
     @Test
+    fun formatsDistanceOver1000KmWithoutDecimal() {
+        1_001_234.5.formatKm() shouldBe "1,001k"
+    }
+
+    @Test
     fun formatsPacePerKmFromSeconds() {
         301.formatPace() shouldBe "5:01/k"
     }

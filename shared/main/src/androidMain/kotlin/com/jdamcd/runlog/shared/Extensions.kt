@@ -5,7 +5,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 actual fun Double.formatKm(): String {
-    return "${DecimalFormat("#,##0.#").format(this / 1000)}k"
+    val distanceKm = this / 1000
+    val pattern = if (distanceKm >= 1000) "#,##0" else "#,##0.#"
+    return "${DecimalFormat(pattern).format(distanceKm)}k"
 }
 
 actual fun Int.formatPace(): String {
