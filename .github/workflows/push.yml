@@ -22,5 +22,20 @@ jobs:
     - name: Assemble
       run: ./gradlew spotlessCheck assembleDebug
 
-    - name: Test
+    - name: Run tests
       run: ./gradlew test
+
+    - name: Copy test results
+      if: always()
+      run: |
+        mkdir -p junit
+        find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+
+    - name: Generate test report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: JUnit Tests
+          path: junit
+          reporter: java-junit
+          fail-on-error: true
