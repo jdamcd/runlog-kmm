@@ -14,37 +14,37 @@ data class ApiSummaryActivity(
     val name: String,
     val type: String,
     val workout_type: Int?,
-    val distance: Double,
-    val moving_time: Long,
-    val elapsed_time: Long,
+    val distance: Float,
+    val moving_time: Int,
+    val elapsed_time: Int,
     val start_date_local: String,
-    val map: ApiMap?
+    val map: ApiPolylineMap?
 )
 
 @Serializable
-data class ApiMap(
+data class ApiPolylineMap(
     val summary_polyline: String
 )
 
 @Serializable
-data class ApiAthlete(
+data class ApiSummaryAthlete(
     val id: Long,
     val username: String,
     val firstname: String,
     val lastname: String,
-    val profile: String
+    val profile: String? // 124px image URL
 )
 
 @Serializable
-data class ApiAthleteStats(
-    val recent_run_totals: ApiStatsBlock,
-    val ytd_run_totals: ApiStatsBlock,
-    val all_run_totals: ApiStatsBlock
+data class ApiActivityStats(
+    val recent_run_totals: ApiActivityTotal,
+    val ytd_run_totals: ApiActivityTotal,
+    val all_run_totals: ApiActivityTotal
 )
 
 @Serializable
-data class ApiStatsBlock(
+data class ApiActivityTotal(
     val count: Int,
-    val distance: Double,
-    val moving_time: Long
+    val distance: Float,
+    val moving_time: Int
 )

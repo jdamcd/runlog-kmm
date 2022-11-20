@@ -1,24 +1,24 @@
 package com.jdamcd.runlog.shared.internal
 
-import com.jdamcd.runlog.shared.api.ApiAthlete
-import com.jdamcd.runlog.shared.api.ApiAthleteStats
-import com.jdamcd.runlog.shared.api.ApiStatsBlock
+import com.jdamcd.runlog.shared.api.ApiActivityStats
+import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
-import kotlin.math.roundToLong
+import com.jdamcd.runlog.shared.api.ApiSummaryAthlete
+import kotlin.math.roundToInt
 
 fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
     id = 123L,
     name = "my activity",
     type = "Run",
     workout_type = workout_type,
-    distance = 10_100.0,
-    moving_time = 2400L,
-    elapsed_time = 2460L,
+    distance = 10_100.0f,
+    moving_time = 2400,
+    elapsed_time = 2460,
     start_date_local = "2022-10-25T17:58:50Z",
     map = null
 )
 
-fun athleteModel() = ApiAthlete(
+fun athleteModel() = ApiSummaryAthlete(
     id = 123L,
     username = "jdamcd",
     firstname = "Jamie",
@@ -26,14 +26,14 @@ fun athleteModel() = ApiAthlete(
     profile = "image.url"
 )
 
-fun athleteStatsModel() = ApiAthleteStats(
-    recent_run_totals = statsBlock(distance = 100_000.0),
-    ytd_run_totals = statsBlock(distance = 1_000_000.0),
-    all_run_totals = statsBlock(distance = 5_000_000.0)
+fun athleteStatsModel() = ApiActivityStats(
+    recent_run_totals = statsBlock(distance = 100_000.0f),
+    ytd_run_totals = statsBlock(distance = 1_000_000.0f),
+    all_run_totals = statsBlock(distance = 5_000_000.0f)
 )
 
-fun statsBlock(distance: Double = 100.0) = ApiStatsBlock(
+fun statsBlock(distance: Float = 100.0f) = ApiActivityTotal(
     count = 123,
     distance = distance,
-    moving_time = (distance / 3).roundToLong()
+    moving_time = (distance / 3).roundToInt()
 )

@@ -4,10 +4,10 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
-import com.jdamcd.runlog.shared.api.ApiAthlete
-import com.jdamcd.runlog.shared.api.ApiAthleteStats
-import com.jdamcd.runlog.shared.api.ApiStatsBlock
+import com.jdamcd.runlog.shared.api.ApiActivityStats
+import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
+import com.jdamcd.runlog.shared.api.ApiSummaryAthlete
 import com.jdamcd.runlog.shared.api.MapboxStatic
 import com.jdamcd.runlog.shared.formatDate
 import com.jdamcd.runlog.shared.formatDuration
@@ -68,7 +68,7 @@ internal object Mapper {
         }
     }
 
-    fun mapProfile(athlete: ApiAthlete, athleteStats: ApiAthleteStats): AthleteProfile {
+    fun mapProfile(athlete: ApiSummaryAthlete, athleteStats: ApiActivityStats): AthleteProfile {
         return AthleteProfile(
             id = athlete.id,
             username = athlete.username,
@@ -80,14 +80,14 @@ internal object Mapper {
         )
     }
 
-    private fun mapStats(stats: ApiStatsBlock): AthleteStats {
+    private fun mapStats(stats: ApiActivityTotal): AthleteStats {
         return AthleteStats(
             distance = stats.distance.formatKm(),
             pace = calculatePace(stats.distance, stats.moving_time)
         )
     }
 
-    private fun calculatePace(distanceMetres: Double, timeSeconds: Long): String {
+    private fun calculatePace(distanceMetres: Float, timeSeconds: Int): String {
         val distanceKm = distanceMetres / 1000
         val pace = (timeSeconds / distanceKm).roundToInt() // seconds per km
         return pace.formatPace()

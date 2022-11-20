@@ -40,10 +40,12 @@ private struct ProfileDetailsView: View {
 
     var body: some View {
         VStack {
-            LazyImage(url: URL(string: profile.imageUrl))
-                .frame(width: 100, height: 100)
-                .clipShape(Circle())
-                .padding(.top)
+            if let imageUrl = profile.imageUrl {
+                LazyImage(url: URL(string: imageUrl))
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+                    .padding(.top)
+            }
             Text(profile.name)
                 .font(.headline)
             Text(profile.username)

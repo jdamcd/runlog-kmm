@@ -11,7 +11,7 @@ import platform.Foundation.autoupdatingCurrentLocale
 import platform.Foundation.stringWithFormat
 import platform.Foundation.timeZoneWithName
 
-actual fun Double.formatKm(): String {
+actual fun Float.formatKm(): String {
     val distanceKm = this / 1000
     val nf = NSNumberFormatter()
     nf.positiveFormat = if (distanceKm >= 1000) "#,##0" else "#,##0.#"
@@ -24,7 +24,7 @@ actual fun Int.formatPace(): String {
     return NSString.stringWithFormat("%d:%02d/k", mins, seconds)
 }
 
-actual fun Long.formatDuration(): String {
+actual fun Int.formatDuration(): String {
     val hours = this / 3600
     val mins = (this % 3600) / 60
     val seconds = this % 60

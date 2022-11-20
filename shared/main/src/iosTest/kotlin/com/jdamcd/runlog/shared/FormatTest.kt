@@ -7,17 +7,17 @@ class FormatTest {
 
     @Test
     fun formatsMetresToKmWithSingleDecimal() {
-        10_123.0.formatKm() shouldBe "10.1k"
+        10_123.0f.formatKm() shouldBe "10.1k"
     }
 
     @Test
     fun formatsRoundKmsWithNoDecimal() {
-        10_000.0.formatKm() shouldBe "10k"
+        10_000.0f.formatKm() shouldBe "10k"
     }
 
     @Test
     fun formatsDistanceOver1000KmWithoutDecimal() {
-        1_001_234.5.formatKm() shouldBe "1,001k"
+        1_001_234.5f.formatKm() shouldBe "1,001k"
     }
 
     @Test
@@ -27,17 +27,17 @@ class FormatTest {
 
     @Test
     fun formatDurationLessThan10Mins() {
-        540L.formatDuration() shouldBe "09:00"
+        540.formatDuration() shouldBe "09:00"
     }
 
     @Test
     fun formatsDurationLessThanAnHour() {
-        3540L.formatDuration() shouldBe "59:00"
+        3540.formatDuration() shouldBe "59:00"
     }
 
     @Test
     fun formatsDurationMoreThanAnHour() {
-        3660L.formatDuration() shouldBe "1:01:00"
+        3660.formatDuration() shouldBe "1:01:00"
     }
 
     @Test

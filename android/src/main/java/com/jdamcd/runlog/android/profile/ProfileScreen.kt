@@ -107,13 +107,15 @@ private fun ProfileContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        AsyncImage(
-            model = profile.imageUrl,
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape),
-            contentDescription = null
-        )
+        profile.imageUrl?.let {
+            AsyncImage(
+                model = it,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentDescription = null
+            )
+        }
         Text(
             text = profile.name,
             style = MaterialTheme.typography.h6,

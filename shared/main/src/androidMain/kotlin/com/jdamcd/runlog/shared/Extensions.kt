@@ -4,7 +4,7 @@ import java.text.DecimalFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-actual fun Double.formatKm(): String {
+actual fun Float.formatKm(): String {
     val distanceKm = this / 1000
     val pattern = if (distanceKm >= 1000) "#,##0" else "#,##0.#"
     return "${DecimalFormat(pattern).format(distanceKm)}k"
@@ -16,7 +16,7 @@ actual fun Int.formatPace(): String {
     return String.format("%d:%02d/k", mins, seconds)
 }
 
-actual fun Long.formatDuration(): String {
+actual fun Int.formatDuration(): String {
     val hours = this / 3600
     val mins = (this % 3600) / 60
     val seconds = this % 60

@@ -93,10 +93,10 @@ class StravaApi(private val tokenProvider: TokenProvider) {
             parameter("page", page)
         }.body()
 
-    suspend fun athlete(): ApiAthlete =
+    suspend fun athlete(): ApiSummaryAthlete =
         client.get("$BASE_URL/athlete").body()
 
-    suspend fun athleteStats(id: Long): ApiAthleteStats =
+    suspend fun athleteStats(id: Long): ApiActivityStats =
         client.get("$BASE_URL/athletes/$id/stats").body()
 
     companion object {
