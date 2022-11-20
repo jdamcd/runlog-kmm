@@ -25,17 +25,11 @@ jobs:
     - name: Run tests
       run: ./gradlew test
 
-    - name: Copy results
-      if: always()
-      run: |
-        mkdir -p junit
-        find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
-
     - name: Generate report
       uses: dorny/test-reporter@v1.6.0
       if: always()
       with:
         name: JUnit Tests
-        path: junit
+        path: "**/build/test-results/**/TEST-*.xml"
         reporter: java-junit
         fail-on-error: true
