@@ -23,19 +23,16 @@ jobs:
       run: ./gradlew spotlessCheck assembleDebug
 
     - name: Run tests
-      run: ./gradlew test
-
-    - name: Copy test results
-      if: always()
-      run: |
-        mkdir -p junit
-        find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
-
-    - name: Generate test report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: JUnit Tests
-          path: junit
-          reporter: java-junit
-          fail-on-error: true
+      steps:
+        - run: ./gradlew test
+        - run: |
+            mkdir -p junit
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+        - name: Generate report
+          uses: dorny/test-reporter@v1.6.0
+          if: always()
+          with:
+            name: JUnit tests
+            path: junit
+            reporter: java-junit
+            fail-on-error: true
