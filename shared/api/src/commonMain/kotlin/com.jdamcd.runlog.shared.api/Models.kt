@@ -22,6 +22,22 @@ data class ApiSummaryActivity(
 )
 
 @Serializable
+data class ApiDetailedActivity(
+    val id: Long,
+    val name: String,
+    val description: String,
+    val type: String,
+    val workout_type: Int?,
+    val distance: Float,
+    val moving_time: Int,
+    val elapsed_time: Int,
+    val total_elevation_gain: Float,
+    val calories: Float,
+    val start_date_local: String,
+    val map: ApiPolylineMap?
+)
+
+@Serializable
 data class ApiPolylineMap(
     val summary_polyline: String
 )
