@@ -7,7 +7,9 @@ enum Copy {
     static var profile_stat_30d: LocalizedStringKey = "profile_stat_30d"
     static var profile_stat_year_to_date: LocalizedStringKey = "profile_stat_year_to_date"
     static var profile_stat_all_time: LocalizedStringKey = "profile_stat_all_time"
+    static var login_permission_error: LocalizedStringKey = "login_permission_error"
     static var strava_view: LocalizedStringKey = "strava_view"
     static var retry: LocalizedStringKey = "retry"
     static var sign_out: LocalizedStringKey = "sign_out"
+    static var button_ok: LocalizedStringKey = "button_ok"
 }

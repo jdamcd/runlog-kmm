@@ -4,6 +4,7 @@ import SwiftUI
 struct LoginView: View {
     @ObservedObject var viewModel = LoginViewModel()
     @EnvironmentObject var userAuth: UserAuth
+    @State private var showingPermissionError = false
 
     var body: some View {
         ZStack {
@@ -22,7 +23,7 @@ struct LoginView: View {
                     case .loading:
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                    case .idle:
+                    case .idle, .permission_error:
                         Button(action: {
                             viewModel.startLogin()
                         }) {
@@ -36,9 +37,15 @@ struct LoginView: View {
                 Image("StravaPowered")
             }.frame(maxHeight: .infinity)
                 .padding(.vertical, 30)
+                .alert(Copy.login_permission_error,
+                       isPresented: $showingPermissionError) {
+                    Button(Copy.button_ok) { showingPermissionError = false }
+                }
         }.onReceive(viewModel.$state, perform: { state in
             if state == .success {
                 userAuth.onLoginSuccess()
+            } else if state == .permission_error {
+                showingPermissionError = true
             }
         })
     }

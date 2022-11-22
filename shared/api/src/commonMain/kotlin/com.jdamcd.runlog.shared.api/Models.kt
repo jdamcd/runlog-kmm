@@ -27,7 +27,7 @@ data class ApiPolylineMap(
 )
 
 @Serializable
-data class ApiSummaryAthlete(
+data class ApiDetailedAthlete(
     val id: Long,
     val username: String,
     val firstname: String,

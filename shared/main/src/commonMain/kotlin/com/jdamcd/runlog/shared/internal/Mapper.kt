@@ -6,8 +6,8 @@ import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
+import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
-import com.jdamcd.runlog.shared.api.ApiSummaryAthlete
 import com.jdamcd.runlog.shared.api.MapboxStatic
 import com.jdamcd.runlog.shared.formatDate
 import com.jdamcd.runlog.shared.formatDuration
@@ -68,7 +68,7 @@ internal object Mapper {
         }
     }
 
-    fun mapProfile(athlete: ApiSummaryAthlete, athleteStats: ApiActivityStats): AthleteProfile {
+    fun mapProfile(athlete: ApiDetailedAthlete, athleteStats: ApiActivityStats): AthleteProfile {
         return AthleteProfile(
             id = athlete.id,
             username = athlete.username,

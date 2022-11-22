@@ -19,19 +19,26 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
             callbackURLScheme: strava.authScheme
         ) { result, error in
             if let result {
-                if let code = result.paramValue("code") {
-                    self.submitAuthCode(code: code)
-                } else {
-                    self.updateState(to: LoginState.idle)
-                }
-            }
-            if error != nil {
+                self.handleCallback(result: result)
+            } else if error != nil {
                 self.updateState(to: .idle)
             }
         }
         session.presentationContextProvider = self
         session.prefersEphemeralWebBrowserSession = false
         session.start()
+    }
+
+    private func handleCallback(result: URL) {
+        if let code = result.paramValue("code"), let scope = result.paramValue("scope") {
+            if scope.contains("activity:read_all") {
+                submitAuthCode(code: code)
+            } else {
+                updateState(to: .permission_error)
+            }
+        } else {
+            updateState(to: .idle)
+        }
     }
 
     private func submitAuthCode(code: String) {
@@ -61,4 +68,5 @@ enum LoginState {
     case idle
     case loading
     case success
+    case permission_error
 }

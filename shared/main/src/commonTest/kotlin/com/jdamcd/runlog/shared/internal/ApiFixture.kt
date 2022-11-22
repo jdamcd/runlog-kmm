@@ -2,8 +2,8 @@ package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
+import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
-import com.jdamcd.runlog.shared.api.ApiSummaryAthlete
 import kotlin.math.roundToInt
 
 fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
@@ -18,7 +18,7 @@ fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
     map = null
 )
 
-fun athleteModel() = ApiSummaryAthlete(
+fun athleteModel() = ApiDetailedAthlete(
     id = 123L,
     username = "jdamcd",
     firstname = "Jamie",

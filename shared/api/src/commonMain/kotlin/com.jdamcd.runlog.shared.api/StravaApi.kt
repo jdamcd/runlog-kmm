@@ -41,7 +41,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                     BearerTokens(tokenProvider.accessToken, tokenProvider.refreshToken)
                 }
                 refreshTokens {
-                    val apiToken = refreshCall(tokenProvider.refreshToken)
+                    val apiToken = tokenRefresh(tokenProvider.refreshToken)
                     tokenProvider.store(apiToken.access_token, apiToken.refresh_token)
                     BearerTokens(apiToken.access_token, apiToken.refresh_token)
                 }
@@ -69,7 +69,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }
     }
 
-    private suspend fun refreshCall(refreshToken: String): ApiToken {
+    private suspend fun tokenRefresh(refreshToken: String): ApiToken {
         return client.post("$BASE_URL/oauth/token") {
             parameter("refresh_token", refreshToken)
             parameter("client_id", BuildKonfig.CLIENT_ID)
@@ -87,13 +87,13 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }.body<ApiToken>().let { tokenProvider.store(it.access_token, it.refresh_token) }
     }
 
-    suspend fun activities(pageSize: Int = 200, page: Int = 1): List<ApiSummaryActivity> =
+    suspend fun activities(pageSize: Int = 100, page: Int = 1): List<ApiSummaryActivity> =
         client.get("$BASE_URL/athlete/activities") {
             parameter("per_page", pageSize)
             parameter("page", page)
         }.body()
 
-    suspend fun athlete(): ApiSummaryAthlete =
+    suspend fun athlete(): ApiDetailedAthlete =
         client.get("$BASE_URL/athlete").body()
 
     suspend fun athleteStats(id: Long): ApiActivityStats =
@@ -110,7 +110,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
                     append("redirect_uri", "$AUTH_SCHEME://jdamcd.com")
                     append("response_type", "code")
                     append("approval_prompt", "auto")
-                    append("scope", "activity:read")
+                    append("scope", "activity:read_all")
                 }
             }.buildString()
 

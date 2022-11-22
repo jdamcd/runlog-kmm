@@ -2,6 +2,7 @@ package com.jdamcd.runlog.android.login
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -10,6 +11,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.jdamcd.runlog.android.R
+import com.jdamcd.runlog.android.app.toast
 import com.jdamcd.runlog.android.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,11 +56,20 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        handleCallback(intent.data)
+        intent.data = null
+    }
 
-        val authCode = intent.data?.getQueryParameter(CODE_PARAM)
+    private fun handleCallback(uri: Uri?) {
+        val authCode = uri?.getQueryParameter(CODE_PARAM)
+        val scope = uri?.getQueryParameter(SCOPE_PARAM)
+
         authCode.takeIf { !it.isNullOrEmpty() }?.let {
-            viewModel.submitAuthCode(it)
-            intent.data = null
+            if (scope?.contains(READ_ALL_SCOPE) == true) {
+                viewModel.submitAuthCode(it)
+            } else {
+                toast(R.string.login_permission_error)
+            }
         }
     }
 
@@ -74,6 +86,8 @@ class LoginActivity : AppCompatActivity() {
         fun clearUser(context: Context) = create(context).putExtra(EXTRA_CLEAR_USER, true)
 
         private const val CODE_PARAM = "code"
+        private const val SCOPE_PARAM = "scope"
+        private const val READ_ALL_SCOPE = "activity:read_all"
         private const val EXTRA_CLEAR_USER = "clear_user"
     }
 }

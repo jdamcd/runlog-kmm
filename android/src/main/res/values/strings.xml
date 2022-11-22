@@ -6,6 +6,7 @@
     <string name="profile_stat_30d">30D</string>
     <string name="profile_stat_year_to_date">YTD</string>
     <string name="profile_stat_all_time">All time</string>
+    <string name="login_permission_error">Strava activity permision is required</string>
     <string name="strava_view">View on Strava</string>
     <string name="strava_connect">Connect with Strava</string>
     <string name="strava_powered">Powered by Strava</string>
