@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RunLog</string>
+    <string name="app_name">Kilometer</string>
     <string name="activities_title">Training</string>
     <string name="profile_title">Profile</string>
     <string name="profile_stat_30d">30D</string>
