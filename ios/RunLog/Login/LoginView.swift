@@ -7,14 +7,15 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(
-                colors: [.asset(.primary), .asset(.dark)]),
-            startPoint: .top, endPoint: .bottom)
+            Image("LoginBackground")
+                .resizable()
+                .aspectRatio(UIImage(named: "LoginBackground")!.size, contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
                 Spacer()
                 Image("Logo")
+                    .shadow(radius: 4)
                 Spacer()
                 ZStack {
                     switch viewModel.state {
@@ -33,8 +34,8 @@ struct LoginView: View {
                 }.frame(height: 60)
                 Spacer()
                 Image("StravaPowered")
-                    .padding()
             }.frame(maxHeight: .infinity)
+                .padding(.vertical, 30)
         }.onReceive(viewModel.$state, perform: { state in
             if state == .success {
                 userAuth.onLoginSuccess()

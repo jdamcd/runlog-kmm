@@ -1,7 +1,6 @@
 package com.jdamcd.runlog.android.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,13 +34,13 @@ fun Login(
 ) {
     RunLogTheme {
         Box {
-            GradientBackground()
+            LoginBackground()
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
                         start = 16.dp,
-                        top = 96.dp,
+                        top = 160.dp,
                         end = 16.dp,
                         bottom = 16.dp
                     ),
@@ -51,8 +51,8 @@ fun Login(
                     painter = painterResource(id = R.drawable.vector_logo),
                     contentDescription = stringResource(id = R.string.app_name),
                     modifier = Modifier
-                        .width(200.dp)
-                        .height(200.dp)
+                        .width(300.dp)
+                        .height(300.dp)
                 )
                 ConnectLoadable(
                     stateFlow = viewModel.flow,
@@ -98,17 +98,13 @@ private fun ConnectLoadable(
 
 @Preview
 @Composable
-fun GradientBackground() {
+private fun LoginBackground() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        MaterialTheme.colors.primary,
-                        MaterialTheme.colors.primaryVariant
-                    )
-                )
+            .paint(
+                painterResource(id = R.drawable.login_background),
+                contentScale = ContentScale.FillBounds
             )
     )
 }

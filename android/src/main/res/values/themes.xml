@@ -1,14 +1,10 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/themePrimaryDark</item>
-        <item name="android:navigationBarColor">@color/themePrimaryDark</item>
-    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar" />
 
     <style name="LoginTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:statusBarColor">@color/themePrimaryDark</item>
-        <item name="android:navigationBarColor">@color/themePrimaryDark</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 </resources>
