@@ -1,11 +1,13 @@
 package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
+import com.jdamcd.runlog.shared.api.ApiDetailedActivity
 import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.api.MapboxStatic
@@ -19,7 +21,7 @@ internal object Mapper {
 
     private const val DATE_PATTERN = "EEEE dd MMM @ h:mma"
 
-    fun mapActivityRow(activity: ApiSummaryActivity): ActivityCard {
+    fun mapActivityCard(activity: ApiSummaryActivity): ActivityCard {
         val type = ApiWorkoutType.map(activity.workout_type ?: 0)
         return ActivityCard(
             id = activity.id,
@@ -31,6 +33,12 @@ internal object Mapper {
             pace = mapPace(activity, type),
             start = mapStartTime(activity),
             mapUrl = activity.map?.let { MapboxStatic.makeUrl(it.summary_polyline) }
+        )
+    }
+
+    fun mapActivityDetails(activity: ApiDetailedActivity): ActivityDetails {
+        return ActivityDetails(
+            id = activity.id
         )
     }
 

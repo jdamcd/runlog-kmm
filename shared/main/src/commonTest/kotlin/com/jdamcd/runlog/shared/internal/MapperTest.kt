@@ -11,7 +11,7 @@ class MapperTest {
 
     @Test
     fun mapsDefaultActivity() {
-        Mapper.mapActivityRow(activityModel()) shouldBe ActivityCard(
+        Mapper.mapActivityCard(activityModel()) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -26,7 +26,7 @@ class MapperTest {
 
     @Test
     fun mapsRaceActivityUsingElapsedTime() {
-        Mapper.mapActivityRow(activityModel(workout_type = 1)) shouldBe ActivityCard(
+        Mapper.mapActivityCard(activityModel(workout_type = 1)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -41,7 +41,7 @@ class MapperTest {
 
     @Test
     fun mapsLongRunActivity() {
-        Mapper.mapActivityRow(activityModel(workout_type = 2)) shouldBe ActivityCard(
+        Mapper.mapActivityCard(activityModel(workout_type = 2)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -56,7 +56,7 @@ class MapperTest {
 
     @Test
     fun mapsWorkoutActivity() {
-        Mapper.mapActivityRow(activityModel(workout_type = 3)) shouldBe ActivityCard(
+        Mapper.mapActivityCard(activityModel(workout_type = 3)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,

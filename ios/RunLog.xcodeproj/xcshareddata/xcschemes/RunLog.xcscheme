@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7555FF7A242A565900829871"
-               BuildableName = "RunLog.app"
+               BuildableName = "Kilometer.app"
                BlueprintName = "RunLog"
                ReferencedContainer = "container:RunLog.xcodeproj">
             </BuildableReference>
@@ -82,7 +82,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7555FF7A242A565900829871"
-            BuildableName = "RunLog.app"
+            BuildableName = "Kilometer.app"
             BlueprintName = "RunLog"
             ReferencedContainer = "container:RunLog.xcodeproj">
          </BuildableReference>

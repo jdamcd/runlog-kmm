@@ -25,7 +25,7 @@ data class ApiSummaryActivity(
 data class ApiDetailedActivity(
     val id: Long,
     val name: String,
-    val description: String,
+    val description: String?,
     val type: String,
     val workout_type: Int?,
     val distance: Float,

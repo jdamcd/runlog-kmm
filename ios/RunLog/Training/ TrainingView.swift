@@ -18,9 +18,6 @@ struct TrainingView: View {
                 case let .data(data):
                     ActivitiesListView(
                         activities: data.activities,
-                        generateUrl: { id in
-                            viewModel.linkUrl(id: id)
-                        },
                         refresh: {
                             self.viewModel.refresh()
                         }
@@ -44,13 +41,12 @@ struct TrainingView: View {
 
 private struct ActivitiesListView: View {
     var activities: [ActivityCard]
-    var generateUrl: (Int64) -> URL
     var refresh: () -> Void
 
     var body: some View {
         List(activities, id: \.id) { activity in
-            Link(destination: generateUrl(activity.id)) {
-                VStack {
+            VStack {
+                NavigationLink(destination: ActivityView(id: activity.id)) {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(activity.name)
@@ -66,33 +62,26 @@ private struct ActivitiesListView: View {
                                 .fontWeight(.light)
                         }
                         Spacer()
-                        VStack(alignment: .trailing) {
-                            HStack {
-                                switch activity.type {
-                                case .run:
-                                    Image(systemName: "figure.run")
-                                case .cycle:
-                                    Image(systemName: "figure.outdoor.cycle")
-                                default:
-                                    Image(systemName: "dumbbell")
-                                }
-                                if activity.isRace {
-                                    Image(systemName: "medal.fill")
-                                        .foregroundColor(Color.asset(.strava))
-                                }
-                            }.padding(.bottom)
-
-                            Text(Copy.strava_view)
-                                .font(.footnote)
-                                .foregroundColor(Color.asset(.strava))
-                                .padding(.top)
+                        HStack {
+                            switch activity.type {
+                            case .run:
+                                Image(systemName: "figure.run")
+                            case .cycle:
+                                Image(systemName: "figure.outdoor.cycle")
+                            default:
+                                Image(systemName: "dumbbell")
+                            }
+                            if activity.isRace {
+                                Image(systemName: "medal.fill")
+                                    .foregroundColor(Color.asset(.strava))
+                            }
                         }
                     }
-                    if let map = activity.mapUrl {
-                        LazyImage(url: URL(string: map))
-                            .aspectRatio(2.5, contentMode: ContentMode.fit)
-                            .cornerRadius(6)
-                    }
+                }
+                if let map = activity.mapUrl {
+                    LazyImage(url: URL(string: map))
+                        .aspectRatio(2.5, contentMode: ContentMode.fit)
+                        .cornerRadius(6)
                 }
             }
         }
@@ -132,7 +121,6 @@ struct ActivitiesView_Previews: PreviewProvider {
                     mapUrl: nil
                 ),
             ],
-            generateUrl: { _ in URL(string: "example.com")! },
             refresh: {}
         )
     }

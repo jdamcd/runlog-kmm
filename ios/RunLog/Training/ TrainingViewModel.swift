@@ -48,10 +48,6 @@ class TrainingViewModel: ObservableObject {
         }
     }
 
-    func linkUrl(id: Int64) -> URL {
-        URL(string: strava.linkUrl(id: id))!
-    }
-
     private func signOut() {
         user.clear()
     }
