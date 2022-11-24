@@ -9,6 +9,7 @@ import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiDetailedActivity
 import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
+import com.jdamcd.runlog.shared.api.ApiPolylineMap
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.api.MapboxStatic
 import com.jdamcd.runlog.shared.formatDate
@@ -32,8 +33,13 @@ internal object Mapper {
             duration = mapDuration(activity, type),
             pace = mapPace(activity, type),
             start = mapStartTime(activity),
-            mapUrl = activity.map?.let { MapboxStatic.makeUrl(it.summary_polyline) }
+            mapUrl = mapMap(activity.map)
         )
+    }
+
+    private fun mapMap(map: ApiPolylineMap?): String? {
+        return map?.takeIf { it.summary_polyline.isNotEmpty() }
+            ?.let { MapboxStatic.makeUrl(it.summary_polyline) }
     }
 
     fun mapActivityDetails(activity: ApiDetailedActivity): ActivityDetails {
