@@ -51,8 +51,6 @@ class TrainingViewModel @Inject constructor(
             }
         }
     }
-
-    fun generateLink(id: Long) = strava.linkUrl(id)
 }
 
 sealed class TrainingState {

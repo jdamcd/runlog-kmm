@@ -54,7 +54,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun TrainingScreen(
     viewModel: TrainingViewModel,
-    onOpenLink: (String) -> Unit,
+    onNavigateToActivity: (Long) -> Unit,
     onNavigateToProfile: () -> Unit
 ) {
     Scaffold(
@@ -83,7 +83,7 @@ fun TrainingScreen(
             TrainingList(
                 stateFlow = viewModel.flow,
                 modifier = Modifier.padding(padding),
-                onItemClick = { onOpenLink(viewModel.generateLink(it)) },
+                onItemClick = { onNavigateToActivity(it) },
                 onRetryClick = { viewModel.load() },
                 onPullRefresh = { viewModel.refresh() }
             )
@@ -155,15 +155,6 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
                 activity = activity,
                 modifier = Modifier.constrainAs(icons) {
                     top.linkTo(parent.top, margin = 8.dp)
-                    end.linkTo(parent.end)
-                }
-            )
-            Text(
-                text = stringResource(R.string.strava_view),
-                style = MaterialTheme.typography.body2,
-                color = stravaBrand,
-                modifier = Modifier.constrainAs(link) {
-                    bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
                 }
             )

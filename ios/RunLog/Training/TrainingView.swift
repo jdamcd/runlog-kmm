@@ -19,7 +19,7 @@ struct TrainingView: View {
                     ActivitiesListView(
                         activities: data.activities,
                         refresh: {
-                            self.viewModel.refresh()
+                            viewModel.refresh()
                         }
                     )
                 }
@@ -33,7 +33,7 @@ struct TrainingView: View {
                 }
             )
             .onAppear(perform: {
-                self.viewModel.load()
+                viewModel.load()
             })
         }.accentColor(Color.asset(.strava))
     }

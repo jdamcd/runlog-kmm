@@ -9,7 +9,7 @@ struct ActivityView: View {
             Text(Copy.strava_view)
                 .foregroundColor(Color.asset(.strava))
         }.onAppear(perform: {
-            self.viewModel.load(id: id)
+            viewModel.load(id: id)
         })
     }
 }
