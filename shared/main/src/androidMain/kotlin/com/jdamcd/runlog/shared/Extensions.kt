@@ -10,6 +10,10 @@ actual fun Float.formatKm(): String {
     return "${DecimalFormat(pattern).format(distanceKm)}k"
 }
 
+actual fun Float.formatElevation(): String {
+    return "${DecimalFormat("#0.#").format(this)}m"
+}
+
 actual fun Int.formatPace(): String {
     val mins = this / 60
     val seconds = this % 60
@@ -23,7 +27,7 @@ actual fun Int.formatDuration(): String {
     return if (hours > 0) {
         String.format("%d:%02d:%02d", hours, mins, seconds)
     } else {
-        String.format("%02d:%02d", mins, seconds)
+        String.format("%d:%02d", mins, seconds)
     }
 }
 

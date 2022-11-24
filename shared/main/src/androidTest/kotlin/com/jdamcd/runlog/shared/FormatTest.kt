@@ -16,6 +16,16 @@ class FormatTest {
     }
 
     @Test
+    fun formatsElevationWithSingleDecimal() {
+        123.45f.formatElevation() shouldBe "123.4m"
+    }
+
+    @Test
+    fun formatsRoundElevationWithNoDecimal() {
+        123.0f.formatElevation() shouldBe "123m"
+    }
+
+    @Test
     fun formatsDistanceOver1000KmWithoutDecimal() {
         1_001_234.5f.formatKm() shouldBe "1,001k"
     }
@@ -27,7 +37,7 @@ class FormatTest {
 
     @Test
     fun formatDurationLessThan10Mins() {
-        540.formatDuration() shouldBe "09:00"
+        540.formatDuration() shouldBe "9:00"
     }
 
     @Test

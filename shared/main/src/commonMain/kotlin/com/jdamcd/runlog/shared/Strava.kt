@@ -33,7 +33,38 @@ data class ActivityCard(
 )
 
 data class ActivityDetails(
-    val id: Long
+    val id: Long,
+    val name: String,
+    val description: String?,
+    val type: ActivityType,
+    val kudos: Int,
+    val isRace: Boolean,
+    val distance: String,
+    val elapsedDuration: String,
+    val movingDuration: String,
+    val elevationGain: String,
+    val elevationLow: String?,
+    val elevationHigh: String?,
+    val effort: Int?,
+    val calories: Int,
+    val cadence: Int?,
+    val averageHeartrate: Int?,
+    val maxHeartrate: Int?,
+    val pace: String,
+    val start: String,
+    val mapUrl: String?,
+    val splits: List<Split>?
+)
+
+data class Split(
+    val split: Int,
+    val distance: String,
+    val elapsedDuration: String,
+    val movingDuration: String,
+    val elevationGain: String,
+    val averageHeartrate: Int?,
+    val pace: String,
+    val paceZone: Int
 )
 
 enum class ActivityType {

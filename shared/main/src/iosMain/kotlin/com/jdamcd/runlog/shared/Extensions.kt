@@ -18,6 +18,12 @@ actual fun Float.formatKm(): String {
     return "${nf.stringFromNumber(NSNumber(distanceKm))}k"
 }
 
+actual fun Float.formatElevation(): String {
+    val nf = NSNumberFormatter()
+    nf.positiveFormat = "#0.#"
+    return "${nf.stringFromNumber(NSNumber(this))}m"
+}
+
 actual fun Int.formatPace(): String {
     val mins = this / 60
     val seconds = this % 60
@@ -31,7 +37,7 @@ actual fun Int.formatDuration(): String {
     return if (hours > 0) {
         NSString.stringWithFormat("%d:%02d:%02d", hours, mins, seconds)
     } else {
-        NSString.stringWithFormat("%02d:%02d", mins, seconds)
+        NSString.stringWithFormat("%d:%02d", mins, seconds)
     }
 }
 
