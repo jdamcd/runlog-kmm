@@ -12,9 +12,9 @@ struct TrainingView: View {
                 case .loading:
                     ProgressView()
                 case .error:
-                    Button(action: viewModel.load, label: {
+                    Button(action: viewModel.load) {
                         Text(Copy.retry)
-                    })
+                    }
                 case let .data(data):
                     ActivitiesListView(
                         activities: data.activities,
@@ -45,49 +45,65 @@ private struct ActivitiesListView: View {
 
     var body: some View {
         List(activities, id: \.id) { activity in
-            VStack {
-                NavigationLink(destination: ActivityView(id: activity.id)) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(activity.name)
-                                .font(.headline)
-                            HStack(alignment: .firstTextBaseline) {
-                                Text(activity.distance)
-                                    .font(.largeTitle)
-                                Text("·  \(activity.duration)")
-                                Text("·  \(activity.pace)")
-                            }
-                            Text(activity.start)
-                                .font(.footnote)
-                                .fontWeight(.light)
-                        }
-                        Spacer()
-                        HStack {
-                            switch activity.type {
-                            case .run:
-                                Image(systemName: "figure.run")
-                            case .cycle:
-                                Image(systemName: "figure.outdoor.cycle")
-                            default:
-                                Image(systemName: "dumbbell")
-                            }
-                            if activity.isRace {
-                                Image(systemName: "medal.fill")
-                                    .foregroundColor(Color.asset(.strava))
-                            }
-                        }
-                    }
-                }
-                if let map = activity.mapUrl {
-                    LazyImage(url: URL(string: map))
-                        .aspectRatio(2.5, contentMode: ContentMode.fit)
-                        .cornerRadius(6)
-                }
-            }
+            ActivityItemView(activity: activity)
         }
         .listStyle(PlainListStyle())
         .refreshable {
             refresh()
+        }
+    }
+}
+
+private struct ActivityItemView: View {
+    var activity: ActivityCard
+
+    var body: some View {
+        VStack {
+            NavigationLink(destination: ActivityView(id: activity.id)) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(activity.name)
+                            .font(.headline)
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(activity.distance)
+                                .font(.largeTitle)
+                            Text("·  \(activity.duration)")
+                            Text("·  \(activity.pace)")
+                        }
+                        Text(activity.start)
+                            .font(.footnote)
+                            .fontWeight(.light)
+                    }
+                    Spacer()
+                    ActivityIconsView(activity: activity)
+                }
+            }
+            if let map = activity.mapUrl {
+                LazyImage(url: URL(string: map))
+                    .aspectRatio(2.5, contentMode: ContentMode.fit)
+                    .cornerRadius(6)
+            }
+        }
+    }
+}
+
+private struct ActivityIconsView: View {
+    var activity: ActivityCard
+
+    var body: some View {
+        HStack {
+            switch activity.type {
+            case .run:
+                Image(systemName: "figure.run")
+            case .cycle:
+                Image(systemName: "figure.outdoor.cycle")
+            default:
+                Image(systemName: "dumbbell")
+            }
+            if activity.isRace {
+                Image(systemName: "medal.fill")
+                    .foregroundColor(Color.asset(.strava))
+            }
         }
     }
 }
