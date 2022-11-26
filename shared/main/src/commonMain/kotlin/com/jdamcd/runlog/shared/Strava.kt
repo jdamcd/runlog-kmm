@@ -60,7 +60,7 @@ data class Split(
     val distance: String,
     val elapsedDuration: String,
     val movingDuration: String,
-    val elevationGain: String,
+    val elevation: Int,
     val averageHeartrate: Int?,
     val pace: String,
     val paceZone: Int

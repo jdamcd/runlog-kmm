@@ -32,7 +32,12 @@ class FormatTest {
 
     @Test
     fun formatsPacePerKmFromSeconds() {
-        301.formatPace() shouldBe "5:01/k"
+        301.formatPace() shouldBe "5:01 /km"
+    }
+
+    @Test
+    fun formatsPaceWithoutUnit() {
+        301.formatPace(withUnit = false) shouldBe "5:01"
     }
 
     @Test

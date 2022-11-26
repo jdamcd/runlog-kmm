@@ -20,7 +20,7 @@ class MapperTest {
             isRace = false,
             distance = "10.1k",
             duration = "40:00",
-            pace = "3:58/k",
+            pace = "3:58 /km",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -35,7 +35,7 @@ class MapperTest {
             isRace = true,
             distance = "10.1k",
             duration = "41:00",
-            pace = "4:04/k",
+            pace = "4:04 /km",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -50,7 +50,7 @@ class MapperTest {
             isRace = false,
             distance = "10.1k",
             duration = "40:00",
-            pace = "3:58/k",
+            pace = "3:58 /km",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -65,7 +65,7 @@ class MapperTest {
             isRace = false,
             distance = "10.1k",
             duration = "40:00",
-            pace = "3:58/k",
+            pace = "3:58 /km",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null
         )
@@ -90,7 +90,7 @@ class MapperTest {
             calories = 200,
             averageHeartrate = 160,
             maxHeartrate = 180,
-            pace = "3:58/k",
+            pace = "3:58 /km",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null,
             splits = listOf(
@@ -99,9 +99,9 @@ class MapperTest {
                     distance = "1k",
                     elapsedDuration = "5:00",
                     movingDuration = "5:00",
-                    elevationGain = "10m",
+                    elevation = 10,
                     averageHeartrate = 160,
-                    pace = "5:00/k",
+                    pace = "5:00",
                     paceZone = 2
                 )
             )
@@ -117,15 +117,15 @@ class MapperTest {
             imageUrl = "image.url",
             recentRuns = AthleteStats(
                 distance = "100k",
-                pace = "5:33/k"
+                pace = "5:33 /km"
             ),
             yearRuns = AthleteStats(
                 distance = "1,000k",
-                pace = "5:33/k"
+                pace = "5:33 /km"
             ),
             allRuns = AthleteStats(
                 distance = "5,000k",
-                pace = "5:33/k"
+                pace = "5:33 /km"
             )
         )
     }

@@ -12,7 +12,7 @@
 "activity_stat_hr_avg" = "HR (avg)";
 "activity_stat_hr_max" = "HR (max)";
 "activity_split_k" = "KM";
-"activity_split_pace" = "PACE";
+"activity_split_pace" = "PACE (/km)";
 "activity_split_elevation" = "ELEV. (m)";
 "activity_split_hr" = "HR";
 "login_permission_error" = "Strava activity permision is required";

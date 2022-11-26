@@ -14,10 +14,11 @@ actual fun Float.formatElevation(): String {
     return "${DecimalFormat("#0.#").format(this)}m"
 }
 
-actual fun Int.formatPace(): String {
+actual fun Int.formatPace(withUnit: Boolean): String {
     val mins = this / 60
     val seconds = this % 60
-    return String.format("%d:%02d/k", mins, seconds)
+    val pattern = if (withUnit) "%d:%02d /km" else "%d:%02d"
+    return String.format(pattern, mins, seconds)
 }
 
 actual fun Int.formatDuration(): String {

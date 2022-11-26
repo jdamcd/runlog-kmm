@@ -12,7 +12,7 @@ val activityCard1 = ActivityCard(
     isRace = true,
     distance = "10.1k",
     duration = "40:00",
-    pace = "3:58/k",
+    pace = "3:58 /km",
     start = "TUESDAY 25 OCT @ 5:58PM",
     mapUrl = "map.url/123"
 )
@@ -24,7 +24,7 @@ val activityCard2 = ActivityCard(
     isRace = true,
     distance = "10.1k",
     duration = "40:00",
-    pace = "3:58/k",
+    pace = "3:58 /km",
     start = "TUESDAY 25 OCT @ 5:58PM",
     mapUrl = "map.url/123"
 )
@@ -36,14 +36,14 @@ val athleteProfile = AthleteProfile(
     imageUrl = "image.url/123",
     recentRuns = AthleteStats(
         distance = "123km",
-        pace = "5:00/k"
+        pace = "5:00 /km"
     ),
     yearRuns = AthleteStats(
         distance = "1234km",
-        pace = "5:00/k"
+        pace = "5:00 /km"
     ),
     allRuns = AthleteStats(
         distance = "12345km",
-        pace = "5:00/k"
+        pace = "5:00 /km"
     )
 )

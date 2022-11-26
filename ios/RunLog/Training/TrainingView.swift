@@ -121,7 +121,7 @@ struct ActivitiesView_Previews: PreviewProvider {
                     isRace: true,
                     distance: "42.2k",
                     duration: "2:59:59",
-                    pace: "4:16/k",
+                    pace: "4:16 /km",
                     start: "SUNDAY 6 NOV @ 9:11AM",
                     mapUrl: "example.com"
                 ),
@@ -132,7 +132,7 @@ struct ActivitiesView_Previews: PreviewProvider {
                     isRace: false,
                     distance: "12.3k",
                     duration: "1:02:17",
-                    pace: "5:04/k",
+                    pace: "5:04 /km",
                     start: "SATURDAY 12 NOV @ 8:37AM",
                     mapUrl: nil
                 ),

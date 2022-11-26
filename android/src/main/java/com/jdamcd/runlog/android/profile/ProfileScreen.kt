@@ -201,15 +201,15 @@ private class ProfileContentProvider : PreviewParameterProvider<AthleteProfile> 
             imageUrl = "example.com",
             recentRuns = AthleteStats(
                 distance = "123.4k",
-                pace = "4:50/k"
+                pace = "4:50 /km"
             ),
             yearRuns = AthleteStats(
                 distance = "1,234k",
-                pace = "5:01/k"
+                pace = "5:01 /km"
             ),
             allRuns = AthleteStats(
                 distance = "12,345k",
-                pace = "5:25/k"
+                pace = "5:25 /km"
             )
         )
     )

@@ -89,17 +89,17 @@ internal object Mapper {
         distanceMetres: Float,
         type: ApiWorkoutType
     ): String {
-        return calculatePace(distanceMetres, if (type.isRace()) elapsedTime else movingTime)
+        val time = if (type.isRace()) elapsedTime else movingTime
+        return calculatePace(distanceMetres, time).formatPace()
     }
 
     private fun mapStartTime(startDateLocal: String): String {
         return startDateLocal.formatDate(DATE_PATTERN).uppercase()
     }
 
-    private fun calculatePace(distanceMetres: Float, timeSeconds: Int): String {
+    private fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
         val distanceKm = distanceMetres / 1000
-        val pace = (timeSeconds / distanceKm).roundToInt() // seconds per km
-        return pace.formatPace()
+        return (timeSeconds / distanceKm).roundToInt() // seconds per km
     }
 
     private fun mapMap(map: ApiPolylineMap?): String? {
@@ -110,7 +110,7 @@ internal object Mapper {
     private fun mapStats(stats: ApiActivityTotal): AthleteStats {
         return AthleteStats(
             distance = stats.distance.formatKm(),
-            pace = calculatePace(stats.distance, stats.moving_time)
+            pace = calculatePace(stats.distance, stats.moving_time).formatPace()
         )
     }
 
@@ -121,9 +121,9 @@ internal object Mapper {
                 distance = it.distance.formatKm(),
                 elapsedDuration = it.elapsed_time.formatDuration(),
                 movingDuration = it.moving_time.formatDuration(),
-                elevationGain = it.elevation_difference.formatElevation(),
+                elevation = it.elevation_difference.roundToInt(),
                 averageHeartrate = it.average_heartrate?.roundToInt(),
-                pace = calculatePace(it.distance, it.elapsed_time),
+                pace = calculatePace(it.distance, it.elapsed_time).formatPace(withUnit = false),
                 paceZone = it.pace_zone
             )
         }

@@ -201,7 +201,7 @@ private struct SplitItem: View {
                 .padding(.leading, 4)
                 .frame(width: 68, alignment: .leading)
             Spacer()
-            Text(split.elevationGain)
+            Text("\(split.elevation)")
                 .frame(width: 68, alignment: .trailing)
             if let avgHr = split.averageHeartrate {
                 Text("\(avgHr)")
@@ -232,7 +232,7 @@ struct ActivityView_Previews: PreviewProvider {
                     calories: 371,
                     averageHeartrate: 151,
                     maxHeartrate: 167,
-                    pace: "4:54/k",
+                    pace: "4:54 /km",
                     start: "FRIDAY 25 NOV @ 2:23PM",
                     mapUrl: "",
                     splits: [
@@ -241,9 +241,9 @@ struct ActivityView_Previews: PreviewProvider {
                             distance: "1k",
                             elapsedDuration: "5:03",
                             movingDuration: "5:03",
-                            elevationGain: "13.8m",
+                            elevation: 14,
                             averageHeartrate: 145,
-                            pace: "5:03/k",
+                            pace: "5:03",
                             paceZone: 2
                         ),
                         Split(
@@ -251,9 +251,9 @@ struct ActivityView_Previews: PreviewProvider {
                             distance: "1k",
                             elapsedDuration: "5:04",
                             movingDuration: "5:04",
-                            elevationGain: "12.4m",
+                            elevation: 12,
                             averageHeartrate: 159,
-                            pace: "5:04/k",
+                            pace: "5:04",
                             paceZone: 2
                         ),
                         Split(
@@ -261,9 +261,9 @@ struct ActivityView_Previews: PreviewProvider {
                             distance: "1k",
                             elapsedDuration: "5:06",
                             movingDuration: "5:06",
-                            elevationGain: "-14.8m",
+                            elevation: -15,
                             averageHeartrate: 158,
-                            pace: "5:06/k",
+                            pace: "5:06",
                             paceZone: 1
                         ),
                         Split(
@@ -271,9 +271,9 @@ struct ActivityView_Previews: PreviewProvider {
                             distance: "1k",
                             elapsedDuration: "5:23",
                             movingDuration: "4:35",
-                            elevationGain: "-6m",
+                            elevation: -6,
                             averageHeartrate: 150,
-                            pace: "5:22/k",
+                            pace: "5:22",
                             paceZone: 2
                         ),
                         Split(
@@ -281,9 +281,9 @@ struct ActivityView_Previews: PreviewProvider {
                             distance: "1k",
                             elapsedDuration: "6:16",
                             movingDuration: "4:41",
-                            elevationGain: "-5.4m",
+                            elevation: -5,
                             averageHeartrate: 143,
-                            pace: "6:16/k",
+                            pace: "6:16",
                             paceZone: 2
                         ),
                         Split(
@@ -291,9 +291,9 @@ struct ActivityView_Previews: PreviewProvider {
                             distance: "0k",
                             elapsedDuration: "0:13",
                             movingDuration: "0:10",
-                            elevationGain: "-1m",
+                            elevation: -1,
                             averageHeartrate: 160,
-                            pace: "7:13/k",
+                            pace: "7:13",
                             paceZone: 1
                         ),
                     ]
