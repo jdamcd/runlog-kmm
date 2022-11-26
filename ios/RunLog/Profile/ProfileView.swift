@@ -12,9 +12,9 @@ struct ProfileView: View {
             case .loading:
                 ProgressView()
             case .error:
-                Button(action: viewModel.load, label: {
+                Button(action: viewModel.load) {
                     Text(Copy.retry)
-                })
+                }
             case let .data(data):
                 ProfileDetailsView(profile: data.profile)
             }
@@ -22,7 +22,7 @@ struct ProfileView: View {
         .navigationBarTitle(Copy.profile_title, displayMode: .inline)
         .navigationBarItems(trailing:
             Button {
-                self.userAuth.signOut()
+                userAuth.signOut()
             } label: {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
                     .renderingMode(.template)
@@ -30,7 +30,7 @@ struct ProfileView: View {
             }
         )
         .onAppear(perform: {
-            self.viewModel.load()
+            viewModel.load()
         })
     }
 }

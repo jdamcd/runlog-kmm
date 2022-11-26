@@ -2,7 +2,10 @@ package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
+import com.jdamcd.runlog.shared.api.ApiDetailedActivity
 import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
+import com.jdamcd.runlog.shared.api.ApiPolylineMap
+import com.jdamcd.runlog.shared.api.ApiSplit
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import kotlin.math.roundToInt
 
@@ -16,6 +19,40 @@ fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
     elapsed_time = 2460,
     start_date_local = "2022-10-25T17:58:50Z",
     map = null
+)
+
+fun detailedActivityModel() = ApiDetailedActivity(
+    id = 123L,
+    name = "my activity",
+    description = "my description",
+    type = "Run",
+    workout_type = 2,
+    kudos_count = 0,
+    distance = 10_100.0f,
+    moving_time = 2400,
+    elapsed_time = 2460,
+    total_elevation_gain = 10.0f,
+    elev_low = 5.0f,
+    elev_high = 15.0f,
+    suffer_score = 50.0f,
+    calories = 200.0f,
+    average_heartrate = 160.0f,
+    max_heartrate = 180.0f,
+    start_date_local = "2022-10-25T17:58:50Z",
+    map = ApiPolylineMap(
+        summary_polyline = ""
+    ),
+    splits_metric = listOf(
+        ApiSplit(
+            split = 1,
+            distance = 1000.0f,
+            elapsed_time = 300,
+            moving_time = 300,
+            elevation_difference = 10.0f,
+            average_heartrate = 160.0f,
+            pace_zone = 2
+        )
+    )
 )
 
 fun athleteModel() = ApiDetailedAthlete(

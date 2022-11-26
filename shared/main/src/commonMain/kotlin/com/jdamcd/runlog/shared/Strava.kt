@@ -3,6 +3,7 @@ package com.jdamcd.runlog.shared
 interface Strava {
     suspend fun authenticate(code: String): LoginResult
     suspend fun activities(): Result<List<ActivityCard>>
+    suspend fun activityDetails(id: Long): Result<ActivityDetails>
     suspend fun profile(): Result<AthleteProfile>
     val loginUrl: String
     val authScheme: String
@@ -29,6 +30,40 @@ data class ActivityCard(
     val pace: String,
     val start: String,
     val mapUrl: String?
+)
+
+data class ActivityDetails(
+    val id: Long,
+    val name: String,
+    val description: String?,
+    val type: ActivityType,
+    val kudos: Int,
+    val isRace: Boolean,
+    val distance: String,
+    val elapsedDuration: String,
+    val movingDuration: String,
+    val elevationGain: String,
+    val elevationLow: String?,
+    val elevationHigh: String?,
+    val effort: Int?,
+    val calories: Int,
+    val averageHeartrate: Int?,
+    val maxHeartrate: Int?,
+    val pace: String,
+    val start: String,
+    val mapUrl: String?,
+    val splits: List<Split>?
+)
+
+data class Split(
+    val split: Int,
+    val distance: String,
+    val elapsedDuration: String,
+    val movingDuration: String,
+    val elevationGain: String,
+    val averageHeartrate: Int?,
+    val pace: String,
+    val paceZone: Int
 )
 
 enum class ActivityType {
