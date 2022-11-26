@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MainNavigation(
-                onOpenLink = { openLink(this, it) },
-                onSignOut = { signOut() }
+                openLink = { openLink(this, it) },
+                signOut = { signOut() }
             )
         }
     }

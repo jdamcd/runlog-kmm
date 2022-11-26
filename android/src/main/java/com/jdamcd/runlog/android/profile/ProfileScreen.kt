@@ -68,15 +68,14 @@ fun ProfileScreen(
                     }
                 }
             )
-        },
-        content = { padding ->
-            ProfileStates(
-                stateFlow = viewModel.flow,
-                modifier = Modifier.padding(padding),
-                onRetryClick = { viewModel.load() }
-            )
         }
-    )
+    ) { padding ->
+        ProfileStates(
+            stateFlow = viewModel.flow,
+            modifier = Modifier.padding(padding),
+            onRetryClick = { viewModel.load() }
+        )
+    }
 }
 
 @Composable

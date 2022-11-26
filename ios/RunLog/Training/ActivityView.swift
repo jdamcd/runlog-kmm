@@ -167,7 +167,7 @@ private struct SplitsList: View {
                 .font(.footnote)
                 .fontWeight(.light)
                 .padding(.leading, 4)
-                .frame(width: 68, alignment: .leading)
+                .frame(width: 76, alignment: .leading)
             Spacer()
             Text(Copy.activity_split_elevation)
                 .font(.footnote)
@@ -199,7 +199,7 @@ private struct SplitItem: View {
                 .frame(width: 28, alignment: .leading)
             Text(split.pace)
                 .padding(.leading, 4)
-                .frame(width: 68, alignment: .leading)
+                .frame(width: 76, alignment: .leading)
             Spacer()
             Text("\(split.elevation)")
                 .frame(width: 68, alignment: .trailing)
@@ -290,18 +290,7 @@ struct ActivityView_Previews: PreviewProvider {
                             pace: "6:16",
                             paceSeconds: 376,
                             paceZone: 2
-                        ),
-                        Split(
-                            split: 6,
-                            distance: "0k",
-                            elapsedDuration: "0:13",
-                            movingDuration: "0:10",
-                            elevation: -1,
-                            averageHeartrate: 160,
-                            pace: "7:13",
-                            paceSeconds: 433,
-                            paceZone: 1
-                        ),
+                        )
                     ]
                 ),
                 openOnWeb: { URL(string: "example.com")! })

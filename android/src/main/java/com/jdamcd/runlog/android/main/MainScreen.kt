@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jdamcd.runlog.android.profile.ProfileScreen
 import com.jdamcd.runlog.android.training.ActivityScreen
+import com.jdamcd.runlog.android.training.ActivityViewModel
 import com.jdamcd.runlog.android.training.TrainingScreen
 import com.jdamcd.runlog.android.ui.RunLogTheme
 
@@ -19,8 +20,8 @@ fun MainNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = "home",
-    onOpenLink: (String) -> Unit,
-    onSignOut: () -> Unit
+    openLink: (String) -> Unit,
+    signOut: () -> Unit
 ) {
     RunLogTheme {
         NavHost(
@@ -39,16 +40,17 @@ fun MainNavigation(
                 route = "activity/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.LongType })
             ) { backstackEntry ->
+                val id = backstackEntry.arguments!!.getLong("id")
                 ActivityScreen(
-                    id = backstackEntry.arguments!!.getLong("id"),
-                    viewModel = hiltViewModel(),
-                    onOpenLink = onOpenLink
+                    id = id,
+                    viewModel = hiltViewModel<ActivityViewModel>().also { it.load(id) },
+                    openLink = openLink
                 )
             }
             composable("profile") {
                 ProfileScreen(
                     viewModel = hiltViewModel(),
-                    onSignOutClick = onSignOut
+                    onSignOutClick = signOut
                 )
             }
         }

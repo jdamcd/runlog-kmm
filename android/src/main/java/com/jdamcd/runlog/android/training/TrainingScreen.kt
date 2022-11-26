@@ -78,17 +78,16 @@ fun TrainingScreen(
                     }
                 }
             )
-        },
-        content = { padding ->
-            TrainingList(
-                stateFlow = viewModel.flow,
-                modifier = Modifier.padding(padding),
-                onItemClick = { onNavigateToActivity(it) },
-                onRetryClick = { viewModel.load() },
-                onPullRefresh = { viewModel.refresh() }
-            )
         }
-    )
+    ) { padding ->
+        TrainingList(
+            stateFlow = viewModel.flow,
+            modifier = Modifier.padding(padding),
+            onItemClick = { onNavigateToActivity(it) },
+            onRetryClick = { viewModel.load() },
+            onPullRefresh = { viewModel.refresh() }
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
