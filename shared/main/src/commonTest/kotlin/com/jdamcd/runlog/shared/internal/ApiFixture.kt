@@ -36,7 +36,6 @@ fun detailedActivityModel() = ApiDetailedActivity(
     elev_high = 15.0f,
     suffer_score = 50.0f,
     calories = 200.0f,
-    average_cadence = 150.0f,
     average_heartrate = 160.0f,
     max_heartrate = 180.0f,
     start_date_local = "2022-10-25T17:58:50Z",

@@ -37,7 +37,6 @@ data class ApiDetailedActivity(
     val elev_high: Float?,
     val suffer_score: Float?,
     val calories: Float,
-    val average_cadence: Float?,
     val average_heartrate: Float?,
     val max_heartrate: Float?,
     val start_date_local: String,

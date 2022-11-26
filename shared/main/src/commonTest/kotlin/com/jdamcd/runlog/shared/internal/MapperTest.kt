@@ -88,7 +88,6 @@ class MapperTest {
             elevationHigh = "15m",
             effort = 50,
             calories = 200,
-            cadence = 150,
             averageHeartrate = 160,
             maxHeartrate = 180,
             pace = "3:58/k",

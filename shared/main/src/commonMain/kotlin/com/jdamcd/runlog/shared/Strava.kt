@@ -47,7 +47,6 @@ data class ActivityDetails(
     val elevationHigh: String?,
     val effort: Int?,
     val calories: Int,
-    val cadence: Int?,
     val averageHeartrate: Int?,
     val maxHeartrate: Int?,
     val pace: String,

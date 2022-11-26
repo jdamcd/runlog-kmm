@@ -57,7 +57,6 @@ internal object Mapper {
             elevationHigh = activity.elev_high?.formatElevation(),
             effort = activity.suffer_score?.roundToInt(),
             calories = activity.calories.roundToInt(),
-            cadence = activity.average_cadence?.roundToInt(),
             averageHeartrate = activity.average_heartrate?.roundToInt(),
             maxHeartrate = activity.max_heartrate?.roundToInt(),
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, type),
