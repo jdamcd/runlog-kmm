@@ -4,6 +4,7 @@ enum AssetColor: String {
     case primary
     case dark
     case accent
+    case container
     case strava
 }
 
