@@ -115,7 +115,8 @@ internal object Mapper {
     }
 
     private fun mapSplits(splits: List<ApiSplit>?): List<Split>? {
-        return splits?.map {
+        return splits?.filter { it.distance >= 200 }?.map {
+            val paceSeconds = calculatePace(it.distance, it.elapsed_time)
             Split(
                 split = it.split,
                 distance = it.distance.formatKm(),
@@ -123,7 +124,8 @@ internal object Mapper {
                 movingDuration = it.moving_time.formatDuration(),
                 elevation = it.elevation_difference.roundToInt(),
                 averageHeartrate = it.average_heartrate?.roundToInt(),
-                pace = calculatePace(it.distance, it.elapsed_time).formatPace(withUnit = false),
+                pace = paceSeconds.formatPace(withUnit = false),
+                paceSeconds = paceSeconds,
                 paceZone = it.pace_zone
             )
         }

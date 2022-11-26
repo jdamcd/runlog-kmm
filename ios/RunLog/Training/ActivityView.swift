@@ -244,6 +244,7 @@ struct ActivityView_Previews: PreviewProvider {
                             elevation: 14,
                             averageHeartrate: 145,
                             pace: "5:03",
+                            paceSeconds: 303,
                             paceZone: 2
                         ),
                         Split(
@@ -254,6 +255,7 @@ struct ActivityView_Previews: PreviewProvider {
                             elevation: 12,
                             averageHeartrate: 159,
                             pace: "5:04",
+                            paceSeconds: 304,
                             paceZone: 2
                         ),
                         Split(
@@ -264,6 +266,7 @@ struct ActivityView_Previews: PreviewProvider {
                             elevation: -15,
                             averageHeartrate: 158,
                             pace: "5:06",
+                            paceSeconds: 306,
                             paceZone: 1
                         ),
                         Split(
@@ -274,6 +277,7 @@ struct ActivityView_Previews: PreviewProvider {
                             elevation: -6,
                             averageHeartrate: 150,
                             pace: "5:22",
+                            paceSeconds: 322,
                             paceZone: 2
                         ),
                         Split(
@@ -284,6 +288,7 @@ struct ActivityView_Previews: PreviewProvider {
                             elevation: -5,
                             averageHeartrate: 143,
                             pace: "6:16",
+                            paceSeconds: 376,
                             paceZone: 2
                         ),
                         Split(
@@ -294,6 +299,7 @@ struct ActivityView_Previews: PreviewProvider {
                             elevation: -1,
                             averageHeartrate: 160,
                             pace: "7:13",
+                            paceSeconds: 433,
                             paceZone: 1
                         ),
                     ]

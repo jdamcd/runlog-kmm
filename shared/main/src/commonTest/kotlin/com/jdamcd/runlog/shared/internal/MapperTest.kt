@@ -102,6 +102,7 @@ class MapperTest {
                     elevation = 10,
                     averageHeartrate = 160,
                     pace = "5:00",
+                    paceSeconds = 300,
                     paceZone = 2
                 )
             )
