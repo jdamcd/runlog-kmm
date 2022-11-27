@@ -32,8 +32,8 @@ fun MainNavigation(
             composable("home") {
                 TrainingScreen(
                     viewModel = hiltViewModel(),
-                    onNavigateToActivity = { id -> navController.navigate("activity/$id") },
-                    onNavigateToProfile = { navController.navigate("profile") }
+                    navigateToActivity = { id -> navController.navigate("activity/$id") },
+                    navigateToProfile = { navController.navigate("profile") }
                 )
             }
             composable(

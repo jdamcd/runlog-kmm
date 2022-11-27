@@ -124,7 +124,7 @@ private fun ActivityContent(
                 contentScale = ContentScale.FillWidth
             )
         }
-        SummaryText(
+        DescriptionText(
             description = activity.description,
             time = activity.start
         )
@@ -137,7 +137,7 @@ private fun ActivityContent(
 }
 
 @Composable
-private fun SummaryText(description: String?, time: String) {
+private fun DescriptionText(description: String?, time: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -160,6 +160,23 @@ private fun SummaryText(description: String?, time: String) {
 
 @Composable
 private fun SummaryStats(activity: ActivityDetails) {
+    if (activity.type == ActivityType.CROSS_TRAIN) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            StatBox(
+                title = R.string.activity_stat_elapsed_time,
+                stat = activity.elapsedDuration
+            )
+        }
+    } else {
+        RunRideSummaryStats(activity)
+    }
+}
+
+@Composable
+private fun RunRideSummaryStats(activity: ActivityDetails) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly

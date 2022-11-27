@@ -37,7 +37,7 @@ private struct ActivityDetailsView: View {
                         .aspectRatio(2.5, contentMode: ContentMode.fit)
                 }
                 VStack(alignment: .leading) {
-                    SummaryText(
+                    DescriptionText(
                         description: activity.description_,
                         time: activity.start
                     )
@@ -61,7 +61,7 @@ private struct ActivityDetailsView: View {
     }
 }
 
-private struct SummaryText: View {
+private struct DescriptionText: View {
     var description: String?
     var time: String
 
@@ -85,6 +85,23 @@ private struct SummaryText: View {
 }
 
 private struct SummaryStats: View {
+    var activity: ActivityDetails
+
+    var body: some View {
+        if activity.type == ActivityType.crossTrain {
+            HStack {
+                StatBox(
+                    title: Copy.activity_stat_elapsed_time,
+                    stat: activity.elapsedDuration
+                )
+            }.frame(maxWidth: .infinity)
+        } else {
+            RunRideSummaryStats(activity: activity)
+        }
+    }
+}
+
+private struct RunRideSummaryStats: View {
     var activity: ActivityDetails
 
     var body: some View {

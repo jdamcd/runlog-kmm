@@ -10,6 +10,7 @@ enum Copy {
     static var activity_stat_distance: LocalizedStringKey = "activity_stat_distance"
     static var activity_stat_pace: LocalizedStringKey = "activity_stat_pace"
     static var activity_stat_moving_time: LocalizedStringKey = "activity_stat_moving_time"
+    static var activity_stat_elapsed_time: LocalizedStringKey = "activity_stat_elapsed_time"
     static var activity_stat_elevation: LocalizedStringKey = "activity_stat_elevation"
     static var activity_stat_effort: LocalizedStringKey = "activity_stat_effort"
     static var activity_stat_hr_avg: LocalizedStringKey = "activity_stat_hr_avg"

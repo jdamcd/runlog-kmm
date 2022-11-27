@@ -41,7 +41,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
@@ -55,8 +54,8 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun TrainingScreen(
     viewModel: TrainingViewModel,
-    onNavigateToActivity: (Long) -> Unit,
-    onNavigateToProfile: () -> Unit
+    navigateToActivity: (Long) -> Unit,
+    navigateToProfile: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -70,7 +69,7 @@ fun TrainingScreen(
                 },
                 backgroundColor = MaterialTheme.colors.background,
                 actions = {
-                    IconButton(onClick = onNavigateToProfile) {
+                    IconButton(onClick = navigateToProfile) {
                         Icon(
                             imageVector = Icons.Rounded.AccountCircle,
                             contentDescription = stringResource(R.string.profile_title),
@@ -84,7 +83,7 @@ fun TrainingScreen(
         TrainingList(
             stateFlow = viewModel.flow,
             modifier = Modifier.padding(padding),
-            onItemClick = { onNavigateToActivity(it) },
+            onItemClick = { navigateToActivity(it) },
             onRetryClick = { viewModel.load() },
             onPullRefresh = { viewModel.refresh() }
         )
@@ -141,16 +140,9 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
                 .padding(vertical = 8.dp, horizontal = 16.dp)
                 .fillMaxWidth()
         ) {
-            val (stats, icons, link) = createRefs()
+            val (icons) = createRefs()
 
-            ActivityStats(
-                activity = activity,
-                modifier = Modifier.constrainAs(stats) {
-                    start.linkTo(parent.start)
-                    end.linkTo(link.start)
-                    width = Dimension.fillToConstraints
-                }
-            )
+            ActivitySummary(activity)
             ActivityIcons(
                 activity = activity,
                 modifier = Modifier.constrainAs(icons) {
@@ -182,8 +174,35 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
 }
 
 @Composable
-private fun ActivityStats(activity: ActivityCard, modifier: Modifier) {
-    Column(modifier = modifier) {
+private fun ActivitySummary(activity: ActivityCard) {
+    if (activity.type == ActivityType.CROSS_TRAIN) {
+        MiniSummary(activity)
+    } else {
+        FullSummary(activity)
+    }
+}
+
+@Composable
+private fun MiniSummary(activity: ActivityCard) {
+    Column {
+        Text(
+            text = activity.name,
+            style = MaterialTheme.typography.subtitle1
+        )
+        Text(
+            text = activity.duration,
+            style = MaterialTheme.typography.h4
+        )
+        Text(
+            text = activity.start,
+            style = MaterialTheme.typography.overline
+        )
+    }
+}
+
+@Composable
+private fun FullSummary(activity: ActivityCard) {
+    Column {
         Text(
             text = activity.name,
             style = MaterialTheme.typography.subtitle1
@@ -250,12 +269,12 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
             ),
             ActivityCard(
                 id = 2,
-                name = "Morning Run",
-                type = ActivityType.RUN,
+                name = "Yoga",
+                type = ActivityType.CROSS_TRAIN,
                 subtype = ActivitySubtype.DEFAULT,
-                distance = "12.3k",
-                duration = "1:02:17",
-                pace = "5:04 /km",
+                distance = "0k",
+                duration = "30:00",
+                pace = "0:00 /km",
                 start = "SATURDAY 12 NOV @ 8:37AM",
                 mapUrl = null
             )

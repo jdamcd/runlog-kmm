@@ -16,7 +16,7 @@ struct TrainingView: View {
                         Text(Copy.retry)
                     }
                 case let .data(data):
-                    ActivitiesListView(
+                    ActivitiesList(
                         activities: data.activities,
                         refresh: {
                             viewModel.refresh()
@@ -39,13 +39,13 @@ struct TrainingView: View {
     }
 }
 
-private struct ActivitiesListView: View {
+private struct ActivitiesList: View {
     var activities: [ActivityCard]
     var refresh: () -> Void
 
     var body: some View {
         List(activities, id: \.id) { activity in
-            ActivityItemView(activity: activity)
+            ActivityItem(activity: activity)
         }
         .listStyle(PlainListStyle())
         .refreshable {
@@ -54,28 +54,16 @@ private struct ActivitiesListView: View {
     }
 }
 
-private struct ActivityItemView: View {
+private struct ActivityItem: View {
     var activity: ActivityCard
 
     var body: some View {
         VStack {
             NavigationLink(destination: ActivityView(id: activity.id)) {
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text(activity.name)
-                            .font(.headline)
-                        HStack(alignment: .firstTextBaseline) {
-                            Text(activity.distance)
-                                .font(.largeTitle)
-                            Text("·  \(activity.duration)")
-                            Text("·  \(activity.pace)")
-                        }
-                        Text(activity.start)
-                            .font(.footnote)
-                            .fontWeight(.light)
-                    }
+                    ActivitySummary(activity: activity)
                     Spacer()
-                    ActivityIconsView(activity: activity)
+                    ActivityIcons(activity: activity)
                 }
             }
             if let map = activity.mapUrl {
@@ -87,7 +75,57 @@ private struct ActivityItemView: View {
     }
 }
 
-private struct ActivityIconsView: View {
+private struct ActivitySummary: View {
+    var activity: ActivityCard
+
+    var body: some View {
+        if activity.type == ActivityType.crossTrain {
+            MiniSummary(activity: activity)
+        } else {
+            FullSummary(activity: activity)
+        }
+    }
+}
+
+private struct MiniSummary: View {
+    var activity: ActivityCard
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(activity.name)
+                .font(.headline)
+            Text(activity.duration)
+                .font(.largeTitle)
+            Text(activity.start)
+                .font(.footnote)
+                .fontWeight(.light)
+        }
+    }
+}
+
+private struct FullSummary: View {
+    var activity: ActivityCard
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(activity.name)
+                .font(.headline)
+            HStack(alignment: .firstTextBaseline) {
+                Text(activity.distance)
+                    .font(.largeTitle)
+                Text("·")
+                Text(activity.duration)
+                Text("·")
+                Text(activity.pace)
+            }
+            Text(activity.start)
+                .font(.footnote)
+                .fontWeight(.light)
+        }
+    }
+}
+
+private struct ActivityIcons: View {
     var activity: ActivityCard
 
     var body: some View {
@@ -120,7 +158,7 @@ struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
         TrainingView(viewModel: TrainingViewModel())
 
-        ActivitiesListView(
+        ActivitiesList(
             activities: [
                 ActivityCard(
                     id: 1,
@@ -135,15 +173,15 @@ struct ActivitiesView_Previews: PreviewProvider {
                 ),
                 ActivityCard(
                     id: 2,
-                    name: "Morning Run",
-                    type: ActivityType.run,
+                    name: "Yoga",
+                    type: ActivityType.crossTrain,
                     subtype: ActivitySubtype.default_,
-                    distance: "12.3k",
-                    duration: "1:02:17",
-                    pace: "5:04 /km",
+                    distance: "0k",
+                    duration: "30:00",
+                    pace: "0:00 /km",
                     start: "SATURDAY 12 NOV @ 8:37AM",
                     mapUrl: nil
-                ),
+                )
             ],
             refresh: {}
         )

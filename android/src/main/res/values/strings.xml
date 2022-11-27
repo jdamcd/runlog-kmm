@@ -9,6 +9,7 @@
     <string name="activity_stat_distance">Distance</string>
     <string name="activity_stat_pace">Pace</string>
     <string name="activity_stat_moving_time">Moving time</string>
+    <string name="activity_stat_elapsed_time">Elapsed time</string>
     <string name="activity_stat_elevation">Elevation</string>
     <string name="activity_stat_effort">Effort</string>
     <string name="activity_stat_calories">Calories</string>

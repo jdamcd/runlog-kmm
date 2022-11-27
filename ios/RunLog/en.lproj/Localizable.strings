@@ -6,6 +6,7 @@
 "activity_stat_distance" = "Distance";
 "activity_stat_pace" = "Pace";
 "activity_stat_moving_time" = "Moving time";
+"activity_stat_elapsed_time" = "Elapsed time";
 "activity_stat_elevation" = "Elevation";
 "activity_stat_effort" = "Effort";
 "activity_stat_calories" = "Calories";
