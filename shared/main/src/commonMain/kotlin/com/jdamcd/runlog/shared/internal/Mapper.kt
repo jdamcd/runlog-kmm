@@ -2,6 +2,7 @@ package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
+import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
@@ -26,29 +27,29 @@ internal object Mapper {
     private const val DATE_PATTERN = "EEEE dd MMM @ h:mma"
 
     fun mapActivityCard(activity: ApiSummaryActivity): ActivityCard {
-        val type = ApiWorkoutType.map(activity.workout_type ?: 0)
+        val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         return ActivityCard(
             id = activity.id,
             name = activity.name,
-            type = type.toActivityType(),
-            isRace = type.isRace(),
+            type = mapType(activity.type),
+            subtype = subtype,
             distance = activity.distance.formatKm(),
-            duration = mapDuration(activity.elapsed_time, activity.moving_time, type),
-            pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, type),
+            duration = mapDuration(activity.elapsed_time, activity.moving_time, subtype.isRace()),
+            pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
             start = mapStartTime(activity.start_date_local),
             mapUrl = mapMap(activity.map)
         )
     }
 
     fun mapActivityDetails(activity: ApiDetailedActivity): ActivityDetails {
-        val type = ApiWorkoutType.map(activity.workout_type ?: 0)
+        val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         return ActivityDetails(
             id = activity.id,
             name = activity.name,
-            description = activity.description,
-            type = type.toActivityType(),
+            description = activity.description?.ifEmpty { null },
+            type = mapType(activity.type),
+            subtype = subtype,
             kudos = activity.kudos_count,
-            isRace = type.isRace(),
             distance = activity.distance.formatKm(),
             elapsedDuration = activity.elapsed_time.formatDuration(),
             movingDuration = activity.moving_time.formatDuration(),
@@ -59,7 +60,7 @@ internal object Mapper {
             calories = activity.calories.roundToInt(),
             averageHeartrate = activity.average_heartrate?.roundToInt(),
             maxHeartrate = activity.max_heartrate?.roundToInt(),
-            pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, type),
+            pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
             start = mapStartTime(activity.start_date_local),
             mapUrl = mapMap(activity.map),
             splits = mapSplits(activity.splits_metric)
@@ -78,8 +79,8 @@ internal object Mapper {
         )
     }
 
-    private fun mapDuration(elapsedTime: Int, movingTime: Int, type: ApiWorkoutType): String {
-        val time = if (type.isRace()) elapsedTime else movingTime
+    private fun mapDuration(elapsedTime: Int, movingTime: Int, isRace: Boolean): String {
+        val time = if (isRace) elapsedTime else movingTime
         return time.formatDuration()
     }
 
@@ -87,9 +88,9 @@ internal object Mapper {
         elapsedTime: Int,
         movingTime: Int,
         distanceMetres: Float,
-        type: ApiWorkoutType
+        isRace: Boolean
     ): String {
-        val time = if (type.isRace()) elapsedTime else movingTime
+        val time = if (isRace) elapsedTime else movingTime
         return calculatePace(distanceMetres, time).formatPace()
     }
 
@@ -131,6 +132,14 @@ internal object Mapper {
         }
     }
 
+    private fun mapType(type: String): ActivityType {
+        return when (type) {
+            "Run" -> ActivityType.RUN
+            "Ride" -> ActivityType.CYCLE
+            else -> ActivityType.CROSS_TRAIN
+        }
+    }
+
     private enum class ApiWorkoutType(val id: Int) {
         RUN_DEFAULT(0),
         RUN_RACE(1),
@@ -140,14 +149,17 @@ internal object Mapper {
         RIDE_RACE(11),
         RIDE_WORKOUT(12);
 
-        fun isRace() = this == RUN_RACE || this == RIDE_RACE
-
-        fun toActivityType(): ActivityType {
-            return ActivityType.RUN
+        fun toActivitySubtype(): ActivitySubtype {
+            return when (this.id) {
+                RUN_RACE.id, RIDE_RACE.id -> ActivitySubtype.RACE
+                RUN_WORKOUT.id, RIDE_WORKOUT.id -> ActivitySubtype.WORKOUT
+                RUN_LONG.id -> ActivitySubtype.LONG
+                else -> ActivitySubtype.DEFAULT
+            }
         }
 
         companion object {
-            fun map(id: Int): ApiWorkoutType = values().first { it.id == id }
+            fun map(id: Int?): ApiWorkoutType = values().firstOrNull { it.id == id } ?: RUN_DEFAULT
         }
     }
 }

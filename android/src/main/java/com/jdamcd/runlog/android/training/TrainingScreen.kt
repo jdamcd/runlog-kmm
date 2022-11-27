@@ -48,6 +48,7 @@ import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import kotlinx.coroutines.flow.StateFlow
 
@@ -223,7 +224,7 @@ private fun ActivityIcons(activity: ActivityCard, modifier: Modifier) {
             contentDescription = null,
             tint = MaterialTheme.colors.primaryVariant
         )
-        if (activity.isRace) {
+        if (activity.subtype.isRace()) {
             Icon(
                 imageVector = Icons.Rounded.SportsScore,
                 contentDescription = null,
@@ -240,7 +241,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 id = 1,
                 name = "NYC Marathon",
                 type = ActivityType.RUN,
-                isRace = true,
+                subtype = ActivitySubtype.RACE,
                 distance = "42.2k",
                 duration = "2:59:59",
                 pace = "4:16 /km",
@@ -251,7 +252,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 id = 2,
                 name = "Morning Run",
                 type = ActivityType.RUN,
-                isRace = false,
+                subtype = ActivitySubtype.DEFAULT,
                 distance = "12.3k",
                 duration = "1:02:17",
                 pace = "5:04 /km",

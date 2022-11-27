@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.android.util
 
 import com.jdamcd.runlog.shared.ActivityCard
+import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
@@ -9,7 +10,7 @@ val activityCard1 = ActivityCard(
     id = 123,
     name = "cool run",
     type = ActivityType.RUN,
-    isRace = true,
+    subtype = ActivitySubtype.RACE,
     distance = "10.1k",
     duration = "40:00",
     pace = "3:58 /km",
@@ -21,7 +22,7 @@ val activityCard2 = ActivityCard(
     id = 456,
     name = "cooler run",
     type = ActivityType.RUN,
-    isRace = true,
+    subtype = ActivitySubtype.RACE,
     distance = "10.1k",
     duration = "40:00",
     pace = "3:58 /km",

@@ -24,7 +24,7 @@ data class ActivityCard(
     val id: Long,
     val name: String,
     val type: ActivityType,
-    val isRace: Boolean,
+    val subtype: ActivitySubtype,
     val distance: String,
     val duration: String,
     val pace: String,
@@ -37,8 +37,8 @@ data class ActivityDetails(
     val name: String,
     val description: String?,
     val type: ActivityType,
+    val subtype: ActivitySubtype,
     val kudos: Int,
-    val isRace: Boolean,
     val distance: String,
     val elapsedDuration: String,
     val movingDuration: String,
@@ -69,6 +69,12 @@ data class Split(
 
 enum class ActivityType {
     RUN, CYCLE, CROSS_TRAIN
+}
+
+enum class ActivitySubtype {
+    DEFAULT, RACE, WORKOUT, LONG;
+
+    fun isRace() = this == RACE
 }
 
 data class AthleteProfile(

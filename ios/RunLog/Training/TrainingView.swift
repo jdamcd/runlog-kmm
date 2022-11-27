@@ -100,9 +100,17 @@ private struct ActivityIconsView: View {
             default:
                 Image(systemName: "dumbbell")
             }
-            if activity.isRace {
+            switch activity.subtype {
+            case .race:
                 Image(systemName: "medal.fill")
                     .foregroundColor(Color.asset(.strava))
+            case .workout:
+                Image(systemName: "1.lane")
+                    .foregroundColor(Color.asset(.strava))
+            case .long_:
+                Image(systemName: "signpost.right")
+                    .foregroundColor(Color.asset(.strava))
+            default: EmptyView()
             }
         }
     }
@@ -118,7 +126,7 @@ struct ActivitiesView_Previews: PreviewProvider {
                     id: 1,
                     name: "NYC Marathon",
                     type: ActivityType.run,
-                    isRace: true,
+                    subtype: ActivitySubtype.race,
                     distance: "42.2k",
                     duration: "2:59:59",
                     pace: "4:16 /km",
@@ -129,7 +137,7 @@ struct ActivitiesView_Previews: PreviewProvider {
                     id: 2,
                     name: "Morning Run",
                     type: ActivityType.run,
-                    isRace: false,
+                    subtype: ActivitySubtype.default_,
                     distance: "12.3k",
                     duration: "1:02:17",
                     pace: "5:04 /km",

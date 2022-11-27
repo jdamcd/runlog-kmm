@@ -2,6 +2,7 @@ package com.jdamcd.runlog.shared.internal
 
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
+import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
@@ -17,7 +18,7 @@ class MapperTest {
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
-            isRace = false,
+            subtype = ActivitySubtype.DEFAULT,
             distance = "10.1k",
             duration = "40:00",
             pace = "3:58 /km",
@@ -32,7 +33,7 @@ class MapperTest {
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
-            isRace = true,
+            subtype = ActivitySubtype.RACE,
             distance = "10.1k",
             duration = "41:00",
             pace = "4:04 /km",
@@ -47,7 +48,7 @@ class MapperTest {
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
-            isRace = false,
+            subtype = ActivitySubtype.LONG,
             distance = "10.1k",
             duration = "40:00",
             pace = "3:58 /km",
@@ -62,7 +63,7 @@ class MapperTest {
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
-            isRace = false,
+            subtype = ActivitySubtype.WORKOUT,
             distance = "10.1k",
             duration = "40:00",
             pace = "3:58 /km",
@@ -77,7 +78,7 @@ class MapperTest {
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
-            isRace = false,
+            subtype = ActivitySubtype.LONG,
             description = "my description",
             kudos = 0,
             distance = "10.1k",

@@ -43,6 +43,7 @@ import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.container
 import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityDetails
+import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.Split
 import kotlinx.coroutines.flow.StateFlow
@@ -358,8 +359,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
             name = "Afternoon Run",
             description = "Easy Peckham Rye loop",
             type = ActivityType.RUN,
+            subtype = ActivitySubtype.DEFAULT,
             kudos = 2,
-            isRace = false,
             distance = "5k",
             elapsedDuration = "27:05",
             movingDuration = "24:39",
