@@ -1,8 +1,10 @@
 package com.jdamcd.runlog.android.training
 
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jdamcd.runlog.android.main.ROUTE_ACTIVITY_ID
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.Strava
@@ -14,13 +16,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val strava: Strava
 ) : ViewModel(), LifecycleObserver {
+
+    private val id: Long
 
     private val _mutableFlow = MutableStateFlow<ActivityState>(ActivityState.Loading)
     val flow = _mutableFlow as StateFlow<ActivityState>
 
-    fun load(id: Long) {
+    init {
+        id = savedStateHandle.get<Long>(ROUTE_ACTIVITY_ID)!!
+        load()
+    }
+
+    fun load() {
         _mutableFlow.value = ActivityState.Loading
         viewModelScope.launch {
             when (val result = strava.activityDetails(id)) {
@@ -34,7 +44,7 @@ class ActivityViewModel @Inject constructor(
         }
     }
 
-    fun generateLink(id: Long) = strava.linkUrl(id)
+    fun activityWebLink() = strava.linkUrl(id)
 }
 
 sealed class ActivityState {

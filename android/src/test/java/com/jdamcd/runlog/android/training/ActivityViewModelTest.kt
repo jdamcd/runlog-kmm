@@ -1,5 +1,6 @@
 package com.jdamcd.runlog.android.training
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.shared.ActivityDetails
@@ -28,15 +29,16 @@ class ActivityViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = ActivityViewModel(strava)
+        val state = SavedStateHandle(initialState = mapOf("id" to 123L))
+        viewModel = ActivityViewModel(state, strava)
     }
 
     @Test
     fun `load success emits loading then data`() = runTest {
-        whenever(strava.activityDetails(1L)).thenReturn(Result.Data(activityDetails))
+        whenever(strava.activityDetails(123L)).thenReturn(Result.Data(activityDetails))
 
         viewModel.flow.test {
-            viewModel.load(1L)
+            viewModel.load()
 
             awaitItem() shouldBe ActivityState.Loading
             awaitItem() shouldBe ActivityState.Data(activityDetails)
@@ -46,10 +48,10 @@ class ActivityViewModelTest {
 
     @Test
     fun `load failure emits loading then error`() = runTest {
-        whenever(strava.activityDetails(2L)).thenReturn(Result.Error(Throwable(), recoverable = true))
+        whenever(strava.activityDetails(123L)).thenReturn(Result.Error(Throwable(), recoverable = true))
 
         viewModel.flow.test {
-            viewModel.load(2L)
+            viewModel.load()
 
             awaitItem() shouldBe ActivityState.Loading
             awaitItem() shouldBe ActivityState.Error(recoverable = true)
@@ -59,8 +61,8 @@ class ActivityViewModelTest {
 
     @Test
     fun `generateLink forwards ID to make URL`() {
-        viewModel.generateLink(3L)
+        viewModel.activityWebLink()
 
-        verify(strava).linkUrl(3L)
+        verify(strava).linkUrl(123L)
     }
 }

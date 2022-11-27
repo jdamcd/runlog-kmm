@@ -11,7 +11,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jdamcd.runlog.android.profile.ProfileScreen
 import com.jdamcd.runlog.android.training.ActivityScreen
-import com.jdamcd.runlog.android.training.ActivityViewModel
 import com.jdamcd.runlog.android.training.TrainingScreen
 import com.jdamcd.runlog.android.ui.RunLogTheme
 
@@ -19,7 +18,7 @@ import com.jdamcd.runlog.android.ui.RunLogTheme
 fun MainNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "home",
+    startDestination: String = ROUTE_HOME,
     openLink: (String) -> Unit,
     signOut: () -> Unit
 ) {
@@ -29,25 +28,23 @@ fun MainNavigation(
             navController = navController,
             startDestination = startDestination
         ) {
-            composable("home") {
+            composable(ROUTE_HOME) {
                 TrainingScreen(
                     viewModel = hiltViewModel(),
-                    navigateToActivity = { id -> navController.navigate("activity/$id") },
-                    navigateToProfile = { navController.navigate("profile") }
+                    navigateToActivity = { id -> navController.navigate(buildActivityRoute(id)) },
+                    navigateToProfile = { navController.navigate(ROUTE_PROFILE) }
                 )
             }
             composable(
-                route = "activity/{id}",
-                arguments = listOf(navArgument("id") { type = NavType.LongType })
-            ) { backstackEntry ->
-                val id = backstackEntry.arguments!!.getLong("id")
+                route = "$ROUTE_ACTIVITY/{$ROUTE_ACTIVITY_ID}",
+                arguments = listOf(navArgument(ROUTE_ACTIVITY_ID) { type = NavType.LongType })
+            ) {
                 ActivityScreen(
-                    id = id,
-                    viewModel = hiltViewModel<ActivityViewModel>().also { it.load(id) },
+                    viewModel = hiltViewModel(),
                     openLink = openLink
                 )
             }
-            composable("profile") {
+            composable(ROUTE_PROFILE) {
                 ProfileScreen(
                     viewModel = hiltViewModel(),
                     onSignOutClick = signOut
@@ -56,3 +53,10 @@ fun MainNavigation(
         }
     }
 }
+
+const val ROUTE_HOME = "home"
+const val ROUTE_PROFILE = "profile"
+const val ROUTE_ACTIVITY = "activity"
+const val ROUTE_ACTIVITY_ID = "id"
+
+private fun buildActivityRoute(id: Long) = "$ROUTE_ACTIVITY/$id"

@@ -50,7 +50,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ActivityScreen(
-    id: Long,
     viewModel: ActivityViewModel,
     openLink: (String) -> Unit
 ) {
@@ -72,8 +71,8 @@ fun ActivityScreen(
         ActivityStates(
             stateFlow = viewModel.flow,
             modifier = Modifier.padding(padding),
-            onRetryClick = { viewModel.load(id) },
-            onLinkClick = { openLink(viewModel.generateLink(id)) },
+            onRetryClick = { viewModel.load() },
+            onLinkClick = { openLink(viewModel.activityWebLink()) },
             updateTitle = { screenTitle = it }
         )
     }
