@@ -187,7 +187,8 @@ private fun MiniSummary(activity: ActivityCard) {
     Column {
         Text(
             text = activity.name,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.SemiBold
         )
         Text(
             text = activity.duration,
@@ -195,7 +196,8 @@ private fun MiniSummary(activity: ActivityCard) {
         )
         Text(
             text = activity.start,
-            style = MaterialTheme.typography.overline
+            style = MaterialTheme.typography.body2,
+            fontWeight = FontWeight.Light
         )
     }
 }
@@ -205,7 +207,8 @@ private fun FullSummary(activity: ActivityCard) {
     Column {
         Text(
             text = activity.name,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.SemiBold
         )
         Row {
             Text(
@@ -215,18 +218,19 @@ private fun FullSummary(activity: ActivityCard) {
             )
             Text(
                 text = "  ·  ${activity.duration}",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.body1,
                 modifier = Modifier.alignByBaseline()
             )
             Text(
                 text = "  ·  ${activity.pace}",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.body1,
                 modifier = Modifier.alignByBaseline()
             )
         }
         Text(
             text = activity.start,
-            style = MaterialTheme.typography.overline
+            style = MaterialTheme.typography.body2,
+            fontWeight = FontWeight.Light
         )
     }
 }

@@ -1,0 +1,2 @@
+swiftformat .
+./gradlew spotlessApply assembleDebug testDebugUnitTest

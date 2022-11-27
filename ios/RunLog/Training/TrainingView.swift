@@ -143,7 +143,7 @@ private struct ActivityIcons: View {
                 Image(systemName: "medal.fill")
                     .foregroundColor(Color.asset(.strava))
             case .workout:
-                Image(systemName: "1.lane")
+                Image(systemName: "chart.bar.xaxis")
                     .foregroundColor(Color.asset(.strava))
             case .long_:
                 Image(systemName: "signpost.right")
@@ -156,15 +156,13 @@ private struct ActivityIcons: View {
 
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingView(viewModel: TrainingViewModel())
-
         ActivitiesList(
             activities: [
                 ActivityCard(
                     id: 1,
                     name: "NYC Marathon",
                     type: ActivityType.run,
-                    subtype: ActivitySubtype.race,
+                    subtype: ActivitySubtype.workout,
                     distance: "42.2k",
                     duration: "2:59:59",
                     pace: "4:16 /km",
@@ -185,5 +183,6 @@ struct ActivitiesView_Previews: PreviewProvider {
             ],
             refresh: {}
         )
+        TrainingView(viewModel: TrainingViewModel())
     }
 }
