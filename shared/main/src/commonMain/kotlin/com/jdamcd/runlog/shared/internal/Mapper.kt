@@ -119,7 +119,7 @@ internal class Mapper {
 
     private fun mapSplits(splits: List<ApiSplit>?): List<Split>? {
         return splits?.filter { it.distance >= 200 }?.map {
-            val paceSeconds = calculatePace(it.distance, it.elapsed_time)
+            val paceSeconds = calculatePace(it.distance, it.moving_time)
             Split(
                 split = it.split,
                 distance = it.distance.formatKm(),

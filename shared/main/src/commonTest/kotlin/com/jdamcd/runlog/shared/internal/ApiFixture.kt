@@ -46,7 +46,7 @@ fun detailedActivityModel() = ApiDetailedActivity(
         ApiSplit(
             split = 1,
             distance = 1000.0f,
-            elapsed_time = 300,
+            elapsed_time = 360,
             moving_time = 300,
             elevation_difference = 10.0f,
             average_heartrate = 160.0f,

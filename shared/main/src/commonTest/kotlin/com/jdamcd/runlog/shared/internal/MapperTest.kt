@@ -106,7 +106,7 @@ class MapperTest {
                 Split(
                     split = 1,
                     distance = "1k",
-                    elapsedDuration = "5:00",
+                    elapsedDuration = "6:00",
                     movingDuration = "5:00",
                     elevation = 10,
                     averageHeartrate = 160,
