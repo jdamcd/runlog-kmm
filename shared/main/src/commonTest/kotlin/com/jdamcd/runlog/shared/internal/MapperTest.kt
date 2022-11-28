@@ -8,13 +8,21 @@ import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.Split
 import io.kotest.matchers.shouldBe
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class MapperTest {
 
+    private lateinit var mapper: Mapper
+
+    @BeforeTest
+    fun setUp() {
+        mapper = Mapper()
+    }
+
     @Test
     fun mapsDefaultActivity() {
-        Mapper.mapActivityCard(activityModel()) shouldBe ActivityCard(
+        mapper.mapActivityCard(activityModel()) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -29,7 +37,7 @@ class MapperTest {
 
     @Test
     fun mapsRaceActivityUsingElapsedTime() {
-        Mapper.mapActivityCard(activityModel(workout_type = 1)) shouldBe ActivityCard(
+        mapper.mapActivityCard(activityModel(workout_type = 1)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -44,7 +52,7 @@ class MapperTest {
 
     @Test
     fun mapsLongRunActivity() {
-        Mapper.mapActivityCard(activityModel(workout_type = 2)) shouldBe ActivityCard(
+        mapper.mapActivityCard(activityModel(workout_type = 2)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -59,7 +67,7 @@ class MapperTest {
 
     @Test
     fun mapsWorkoutActivity() {
-        Mapper.mapActivityCard(activityModel(workout_type = 3)) shouldBe ActivityCard(
+        mapper.mapActivityCard(activityModel(workout_type = 3)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -74,7 +82,7 @@ class MapperTest {
 
     @Test
     fun mapsDetailedActivity() {
-        Mapper.mapActivityDetails(detailedActivityModel()) shouldBe ActivityDetails(
+        mapper.mapActivityDetails(detailedActivityModel()) shouldBe ActivityDetails(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -112,7 +120,7 @@ class MapperTest {
 
     @Test
     fun mapsAthleteAndStatsToProfile() {
-        Mapper.mapProfile(athleteModel(), athleteStatsModel()) shouldBe AthleteProfile(
+        mapper.mapProfile(athleteModel(), athleteStatsModel()) shouldBe AthleteProfile(
             id = 123L,
             username = "jdamcd",
             name = "Jamie McDonald",

@@ -41,13 +41,14 @@ struct LoginView: View {
                        isPresented: $showingPermissionError) {
                     Button(Copy.button_ok) { showingPermissionError = false }
                 }
-        }.onReceive(viewModel.$state, perform: { state in
+        }.onReceive(viewModel.$state) { state in
             if state == .success {
                 userAuth.onLoginSuccess()
             } else if state == .permission_error {
                 showingPermissionError = true
             }
-        })
+        }
+        .statusBarHidden()
     }
 }
 

@@ -8,6 +8,7 @@ interface Strava {
     val loginUrl: String
     val authScheme: String
     fun linkUrl(id: Long): String
+    fun requestDarkModeImages(enabled: Boolean)
 }
 
 sealed class LoginResult {

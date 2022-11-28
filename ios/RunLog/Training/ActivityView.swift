@@ -3,7 +3,9 @@ import RunLogShared
 import SwiftUI
 
 struct ActivityView: View {
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel = ActivityViewModel()
+
     var id: Int64
 
     var body: some View {
@@ -21,7 +23,10 @@ struct ActivityView: View {
                     openOnWeb: { viewModel.linkUrl(id: id) }
                 )
             }
-        }.onAppear(perform: { viewModel.load(id: id) })
+        }.onAppear {
+            viewModel.setDarkMode(isEnabled: colorScheme == .dark)
+            viewModel.load(id: id)
+        }
     }
 }
 

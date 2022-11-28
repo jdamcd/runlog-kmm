@@ -2,11 +2,12 @@ package com.jdamcd.runlog.shared
 
 import com.jdamcd.runlog.shared.api.StravaApi
 import com.jdamcd.runlog.shared.api.TokenProvider
+import com.jdamcd.runlog.shared.internal.Mapper
 import com.jdamcd.runlog.shared.internal.StravaInteractor
 
 object SharedModule {
     fun buildStrava(userState: UserState): Strava =
-        StravaInteractor(StravaApi(UserStateWrapper(userState)))
+        StravaInteractor(StravaApi(UserStateWrapper(userState)), Mapper())
 }
 
 internal class UserStateWrapper(private val userState: UserState) : TokenProvider {

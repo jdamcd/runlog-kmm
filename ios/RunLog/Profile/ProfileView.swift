@@ -26,12 +26,12 @@ struct ProfileView: View {
             } label: {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
                     .renderingMode(.template)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
         )
-        .onAppear(perform: {
+        .onAppear {
             viewModel.load()
-        })
+        }
     }
 }
 

@@ -42,6 +42,10 @@ class TrainingViewModel: ObservableObject {
         }
     }
 
+    func setDarkMode(isEnabled: Bool) {
+        strava.requestDarkModeImages(enabled: isEnabled)
+    }
+
     private func updateState(to: TrainingState) {
         DispatchQueue.main.async {
             self.state = to

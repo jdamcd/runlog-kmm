@@ -22,9 +22,11 @@ import com.jdamcd.runlog.shared.formatKm
 import com.jdamcd.runlog.shared.formatPace
 import kotlin.math.roundToInt
 
-internal object Mapper {
+internal class Mapper {
 
-    private const val DATE_PATTERN = "EEEE dd MMM @ h:mma"
+    private val datePattern = "EEEE dd MMM @ h:mma"
+
+    var darkModeImages = false
 
     fun mapActivityCard(activity: ApiSummaryActivity): ActivityCard {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
@@ -95,7 +97,7 @@ internal object Mapper {
     }
 
     private fun mapStartTime(startDateLocal: String): String {
-        return startDateLocal.formatDate(DATE_PATTERN).uppercase()
+        return startDateLocal.formatDate(datePattern).uppercase()
     }
 
     private fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
@@ -105,7 +107,7 @@ internal object Mapper {
 
     private fun mapMap(map: ApiPolylineMap?): String? {
         return map?.takeIf { it.summary_polyline.isNotEmpty() }
-            ?.let { MapboxStatic.makeUrl(it.summary_polyline) }
+            ?.let { MapboxStatic.makeUrl(it.summary_polyline, darkMode = darkModeImages) }
     }
 
     private fun mapStats(stats: ApiActivityTotal): AthleteStats {

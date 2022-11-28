@@ -4,6 +4,7 @@ import SwiftUI
 
 struct TrainingView: View {
     @ObservedObject var viewModel = TrainingViewModel()
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         NavigationView {
@@ -29,12 +30,13 @@ struct TrainingView: View {
                 NavigationLink(destination: ProfileView()) {
                     Image(systemName: "person.circle.fill")
                         .renderingMode(.template)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             )
-            .onAppear(perform: {
+            .onAppear {
+                viewModel.setDarkMode(isEnabled: colorScheme == .dark)
                 viewModel.load()
-            })
+            }
         }.accentColor(Color.asset(.strava))
     }
 }

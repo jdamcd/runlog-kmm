@@ -10,7 +10,8 @@ import com.jdamcd.runlog.shared.api.AuthException
 import com.jdamcd.runlog.shared.api.StravaApi
 
 internal class StravaInteractor(
-    private val stravaApi: StravaApi
+    private val stravaApi: StravaApi,
+    private val mapper: Mapper
 ) : Strava {
 
     override suspend fun authenticate(code: String): LoginResult {
@@ -24,20 +25,20 @@ internal class StravaInteractor(
 
     override suspend fun activities(): Result<List<ActivityCard>> = tryCall {
         val activities = stravaApi.activities().map {
-            Mapper.mapActivityCard(it)
+            mapper.mapActivityCard(it)
         }
         Result.Data(activities)
     }
 
     override suspend fun activityDetails(id: Long): Result<ActivityDetails> = tryCall {
         val activityDetails = stravaApi.activity(id)
-        Result.Data(Mapper.mapActivityDetails(activityDetails))
+        Result.Data(mapper.mapActivityDetails(activityDetails))
     }
 
     override suspend fun profile(): Result<AthleteProfile> = tryCall {
         val athlete = stravaApi.athlete()
         val athleteStats = stravaApi.athleteStats(athlete.id)
-        Result.Data(Mapper.mapProfile(athlete, athleteStats))
+        Result.Data(mapper.mapProfile(athlete, athleteStats))
     }
 
     private inline fun <T> tryCall(call: () -> Result<T>): Result<T> {
@@ -53,4 +54,8 @@ internal class StravaInteractor(
     override val authScheme = StravaApi.AUTH_SCHEME
 
     override fun linkUrl(id: Long) = StravaApi.linkUrl(id)
+
+    override fun requestDarkModeImages(enabled: Boolean) {
+        mapper.darkModeImages = enabled
+    }
 }

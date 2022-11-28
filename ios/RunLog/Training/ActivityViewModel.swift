@@ -33,6 +33,10 @@ class ActivityViewModel: ObservableObject {
         URL(string: strava.linkUrl(id: id))!
     }
 
+    func setDarkMode(isEnabled: Bool) {
+        strava.requestDarkModeImages(enabled: isEnabled)
+    }
+
     private func updateState(to: ActivityState) {
         DispatchQueue.main.async {
             self.state = to
