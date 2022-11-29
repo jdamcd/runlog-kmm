@@ -6,6 +6,12 @@
         <item name="android:navigationBarColor">@color/themePrimaryDark</item>
     </style>
 
+    <style name="Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/themePrimaryDark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
+
     <style name="LoginTheme" parent="AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:navigationBarColor">@color/black</item>

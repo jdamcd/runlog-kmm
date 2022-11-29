@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".app.LaunchActivity"
-            android:theme="@style/LoginTheme"
+            android:theme="@style/Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -13,6 +13,7 @@ dependencies {
     implementation(Dependency.ktxActvitiy)
     implementation(Dependency.viewModel)
     implementation(Dependency.material)
+    implementation(Dependency.splash)
     implementation(Dependency.hilt)
     implementation(Dependency.hiltCompose)
     implementation(Dependency.coil)
