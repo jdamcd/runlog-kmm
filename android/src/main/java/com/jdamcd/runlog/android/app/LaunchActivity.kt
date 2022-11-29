@@ -1,7 +1,7 @@
 package com.jdamcd.runlog.android.app
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import com.jdamcd.runlog.android.login.LoginActivity
 import com.jdamcd.runlog.android.main.MainActivity
 import com.jdamcd.runlog.shared.UserState
@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LaunchActivity : AppCompatActivity() {
+class LaunchActivity : ComponentActivity() {
 
     @Inject lateinit var userState: UserState
 
