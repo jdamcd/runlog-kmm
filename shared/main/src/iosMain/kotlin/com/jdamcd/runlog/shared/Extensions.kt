@@ -11,17 +11,19 @@ import platform.Foundation.autoupdatingCurrentLocale
 import platform.Foundation.stringWithFormat
 import platform.Foundation.timeZoneWithName
 
-actual fun Float.formatKm(): String {
+actual fun Float.formatKm(withUnit: Boolean): String {
     val distanceKm = this / 1000
     val nf = NSNumberFormatter()
     nf.positiveFormat = if (distanceKm >= 1000) "#,##0" else "#,##0.#"
-    return "${nf.stringFromNumber(NSNumber(distanceKm))}k"
+    val unit = if (withUnit) "k" else ""
+    return "${nf.stringFromNumber(NSNumber(distanceKm))}$unit"
 }
 
-actual fun Float.formatElevation(): String {
+actual fun Float.formatElevation(withUnit: Boolean): String {
     val nf = NSNumberFormatter()
     nf.positiveFormat = "#0.#"
-    return "${nf.stringFromNumber(NSNumber(this))}m"
+    val unit = if (withUnit) "m" else ""
+    return "${nf.stringFromNumber(NSNumber(this))}$unit"
 }
 
 actual fun Int.formatPace(withUnit: Boolean): String {

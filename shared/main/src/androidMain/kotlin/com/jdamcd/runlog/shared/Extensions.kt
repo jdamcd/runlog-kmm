@@ -4,14 +4,16 @@ import java.text.DecimalFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-actual fun Float.formatKm(): String {
+actual fun Float.formatKm(withUnit: Boolean): String {
     val distanceKm = this / 1000
     val pattern = if (distanceKm >= 1000) "#,##0" else "#,##0.#"
-    return "${DecimalFormat(pattern).format(distanceKm)}k"
+    val unit = if (withUnit) "k" else ""
+    return "${DecimalFormat(pattern).format(distanceKm)}$unit"
 }
 
-actual fun Float.formatElevation(): String {
-    return "${DecimalFormat("#0.#").format(this)}m"
+actual fun Float.formatElevation(withUnit: Boolean): String {
+    val unit = if (withUnit) "m" else ""
+    return "${DecimalFormat("#0.#").format(this)}$unit"
 }
 
 actual fun Int.formatPace(withUnit: Boolean): String {

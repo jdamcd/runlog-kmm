@@ -66,6 +66,7 @@ data class KmSplits(
 data class Split(
     val number: Int,
     val distance: String,
+    val isPartial: Boolean,
     val elapsedDuration: String,
     val movingDuration: String,
     val elevation: Int,

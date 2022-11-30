@@ -183,7 +183,7 @@ private struct SplitsList: View {
             Text(Copy.activity_split_k)
                 .font(.footnote)
                 .fontWeight(.light)
-                .frame(width: 28, alignment: .leading)
+                .frame(width: 40, alignment: .leading)
 
             Text(Copy.activity_split_pace)
                 .font(.footnote)
@@ -217,8 +217,14 @@ private struct SplitItem: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Text("\(split.number)")
-                .frame(width: 28, alignment: .leading)
+            if split.isPartial {
+                Text(split.distance)
+                    .italic()
+                    .frame(width: 40, alignment: .leading)
+            } else {
+                Text("\(split.number)")
+                    .frame(width: 40, alignment: .leading)
+            }
             Text(split.pace)
                 .padding(.leading, 4)
                 .frame(width: 76, alignment: .leading)
@@ -261,6 +267,7 @@ struct ActivityView_Previews: PreviewProvider {
                         splits: [Split(
                             number: 1,
                             distance: "1k",
+                            isPartial: false,
                             elapsedDuration: "5:03",
                             movingDuration: "5:03",
                             elevation: 14,
@@ -272,6 +279,7 @@ struct ActivityView_Previews: PreviewProvider {
                         Split(
                             number: 2,
                             distance: "1k",
+                            isPartial: false,
                             elapsedDuration: "5:04",
                             movingDuration: "5:04",
                             elevation: 12,
@@ -283,6 +291,7 @@ struct ActivityView_Previews: PreviewProvider {
                         Split(
                             number: 3,
                             distance: "1k",
+                            isPartial: false,
                             elapsedDuration: "5:06",
                             movingDuration: "5:06",
                             elevation: -15,
@@ -294,6 +303,7 @@ struct ActivityView_Previews: PreviewProvider {
                         Split(
                             number: 4,
                             distance: "1k",
+                            isPartial: false,
                             elapsedDuration: "5:23",
                             movingDuration: "4:35",
                             elevation: -6,
@@ -304,7 +314,8 @@ struct ActivityView_Previews: PreviewProvider {
                         ),
                         Split(
                             number: 5,
-                            distance: "1k",
+                            distance: "0.5",
+                            isPartial: true,
                             elapsedDuration: "6:16",
                             movingDuration: "4:41",
                             elevation: -5,

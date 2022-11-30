@@ -123,7 +123,8 @@ internal class Mapper {
             val paceSeconds = calculatePace(it.distance, it.moving_time)
             Split(
                 number = it.split,
-                distance = it.distance.formatKm(),
+                distance = it.distance.formatKm(withUnit = false),
+                isPartial = it.distance < 950, // Not always returned as exactly 1000m
                 elapsedDuration = it.elapsed_time.formatDuration(),
                 movingDuration = it.moving_time.formatDuration(),
                 elevation = it.elevation_difference.roundToInt(),
@@ -134,7 +135,7 @@ internal class Mapper {
             )
         }.orEmpty()
 
-        return if (mappedSplits.isNotEmpty()) {
+        return if (mappedSplits.size >= 2) {
             KmSplits(
                 splits = mappedSplits,
                 minSeconds = mappedSplits.minOf { it.paceSeconds },

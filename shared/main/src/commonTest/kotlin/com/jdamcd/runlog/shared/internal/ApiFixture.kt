@@ -47,19 +47,19 @@ fun detailedActivityModel() = ApiDetailedActivity(
             split = 1,
             distance = 1000.0f,
             elapsed_time = 360,
-            moving_time = 300,
+            moving_time = 310,
             elevation_difference = 10.0f,
             average_heartrate = 160.0f,
             pace_zone = 2
         ),
         ApiSplit(
-            split = 1,
-            distance = 180.0f,
-            elapsed_time = 100,
-            moving_time = 100,
-            elevation_difference = 5.0f,
-            average_heartrate = 120.0f,
-            pace_zone = 1
+            split = 2,
+            distance = 500.0f,
+            elapsed_time = 300,
+            moving_time = 150,
+            elevation_difference = 20.0f,
+            average_heartrate = 180.0f,
+            pace_zone = 2
         )
     )
 )

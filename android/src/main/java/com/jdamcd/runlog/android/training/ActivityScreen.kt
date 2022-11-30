@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -311,12 +312,22 @@ private fun SplitItem(split: Split) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row {
-            Text(
-                text = "${split.number}",
-                style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.Start,
-                modifier = Modifier.width(40.dp)
-            )
+            if (split.isPartial) {
+                Text(
+                    text = split.distance,
+                    style = MaterialTheme.typography.body1,
+                    fontStyle = FontStyle.Italic,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.width(44.dp)
+                )
+            } else {
+                Text(
+                    text = "${split.number}",
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.width(44.dp)
+                )
+            }
             Text(
                 text = split.pace,
                 style = MaterialTheme.typography.body1,
@@ -396,6 +407,7 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                     Split(
                         number = 1,
                         distance = "1k",
+                        isPartial = false,
                         elapsedDuration = "5:03",
                         movingDuration = "5:03",
                         elevation = 14,
@@ -407,6 +419,7 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                     Split(
                         number = 2,
                         distance = "1k",
+                        isPartial = false,
                         elapsedDuration = "5:04",
                         movingDuration = "5:04",
                         elevation = 12,
@@ -418,6 +431,7 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                     Split(
                         number = 3,
                         distance = "1k",
+                        isPartial = false,
                         elapsedDuration = "5:06",
                         movingDuration = "5:06",
                         elevation = -15,
@@ -429,6 +443,7 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                     Split(
                         number = 4,
                         distance = "1k",
+                        isPartial = false,
                         elapsedDuration = "5:23",
                         movingDuration = "4:35",
                         elevation = -6,
@@ -439,7 +454,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                     ),
                     Split(
                         number = 5,
-                        distance = "1k",
+                        distance = "0.5",
+                        isPartial = true,
                         elapsedDuration = "6:16",
                         movingDuration = "4:41",
                         elevation = -5,

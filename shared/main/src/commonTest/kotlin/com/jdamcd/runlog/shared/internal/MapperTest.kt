@@ -107,18 +107,31 @@ class MapperTest {
                 splits = listOf(
                     Split(
                         number = 1,
-                        distance = "1k",
+                        distance = "1",
+                        isPartial = false,
                         elapsedDuration = "6:00",
-                        movingDuration = "5:00",
+                        movingDuration = "5:10",
                         elevation = 10,
                         averageHeartrate = 160,
+                        pace = "5:10",
+                        paceSeconds = 310,
+                        paceZone = 2
+                    ),
+                    Split(
+                        number = 2,
+                        distance = "0.5",
+                        isPartial = true,
+                        elapsedDuration = "5:00",
+                        movingDuration = "2:30",
+                        elevation = 20,
+                        averageHeartrate = 180,
                         pace = "5:00",
                         paceSeconds = 300,
                         paceZone = 2
                     )
                 ),
                 minSeconds = 300,
-                maxSeconds = 300,
+                maxSeconds = 310,
                 hasHeartrate = true
             )
         )

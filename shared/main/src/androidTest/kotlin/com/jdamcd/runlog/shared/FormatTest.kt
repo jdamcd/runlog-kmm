@@ -16,6 +16,16 @@ class FormatTest {
     }
 
     @Test
+    fun formatsDistanceOver1000KmWithoutDecimal() {
+        1_001_234.5f.formatKm() shouldBe "1,001k"
+    }
+
+    @Test
+    fun formatsDistanceWithoutUnit() {
+        10_123.0f.formatKm(withUnit = false) shouldBe "10.1"
+    }
+
+    @Test
     fun formatsElevationWithSingleDecimal() {
         123.45f.formatElevation() shouldBe "123.4m"
     }
@@ -26,8 +36,8 @@ class FormatTest {
     }
 
     @Test
-    fun formatsDistanceOver1000KmWithoutDecimal() {
-        1_001_234.5f.formatKm() shouldBe "1,001k"
+    fun formatsElevationWithoutUnit() {
+        123.45f.formatElevation(withUnit = false) shouldBe "123.4"
     }
 
     @Test
