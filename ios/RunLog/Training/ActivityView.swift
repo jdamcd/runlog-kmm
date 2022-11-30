@@ -48,8 +48,8 @@ private struct ActivityDetailsView: View {
                     )
                     SummaryStats(activity: activity)
                         .padding(.horizontal)
-                    if let splits = activity.splits {
-                        SplitsList(splits: splits)
+                    if let splitsInfo = activity.splitsInfo {
+                        SplitsList(splitsInfo: splitsInfo)
                     }
                     HStack {
                         Spacer()
@@ -176,7 +176,7 @@ private struct StatBox: View {
 }
 
 private struct SplitsList: View {
-    var splits: [Split]
+    var splitsInfo: KmSplits
 
     var body: some View {
         HStack(spacing: 0) {
@@ -195,7 +195,7 @@ private struct SplitsList: View {
                 .font(.footnote)
                 .fontWeight(.light)
                 .frame(width: 68, alignment: .trailing)
-            if splits[0].averageHeartrate != nil {
+            if splitsInfo.hasHeartrate {
                 Text(Copy.activity_split_hr)
                     .font(.footnote)
                     .fontWeight(.light)
@@ -205,7 +205,7 @@ private struct SplitsList: View {
             .padding(.horizontal)
             .background(Color.asset(.container))
 
-        ForEach(splits, id: \.split) { split in
+        ForEach(splitsInfo.splits, id: \.number) { split in
             SplitItem(split: split)
         }
         .padding(.horizontal)
@@ -217,7 +217,7 @@ private struct SplitItem: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Text("\(split.split)")
+            Text("\(split.number)")
                 .frame(width: 28, alignment: .leading)
             Text(split.pace)
                 .padding(.leading, 4)
@@ -257,9 +257,9 @@ struct ActivityView_Previews: PreviewProvider {
                     pace: "4:54 /km",
                     start: "FRIDAY 25 NOV @ 2:23PM",
                     mapUrl: "",
-                    splits: [
-                        Split(
-                            split: 1,
+                    splitsInfo: KmSplits(
+                        splits: [Split(
+                            number: 1,
                             distance: "1k",
                             elapsedDuration: "5:03",
                             movingDuration: "5:03",
@@ -270,7 +270,7 @@ struct ActivityView_Previews: PreviewProvider {
                             paceZone: 2
                         ),
                         Split(
-                            split: 2,
+                            number: 2,
                             distance: "1k",
                             elapsedDuration: "5:04",
                             movingDuration: "5:04",
@@ -281,7 +281,7 @@ struct ActivityView_Previews: PreviewProvider {
                             paceZone: 2
                         ),
                         Split(
-                            split: 3,
+                            number: 3,
                             distance: "1k",
                             elapsedDuration: "5:06",
                             movingDuration: "5:06",
@@ -292,7 +292,7 @@ struct ActivityView_Previews: PreviewProvider {
                             paceZone: 1
                         ),
                         Split(
-                            split: 4,
+                            number: 4,
                             distance: "1k",
                             elapsedDuration: "5:23",
                             movingDuration: "4:35",
@@ -303,7 +303,7 @@ struct ActivityView_Previews: PreviewProvider {
                             paceZone: 2
                         ),
                         Split(
-                            split: 5,
+                            number: 5,
                             distance: "1k",
                             elapsedDuration: "6:16",
                             movingDuration: "4:41",
@@ -312,8 +312,11 @@ struct ActivityView_Previews: PreviewProvider {
                             pace: "6:16",
                             paceSeconds: 376,
                             paceZone: 2
-                        )
-                    ]
+                        )],
+                        minSeconds: 303,
+                        maxSeconds: 376,
+                        hasHeartrate: true
+                    )
                 ),
                 openOnWeb: { URL(string: "example.com")! })
         }

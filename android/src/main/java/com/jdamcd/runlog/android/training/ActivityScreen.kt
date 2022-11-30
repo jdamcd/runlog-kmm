@@ -45,6 +45,7 @@ import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
+import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
 import kotlinx.coroutines.flow.StateFlow
 
@@ -128,8 +129,8 @@ private fun ActivityContent(
             time = activity.start
         )
         SummaryStats(activity = activity)
-        activity.splits?.let {
-            SplitsList(splits = it)
+        activity.splitsInfo?.let {
+            SplitsList(splitsInfo = it)
         }
         WebLink(onClickLink)
     }
@@ -251,7 +252,7 @@ private fun StatBox(@StringRes title: Int, stat: String) {
 }
 
 @Composable
-private fun SplitsList(splits: List<Split>) {
+private fun SplitsList(splitsInfo: KmSplits) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -283,7 +284,7 @@ private fun SplitsList(splits: List<Split>) {
                 textAlign = TextAlign.End,
                 modifier = Modifier.width(80.dp)
             )
-            if (splits[0].averageHeartrate != null) {
+            if (splitsInfo.hasHeartrate) {
                 Text(
                     text = stringResource(R.string.activity_split_hr),
                     style = MaterialTheme.typography.body2,
@@ -295,7 +296,7 @@ private fun SplitsList(splits: List<Split>) {
         }
     }
     Column {
-        for (split in splits) {
+        for (split in splitsInfo.splits) {
             SplitItem(split = split)
         }
     }
@@ -311,7 +312,7 @@ private fun SplitItem(split: Split) {
     ) {
         Row {
             Text(
-                text = "${split.split}",
+                text = "${split.number}",
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.width(40.dp)
@@ -390,62 +391,67 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
             pace = "4:54 /km",
             start = "FRIDAY 25 NOV @ 2:23PM",
             mapUrl = "",
-            splits = listOf(
-                Split(
-                    split = 1,
-                    distance = "1k",
-                    elapsedDuration = "5:03",
-                    movingDuration = "5:03",
-                    elevation = 14,
-                    averageHeartrate = 145,
-                    pace = "5:03",
-                    paceSeconds = 303,
-                    paceZone = 2
+            splitsInfo = KmSplits(
+                splits = listOf(
+                    Split(
+                        number = 1,
+                        distance = "1k",
+                        elapsedDuration = "5:03",
+                        movingDuration = "5:03",
+                        elevation = 14,
+                        averageHeartrate = 145,
+                        pace = "5:03",
+                        paceSeconds = 303,
+                        paceZone = 2
+                    ),
+                    Split(
+                        number = 2,
+                        distance = "1k",
+                        elapsedDuration = "5:04",
+                        movingDuration = "5:04",
+                        elevation = 12,
+                        averageHeartrate = 159,
+                        pace = "5:04",
+                        paceSeconds = 304,
+                        paceZone = 2
+                    ),
+                    Split(
+                        number = 3,
+                        distance = "1k",
+                        elapsedDuration = "5:06",
+                        movingDuration = "5:06",
+                        elevation = -15,
+                        averageHeartrate = 158,
+                        pace = "5:06",
+                        paceSeconds = 306,
+                        paceZone = 1
+                    ),
+                    Split(
+                        number = 4,
+                        distance = "1k",
+                        elapsedDuration = "5:23",
+                        movingDuration = "4:35",
+                        elevation = -6,
+                        averageHeartrate = 150,
+                        pace = "5:22",
+                        paceSeconds = 322,
+                        paceZone = 2
+                    ),
+                    Split(
+                        number = 5,
+                        distance = "1k",
+                        elapsedDuration = "6:16",
+                        movingDuration = "4:41",
+                        elevation = -5,
+                        averageHeartrate = 143,
+                        pace = "6:16",
+                        paceSeconds = 376,
+                        paceZone = 2
+                    )
                 ),
-                Split(
-                    split = 2,
-                    distance = "1k",
-                    elapsedDuration = "5:04",
-                    movingDuration = "5:04",
-                    elevation = 12,
-                    averageHeartrate = 159,
-                    pace = "5:04",
-                    paceSeconds = 304,
-                    paceZone = 2
-                ),
-                Split(
-                    split = 3,
-                    distance = "1k",
-                    elapsedDuration = "5:06",
-                    movingDuration = "5:06",
-                    elevation = -15,
-                    averageHeartrate = 158,
-                    pace = "5:06",
-                    paceSeconds = 306,
-                    paceZone = 1
-                ),
-                Split(
-                    split = 4,
-                    distance = "1k",
-                    elapsedDuration = "5:23",
-                    movingDuration = "4:35",
-                    elevation = -6,
-                    averageHeartrate = 150,
-                    pace = "5:22",
-                    paceSeconds = 322,
-                    paceZone = 2
-                ),
-                Split(
-                    split = 5,
-                    distance = "1k",
-                    elapsedDuration = "6:16",
-                    movingDuration = "4:41",
-                    elevation = -5,
-                    averageHeartrate = 143,
-                    pace = "6:16",
-                    paceSeconds = 376,
-                    paceZone = 2
-                )
+                minSeconds = 303,
+                maxSeconds = 376,
+                hasHeartrate = true
             )
         )
     )

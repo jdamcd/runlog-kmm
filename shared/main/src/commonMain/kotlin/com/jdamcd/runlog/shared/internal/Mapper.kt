@@ -6,6 +6,7 @@ import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
+import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
@@ -65,7 +66,7 @@ internal class Mapper {
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
             start = mapStartTime(activity.start_date_local),
             mapUrl = mapMap(activity.map),
-            splits = mapSplits(activity.splits_metric)
+            splitsInfo = mapSplits(activity.splits_metric)
         )
     }
 
@@ -117,11 +118,11 @@ internal class Mapper {
         )
     }
 
-    private fun mapSplits(splits: List<ApiSplit>?): List<Split>? {
-        return splits?.filter { it.distance >= 200 }?.map {
+    private fun mapSplits(splits: List<ApiSplit>?): KmSplits? {
+        val mappedSplits = splits?.filter { it.distance >= 200 }?.map {
             val paceSeconds = calculatePace(it.distance, it.moving_time)
             Split(
-                split = it.split,
+                number = it.split,
                 distance = it.distance.formatKm(),
                 elapsedDuration = it.elapsed_time.formatDuration(),
                 movingDuration = it.moving_time.formatDuration(),
@@ -131,6 +132,17 @@ internal class Mapper {
                 paceSeconds = paceSeconds,
                 paceZone = it.pace_zone
             )
+        }.orEmpty()
+
+        return if (mappedSplits.isNotEmpty()) {
+            KmSplits(
+                splits = mappedSplits,
+                minSeconds = mappedSplits.minOf { it.paceSeconds },
+                maxSeconds = mappedSplits.maxOf { it.paceSeconds },
+                hasHeartrate = mappedSplits[0].averageHeartrate != null
+            )
+        } else {
+            null
         }
     }
 

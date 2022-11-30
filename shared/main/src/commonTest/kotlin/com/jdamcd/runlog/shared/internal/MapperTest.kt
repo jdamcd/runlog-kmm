@@ -6,6 +6,7 @@ import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
+import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
@@ -102,18 +103,23 @@ class MapperTest {
             pace = "3:58 /km",
             start = "TUESDAY 25 OCT @ 5:58PM",
             mapUrl = null,
-            splits = listOf(
-                Split(
-                    split = 1,
-                    distance = "1k",
-                    elapsedDuration = "6:00",
-                    movingDuration = "5:00",
-                    elevation = 10,
-                    averageHeartrate = 160,
-                    pace = "5:00",
-                    paceSeconds = 300,
-                    paceZone = 2
-                )
+            splitsInfo = KmSplits(
+                splits = listOf(
+                    Split(
+                        number = 1,
+                        distance = "1k",
+                        elapsedDuration = "6:00",
+                        movingDuration = "5:00",
+                        elevation = 10,
+                        averageHeartrate = 160,
+                        pace = "5:00",
+                        paceSeconds = 300,
+                        paceZone = 2
+                    )
+                ),
+                minSeconds = 300,
+                maxSeconds = 300,
+                hasHeartrate = true
             )
         )
     }
