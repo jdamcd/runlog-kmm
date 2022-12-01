@@ -5,9 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -41,6 +44,7 @@ import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
+import com.jdamcd.runlog.android.ui.SplitBar
 import com.jdamcd.runlog.android.ui.container
 import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityDetails
@@ -296,7 +300,7 @@ private fun SplitsList(splitsInfo: KmSplits) {
             }
         }
     }
-    Column {
+    Column(modifier = Modifier.padding(top = 4.dp)) {
         for (split in splitsInfo.splits) {
             SplitItem(split = split)
         }
@@ -308,6 +312,7 @@ private fun SplitItem(split: Split) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .height(IntrinsicSize.Min)
             .padding(horizontal = 16.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -332,15 +337,21 @@ private fun SplitItem(split: Split) {
                 text = split.pace,
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.Start,
-                modifier = Modifier.width(80.dp)
+                modifier = Modifier.width(60.dp)
             )
         }
+        SplitBar(
+            split.visualisation,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+        )
         Row {
             Text(
                 text = "${split.elevation}",
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.End,
-                modifier = Modifier.width(80.dp)
+                modifier = Modifier.width(48.dp)
             )
             split.averageHeartrate?.let {
                 Text(
@@ -414,7 +425,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                         averageHeartrate = 145,
                         pace = "5:03",
                         paceSeconds = 303,
-                        paceZone = 2
+                        paceZone = 2,
+                        visualisation = 1.0f
                     ),
                     Split(
                         number = 2,
@@ -426,7 +438,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                         averageHeartrate = 159,
                         pace = "5:04",
                         paceSeconds = 304,
-                        paceZone = 2
+                        paceZone = 2,
+                        visualisation = 1.0f
                     ),
                     Split(
                         number = 3,
@@ -438,7 +451,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                         averageHeartrate = 158,
                         pace = "5:06",
                         paceSeconds = 306,
-                        paceZone = 1
+                        paceZone = 1,
+                        visualisation = 0.9f
                     ),
                     Split(
                         number = 4,
@@ -450,7 +464,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                         averageHeartrate = 150,
                         pace = "5:22",
                         paceSeconds = 322,
-                        paceZone = 2
+                        paceZone = 2,
+                        visualisation = 0.8f
                     ),
                     Split(
                         number = 5,
@@ -462,11 +477,10 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                         averageHeartrate = 143,
                         pace = "6:16",
                         paceSeconds = 376,
-                        paceZone = 2
+                        paceZone = 2,
+                        visualisation = 0.7f
                     )
                 ),
-                minSeconds = 303,
-                maxSeconds = 376,
                 hasHeartrate = true
             )
         )

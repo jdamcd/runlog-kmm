@@ -115,7 +115,8 @@ class MapperTest {
                         averageHeartrate = 160,
                         pace = "5:10",
                         paceSeconds = 310,
-                        paceZone = 2
+                        paceZone = 2,
+                        visualisation = 0.96666664f
                     ),
                     Split(
                         number = 2,
@@ -127,11 +128,10 @@ class MapperTest {
                         averageHeartrate = 180,
                         pace = "5:00",
                         paceSeconds = 300,
-                        paceZone = 2
+                        paceZone = 2,
+                        visualisation = 1.0f
                     )
                 ),
-                minSeconds = 300,
-                maxSeconds = 310,
                 hasHeartrate = true
             )
         )

@@ -20,6 +20,7 @@
 		499F72F8291F006800810A86 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 499F72F7291F006800810A86 /* NukeUI */; };
 		49A5E9DC292EDAA500E11C55 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A5E9DB292EDAA500E11C55 /* ActivityView.swift */; };
 		49A5E9DE292EDABB00E11C55 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A5E9DD292EDABB00E11C55 /* ActivityViewModel.swift */; };
+		49E395F129392064002BF244 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E395F029392064002BF244 /* Components.swift */; };
 		49FB92C5253ECB68008C9736 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB92C4253ECB68008C9736 /* UserAuth.swift */; };
 		49FB92CB253ECBA0008C9736 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB92CA253ECBA0008C9736 /* LaunchView.swift */; };
 		7555FF83242A565900829871 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* LoginView.swift */; };
@@ -72,6 +73,7 @@
 		49978A95290D7CAC00F1FBCD /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		49A5E9DB292EDAA500E11C55 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		49A5E9DD292EDABB00E11C55 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
+		49E395F029392064002BF244 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		49FB92C4253ECB68008C9736 /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		49FB92CA253ECBA0008C9736 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Kilometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kilometer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 			children = (
 				498FBBEE2535D01F00FEDDA2 /* Colors.swift */,
 				4972406D2542162A008C760B /* Copy.swift */,
+				49E395F029392064002BF244 /* Components.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				4948ECE625378A0D008CE3EE /* LoginViewModel.swift in Sources */,
 				494EACFA253E1EA200BBE267 /* TrainingView.swift in Sources */,
 				49978A96290D7CAC00F1FBCD /* ProfileViewModel.swift in Sources */,
+				49E395F129392064002BF244 /* Components.swift in Sources */,
 				494EACF1253E0FF300BBE267 /* App.swift in Sources */,
 				49FB92CB253ECBA0008C9736 /* LaunchView.swift in Sources */,
 				49A5E9DE292EDABB00E11C55 /* ActivityViewModel.swift in Sources */,

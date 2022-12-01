@@ -119,8 +119,15 @@ internal class Mapper {
     }
 
     private fun mapSplits(splits: List<ApiSplit>?): KmSplits? {
+        val paces = splits?.associateBy(
+            { it.split },
+            { calculatePace(it.distance, it.moving_time) }
+        ).orEmpty()
+        val min = paces.minOf { it.value }
+        val max = paces.minOf { it.value }
+
         val mappedSplits = splits?.filter { it.distance >= 200 }?.map {
-            val paceSeconds = calculatePace(it.distance, it.moving_time)
+            val paceSeconds = paces[it.split]!!
             Split(
                 number = it.split,
                 distance = it.distance.formatKm(withUnit = false),
@@ -131,20 +138,24 @@ internal class Mapper {
                 averageHeartrate = it.average_heartrate?.roundToInt(),
                 pace = paceSeconds.formatPace(withUnit = false),
                 paceSeconds = paceSeconds,
-                paceZone = it.pace_zone
+                paceZone = it.pace_zone,
+                visualisation = visualiseRelativePace(paceSeconds, min, max)
             )
         }.orEmpty()
 
         return if (mappedSplits.size >= 2) {
             KmSplits(
                 splits = mappedSplits,
-                minSeconds = mappedSplits.minOf { it.paceSeconds },
-                maxSeconds = mappedSplits.maxOf { it.paceSeconds },
                 hasHeartrate = mappedSplits[0].averageHeartrate != null
             )
         } else {
             null
         }
+    }
+
+    private fun visualiseRelativePace(paceSeconds: Int, min: Int, max: Int): Float {
+        val value = ((max - paceSeconds) / max.toFloat()) + (min / max.toFloat())
+        return value.coerceIn(0.0f, 1.0f)
     }
 
     private fun mapType(type: String): ActivityType {

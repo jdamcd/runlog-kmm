@@ -227,10 +227,10 @@ private struct SplitItem: View {
             }
             Text(split.pace)
                 .padding(.leading, 4)
-                .frame(width: 76, alignment: .leading)
-            Spacer()
+                .frame(width: 72, alignment: .leading)
+            SplitBar(value: split.visualisation)
             Text("\(split.elevation)")
-                .frame(width: 68, alignment: .trailing)
+                .frame(width: 48, alignment: .trailing)
             if let avgHr = split.averageHeartrate {
                 Text("\(avgHr)")
                     .frame(width: 48, alignment: .trailing)
@@ -274,7 +274,8 @@ struct ActivityView_Previews: PreviewProvider {
                             averageHeartrate: 145,
                             pace: "5:03",
                             paceSeconds: 303,
-                            paceZone: 2
+                            paceZone: 2,
+                            visualisation: 1.0
                         ),
                         Split(
                             number: 2,
@@ -286,7 +287,8 @@ struct ActivityView_Previews: PreviewProvider {
                             averageHeartrate: 159,
                             pace: "5:04",
                             paceSeconds: 304,
-                            paceZone: 2
+                            paceZone: 2,
+                            visualisation: 1.0
                         ),
                         Split(
                             number: 3,
@@ -298,7 +300,8 @@ struct ActivityView_Previews: PreviewProvider {
                             averageHeartrate: 158,
                             pace: "5:06",
                             paceSeconds: 306,
-                            paceZone: 1
+                            paceZone: 1,
+                            visualisation: 0.9
                         ),
                         Split(
                             number: 4,
@@ -310,7 +313,8 @@ struct ActivityView_Previews: PreviewProvider {
                             averageHeartrate: 150,
                             pace: "5:22",
                             paceSeconds: 322,
-                            paceZone: 2
+                            paceZone: 2,
+                            visualisation: 0.8
                         ),
                         Split(
                             number: 5,
@@ -322,10 +326,9 @@ struct ActivityView_Previews: PreviewProvider {
                             averageHeartrate: 143,
                             pace: "6:16",
                             paceSeconds: 376,
-                            paceZone: 2
+                            paceZone: 2,
+                            visualisation: 0.7
                         )],
-                        minSeconds: 303,
-                        maxSeconds: 376,
                         hasHeartrate: true
                     )
                 ),

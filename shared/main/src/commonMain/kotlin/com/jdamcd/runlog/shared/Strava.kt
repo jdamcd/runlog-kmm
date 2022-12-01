@@ -58,8 +58,6 @@ data class ActivityDetails(
 
 data class KmSplits(
     val splits: List<Split>,
-    val minSeconds: Int,
-    val maxSeconds: Int,
     val hasHeartrate: Boolean
 )
 
@@ -73,7 +71,8 @@ data class Split(
     val averageHeartrate: Int?,
     val pace: String,
     val paceSeconds: Int,
-    val paceZone: Int
+    val paceZone: Int,
+    val visualisation: Float // Relative size 0.0 - 1.0
 )
 
 enum class ActivityType {
