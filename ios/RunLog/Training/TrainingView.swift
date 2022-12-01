@@ -30,14 +30,14 @@ struct TrainingView: View {
                 NavigationLink(destination: ProfileView()) {
                     Image(systemName: "person.circle.fill")
                         .renderingMode(.template)
-                        .foregroundColor(.primary)
+                        .foregroundColor(Color.asset(.primary))
                 }
             )
             .onAppear {
                 viewModel.setDarkMode(isEnabled: colorScheme == .dark)
                 viewModel.load()
             }
-        }.accentColor(Color.asset(.strava))
+        }.accentColor(Color.asset(.primary))
     }
 }
 
@@ -143,13 +143,13 @@ private struct ActivityIcons: View {
             switch activity.subtype {
             case .race:
                 Image(systemName: "medal.fill")
-                    .foregroundColor(Color.asset(.strava))
+                    .foregroundColor(Color.asset(.accent))
             case .workout:
                 Image(systemName: "chart.bar.xaxis")
-                    .foregroundColor(Color.asset(.strava))
+                    .foregroundColor(Color.asset(.accent))
             case .long_:
                 Image(systemName: "signpost.right")
-                    .foregroundColor(Color.asset(.strava))
+                    .foregroundColor(Color.asset(.accent))
             default: EmptyView()
             }
         }

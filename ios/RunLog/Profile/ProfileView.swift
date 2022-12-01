@@ -26,7 +26,7 @@ struct ProfileView: View {
             } label: {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
                     .renderingMode(.template)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Color.asset(.primary))
             }
         )
         .onAppear {
