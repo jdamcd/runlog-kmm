@@ -51,14 +51,8 @@ private struct ActivityDetailsView: View {
                     if let splitsInfo = activity.splitsInfo {
                         SplitsList(splitsInfo: splitsInfo)
                     }
-                    HStack {
-                        Spacer()
-                        Link(destination: openOnWeb()) {
-                            Text(Copy.strava_view)
-                                .foregroundColor(Color.asset(.strava))
-                        }
-                        Spacer()
-                    }.padding(.top)
+                    ActivityFooter(openOnWeb: openOnWeb)
+                        .padding(.top, 28)
                 }
                 Spacer()
             }
@@ -204,6 +198,7 @@ private struct SplitsList: View {
         }.padding(.vertical, 12)
             .padding(.horizontal)
             .background(Color.asset(.container))
+            .padding(.bottom, 2)
 
         ForEach(splitsInfo.splits, id: \.number) { split in
             SplitItem(split: split)
@@ -236,6 +231,25 @@ private struct SplitItem: View {
                     .frame(width: 48, alignment: .trailing)
             }
         }.padding(.vertical, 2)
+    }
+}
+
+private struct ActivityFooter: View {
+    var openOnWeb: () -> URL
+
+    var body: some View {
+        HStack {
+            Spacer()
+            Link(destination: openOnWeb()) {
+                Text(Copy.strava_view)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial)
+                    .foregroundColor(Color.asset(.strava))
+                    .cornerRadius(6)
+            }
+            Spacer()
+        }
     }
 }
 

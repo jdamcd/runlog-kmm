@@ -368,12 +368,11 @@ private fun SplitItem(split: Split) {
 @Composable
 private fun WebLink(onClickLink: () -> Unit) {
     Box(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         Button(
+            modifier = Modifier.padding(28.dp),
             onClick = onClickLink,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = stravaBrand,
