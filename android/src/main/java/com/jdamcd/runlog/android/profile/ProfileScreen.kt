@@ -37,7 +37,7 @@ import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.divider
-import com.jdamcd.runlog.android.ui.stravaBrand
+import com.jdamcd.runlog.android.ui.themePrimary
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
 import kotlinx.coroutines.flow.StateFlow
@@ -166,7 +166,7 @@ private fun ProfileStat(
             text = title,
             style = MaterialTheme.typography.subtitle1,
             fontWeight = FontWeight.Bold,
-            color = stravaBrand,
+            color = themePrimary,
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(

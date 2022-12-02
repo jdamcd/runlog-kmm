@@ -65,7 +65,10 @@ private struct ActivityItem: View {
                 HStack {
                     ActivitySummary(activity: activity)
                     Spacer()
-                    ActivityIcons(activity: activity)
+                    ActivityIcons(
+                        type: activity.type,
+                        subtype: activity.subtype
+                    )
                 }
             }
             if let map = activity.mapUrl {
@@ -123,35 +126,6 @@ private struct FullSummary: View {
             Text(activity.start)
                 .font(.footnote)
                 .fontWeight(.light)
-        }
-    }
-}
-
-private struct ActivityIcons: View {
-    var activity: ActivityCard
-
-    var body: some View {
-        HStack {
-            switch activity.type {
-            case .run:
-                Image(systemName: "figure.run")
-            case .cycle:
-                Image(systemName: "figure.outdoor.cycle")
-            default:
-                Image(systemName: "dumbbell")
-            }
-            switch activity.subtype {
-            case .race:
-                Image(systemName: "medal.fill")
-                    .foregroundColor(Color.asset(.accent))
-            case .workout:
-                Image(systemName: "chart.bar.xaxis")
-                    .foregroundColor(Color.asset(.accent))
-            case .long_:
-                Image(systemName: "signpost.right")
-                    .foregroundColor(Color.asset(.accent))
-            default: EmptyView()
-            }
         }
     }
 }

@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
+import com.jdamcd.runlog.android.ui.ActivityIcons
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.SplitBar
@@ -129,36 +130,41 @@ private fun ActivityContent(
                 contentScale = ContentScale.FillWidth
             )
         }
-        DescriptionText(
-            description = activity.description,
-            time = activity.start
-        )
-        SummaryStats(activity = activity)
+        DescriptionHeader(activity)
+        SummaryStats(activity)
         activity.splitsInfo?.let {
-            SplitsList(splitsInfo = it)
+            SplitsList(it)
         }
         WebLink(onClickLink)
     }
 }
 
 @Composable
-private fun DescriptionText(description: String?, time: String) {
-    Column(
+private fun DescriptionHeader(activity: ActivityDetails) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .background(color = container)
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        description?.let {
+        Column {
+            activity.description?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.body1
+                )
+            }
             Text(
-                text = it,
-                style = MaterialTheme.typography.body1
+                text = activity.start,
+                style = MaterialTheme.typography.body2,
+                fontWeight = FontWeight.Light
             )
         }
-        Text(
-            text = time,
-            style = MaterialTheme.typography.body2,
-            fontWeight = FontWeight.Light
+        ActivityIcons(
+            type = activity.type,
+            subtype = activity.subtype
         )
     }
 }

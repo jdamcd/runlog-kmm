@@ -20,10 +20,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
-import androidx.compose.material.icons.rounded.DirectionsBike
-import androidx.compose.material.icons.rounded.DirectionsRun
-import androidx.compose.material.icons.rounded.FitnessCenter
-import androidx.compose.material.icons.rounded.SportsScore
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -43,9 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
+import com.jdamcd.runlog.android.ui.ActivityIcons
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
-import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
@@ -112,7 +108,7 @@ private fun TrainingList(
     }
 }
 
-@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
+@Preview(backgroundColor = 0xffffffff, showBackground = true)
 @Composable
 private fun ActivityItems(
     @PreviewParameter(ActivityItemsProvider::class) data: List<ActivityCard>,
@@ -144,7 +140,8 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
 
             ActivitySummary(activity)
             ActivityIcons(
-                activity = activity,
+                type = activity.type,
+                subtype = activity.subtype,
                 modifier = Modifier.constrainAs(icons) {
                     top.linkTo(parent.top, margin = 8.dp)
                     end.linkTo(parent.end)
@@ -232,28 +229,6 @@ private fun FullSummary(activity: ActivityCard) {
             style = MaterialTheme.typography.body2,
             fontWeight = FontWeight.Light
         )
-    }
-}
-
-@Composable
-private fun ActivityIcons(activity: ActivityCard, modifier: Modifier) {
-    Row(modifier = modifier) {
-        Icon(
-            imageVector = when (activity.type) {
-                ActivityType.RUN -> Icons.Rounded.DirectionsRun
-                ActivityType.CYCLE -> Icons.Rounded.DirectionsBike
-                ActivityType.CROSS_TRAIN -> Icons.Rounded.FitnessCenter
-            },
-            contentDescription = null,
-            tint = MaterialTheme.colors.primaryVariant
-        )
-        if (activity.subtype.isRace()) {
-            Icon(
-                imageVector = Icons.Rounded.SportsScore,
-                contentDescription = null,
-                tint = stravaBrand
-            )
-        }
     }
 }
 

@@ -42,10 +42,7 @@ private struct ActivityDetailsView: View {
                         .aspectRatio(2.5, contentMode: ContentMode.fit)
                 }
                 VStack(alignment: .leading) {
-                    DescriptionText(
-                        description: activity.description_,
-                        time: activity.start
-                    )
+                    DescriptionHeader(activity: activity)
                     SummaryStats(activity: activity)
                         .padding(.horizontal)
                     if let splitsInfo = activity.splitsInfo {
@@ -60,22 +57,22 @@ private struct ActivityDetailsView: View {
     }
 }
 
-private struct DescriptionText: View {
-    var description: String?
-    var time: String
+private struct DescriptionHeader: View {
+    var activity: ActivityDetails
 
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                if let description {
+                if let description = activity.description_ {
                     Text(description)
                         .padding(.bottom, 4)
                 }
-                Text(time)
+                Text(activity.start)
                     .font(.footnote)
                     .fontWeight(.light)
             }
             Spacer()
+            ActivityIcons(type: activity.type, subtype: activity.subtype)
         }.frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .padding(.horizontal)
