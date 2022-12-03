@@ -35,7 +35,8 @@ fun LoadingScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         CircularProgressIndicator(
             modifier = Modifier.align(Alignment.Center),
-            color = MaterialTheme.colors.primaryVariant)
+            color = MaterialTheme.colors.primaryVariant
+        )
     }
 }
 

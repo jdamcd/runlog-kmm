@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun RunLogTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     MaterialTheme(
         colors = if (darkTheme) runLogDarkColors() else runLogLightColors(),
@@ -35,7 +35,7 @@ private fun runLogDarkColors() = darkColors(
     secondary = themePrimary,
     surface = surfaceDark,
     background = black,
-    onPrimary = white,
+    onPrimary = white
 )
 
 private fun runLogTypography() = Typography(
