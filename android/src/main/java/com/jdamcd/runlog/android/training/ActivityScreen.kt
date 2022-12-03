@@ -2,6 +2,7 @@ package com.jdamcd.runlog.android.training
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +31,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -46,7 +46,7 @@ import com.jdamcd.runlog.android.ui.ActivityIcons
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.SplitBar
-import com.jdamcd.runlog.android.ui.container
+import com.jdamcd.runlog.android.ui.previewBackground
 import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
@@ -61,17 +61,18 @@ fun ActivityScreen(
     openLink: (String) -> Unit
 ) {
     var screenTitle by rememberSaveable { mutableStateOf("") }
+    viewModel.setDarkTheme(isSystemInDarkTheme())
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = screenTitle,
-                        color = MaterialTheme.colors.primaryVariant,
+                        color = MaterialTheme.colors.onPrimary,
                         fontWeight = FontWeight.Bold
                     )
                 },
-                backgroundColor = MaterialTheme.colors.background
+                backgroundColor = MaterialTheme.colors.primary
             )
         }
     ) { padding ->
@@ -107,7 +108,7 @@ private fun ActivityStates(
     }
 }
 
-@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Preview(backgroundColor = previewBackground, showBackground = true)
 @Composable
 private fun ActivityContent(
     @PreviewParameter(ActivityContentProvider::class) activity: ActivityDetails,
@@ -146,7 +147,7 @@ private fun DescriptionHeader(activity: ActivityDetails) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = container)
+            .background(color = MaterialTheme.colors.surface)
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Column {
@@ -252,8 +253,7 @@ private fun StatBox(@StringRes title: Int, stat: String) {
     ) {
         Text(
             text = stringResource(title),
-            style = MaterialTheme.typography.subtitle2,
-            fontWeight = FontWeight.Light
+            style = MaterialTheme.typography.subtitle2
         )
         Text(
             text = stat,
@@ -267,7 +267,7 @@ private fun SplitsList(splitsInfo: KmSplits) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(container)
+            .background(MaterialTheme.colors.surface)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -306,7 +306,7 @@ private fun SplitsList(splitsInfo: KmSplits) {
             }
         }
     }
-    Column(modifier = Modifier.padding(top = 4.dp)) {
+    Column(modifier = Modifier.padding(top = 6.dp)) {
         for (split in splitsInfo.splits) {
             SplitItem(split = split)
         }
@@ -319,7 +319,7 @@ private fun SplitItem(split: Split) {
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+            .padding(horizontal = 16.dp, vertical = 6.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row {
@@ -381,8 +381,8 @@ private fun WebLink(onClickLink: () -> Unit) {
             modifier = Modifier.padding(28.dp),
             onClick = onClickLink,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = stravaBrand,
-                contentColor = Color.White
+                backgroundColor = MaterialTheme.colors.surface,
+                contentColor = stravaBrand
             )
         ) {
             Text(stringResource(R.string.strava_view))

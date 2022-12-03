@@ -45,6 +45,10 @@ class ActivityViewModel @Inject constructor(
     }
 
     fun activityWebLink() = strava.linkUrl(id)
+
+    fun setDarkTheme(enabled: Boolean) {
+        strava.requestDarkModeImages(enabled)
+    }
 }
 
 sealed class ActivityState {

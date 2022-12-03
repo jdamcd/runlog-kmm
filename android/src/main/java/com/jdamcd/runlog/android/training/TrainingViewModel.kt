@@ -39,6 +39,10 @@ class TrainingViewModel @Inject constructor(
         getActivities()
     }
 
+    fun setDarkTheme(enabled: Boolean) {
+        strava.requestDarkModeImages(enabled)
+    }
+
     private fun getActivities() {
         viewModelScope.launch {
             when (val result = strava.activities()) {

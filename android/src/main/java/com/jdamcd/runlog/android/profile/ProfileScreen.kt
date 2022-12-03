@@ -36,8 +36,7 @@ import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
-import com.jdamcd.runlog.android.ui.divider
-import com.jdamcd.runlog.android.ui.themePrimary
+import com.jdamcd.runlog.android.ui.previewBackground
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
 import kotlinx.coroutines.flow.StateFlow
@@ -53,17 +52,17 @@ fun ProfileScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.profile_title),
-                        color = MaterialTheme.colors.primaryVariant,
+                        color = MaterialTheme.colors.onPrimary,
                         fontWeight = FontWeight.Bold
                     )
                 },
-                backgroundColor = MaterialTheme.colors.background,
+                backgroundColor = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = onSignOutClick) {
                         Icon(
                             imageVector = Icons.Rounded.ExitToApp,
                             contentDescription = stringResource(R.string.sign_out),
-                            tint = MaterialTheme.colors.primaryVariant
+                            tint = MaterialTheme.colors.onPrimary
                         )
                     }
                 }
@@ -94,7 +93,7 @@ private fun ProfileStates(
     }
 }
 
-@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Preview(backgroundColor = previewBackground, showBackground = true)
 @Composable
 private fun ProfileContent(
     @PreviewParameter(ProfileContentProvider::class) profile: AthleteProfile
@@ -166,7 +165,7 @@ private fun ProfileStat(
             text = title,
             style = MaterialTheme.typography.subtitle1,
             fontWeight = FontWeight.Bold,
-            color = themePrimary,
+            color = MaterialTheme.colors.secondary,
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
@@ -187,7 +186,7 @@ private fun VerticalDivider() {
         modifier = Modifier
             .width(1.dp)
             .height(60.dp)
-            .background(divider)
+            .background(MaterialTheme.colors.surface)
     )
 }
 

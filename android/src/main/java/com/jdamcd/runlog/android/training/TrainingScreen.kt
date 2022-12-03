@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.android.training
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,7 @@ import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.ActivityIcons
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
+import com.jdamcd.runlog.android.ui.previewBackground
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
@@ -53,23 +55,24 @@ fun TrainingScreen(
     navigateToActivity: (Long) -> Unit,
     navigateToProfile: () -> Unit
 ) {
+    viewModel.setDarkTheme(isSystemInDarkTheme())
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = stringResource(R.string.activities_title),
-                        color = MaterialTheme.colors.primaryVariant,
+                        color = MaterialTheme.colors.onPrimary,
                         fontWeight = FontWeight.Bold
                     )
                 },
-                backgroundColor = MaterialTheme.colors.background,
+                backgroundColor = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = navigateToProfile) {
                         Icon(
                             imageVector = Icons.Rounded.AccountCircle,
                             contentDescription = stringResource(R.string.profile_title),
-                            tint = MaterialTheme.colors.primaryVariant
+                            tint = MaterialTheme.colors.onPrimary
                         )
                     }
                 }
@@ -108,7 +111,7 @@ private fun TrainingList(
     }
 }
 
-@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Preview(backgroundColor = previewBackground, showBackground = true)
 @Composable
 private fun ActivityItems(
     @PreviewParameter(ActivityItemsProvider::class) data: List<ActivityCard>,

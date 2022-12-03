@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DirectionsBike
@@ -22,20 +23,25 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 
+@Preview(backgroundColor = previewBackground, showBackground = true)
 @Composable
 fun LoadingScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center),
+            color = MaterialTheme.colors.primaryVariant)
     }
 }
 
+@Preview(backgroundColor = previewBackground, showBackground = true)
 @Composable
-fun RetryScreen(onRetryClick: () -> Unit) {
+fun RetryScreen(onRetryClick: () -> Unit = {}) {
     Box(modifier = Modifier.fillMaxSize()) {
         Button(
             onClick = onRetryClick,
@@ -50,7 +56,7 @@ fun RetryScreen(onRetryClick: () -> Unit) {
 fun SplitBar(
     value: Float,
     modifier: Modifier = Modifier,
-    color: Color = themePrimary
+    color: Color = MaterialTheme.colors.primaryVariant
 ) {
     Canvas(
         modifier
@@ -79,13 +85,13 @@ fun ActivityIcons(
                 ActivityType.CROSS_TRAIN -> Icons.Rounded.FitnessCenter
             },
             contentDescription = null,
-            tint = themeDark
+            tint = MaterialTheme.colors.onBackground
         )
         if (subtype.isRace()) {
             Icon(
                 imageVector = Icons.Rounded.SportsScore,
                 contentDescription = null,
-                tint = themePrimary
+                tint = MaterialTheme.colors.primaryVariant
             )
         }
     }
