@@ -76,7 +76,7 @@ private struct DescriptionHeader: View {
         }.frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .padding(.horizontal)
-            .background(Color.asset(.container))
+            .background(.regularMaterial)
     }
 }
 
@@ -194,7 +194,7 @@ private struct SplitsList: View {
             }
         }.padding(.vertical, 12)
             .padding(.horizontal)
-            .background(Color.asset(.container))
+            .background(.regularMaterial)
             .padding(.bottom, 2)
 
         ForEach(splitsInfo.splits, id: \.number) { split in
@@ -241,7 +241,7 @@ private struct ActivityFooter: View {
                 Text(Copy.strava_view)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .background(.ultraThinMaterial)
+                    .background(.regularMaterial)
                     .foregroundColor(Color.asset(.strava))
                     .cornerRadius(6)
             }
