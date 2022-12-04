@@ -20,9 +20,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,6 +40,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
+import com.jdamcd.runlog.android.main.AppBarState
 import com.jdamcd.runlog.android.ui.ActivityIcons
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
@@ -58,43 +57,30 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun ActivityScreen(
     viewModel: ActivityViewModel,
+    hostAppBar: (AppBarState) -> Unit,
     openLink: (String) -> Unit
 ) {
     var screenTitle by rememberSaveable { mutableStateOf("") }
     viewModel.setDarkTheme(isSystemInDarkTheme())
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = screenTitle,
-                        color = MaterialTheme.colors.onPrimary,
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                backgroundColor = MaterialTheme.colors.primary
-            )
-        }
-    ) { padding ->
-        ActivityStates(
-            stateFlow = viewModel.flow,
-            modifier = Modifier.padding(padding),
-            onRetryClick = { viewModel.load() },
-            onLinkClick = { openLink(viewModel.activityWebLink()) },
-            updateTitle = { screenTitle = it }
-        )
-    }
+    hostAppBar(
+        AppBarState(title = screenTitle)
+    )
+    ActivityStates(
+        stateFlow = viewModel.flow,
+        onRetryClick = { viewModel.load() },
+        onLinkClick = { openLink(viewModel.activityWebLink()) },
+        updateTitle = { screenTitle = it }
+    )
 }
 
 @Composable
 private fun ActivityStates(
     stateFlow: StateFlow<ActivityState>,
-    modifier: Modifier,
     onRetryClick: () -> Unit,
     onLinkClick: () -> Unit,
     updateTitle: (String) -> Unit
 ) {
-    Box(modifier = modifier) {
+    Box {
         val state: ActivityState by stateFlow.collectAsState()
         when (state) {
             is ActivityState.Loading -> LoadingScreen()

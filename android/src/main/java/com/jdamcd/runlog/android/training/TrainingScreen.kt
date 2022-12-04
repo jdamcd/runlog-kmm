@@ -16,9 +16,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -40,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
+import com.jdamcd.runlog.android.main.AppBarState
 import com.jdamcd.runlog.android.ui.ActivityIcons
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
@@ -52,62 +51,56 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun TrainingScreen(
     viewModel: TrainingViewModel,
+    hostAppBar: (AppBarState) -> Unit,
     navigateToActivity: (Long) -> Unit,
     navigateToProfile: () -> Unit
 ) {
     viewModel.setDarkTheme(isSystemInDarkTheme())
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.activities_title),
-                        color = MaterialTheme.colors.onPrimary,
-                        fontWeight = FontWeight.Bold
+    hostAppBar(
+        AppBarState(
+            title = stringResource(R.string.activities_title),
+            actions = {
+                IconButton(onClick = navigateToProfile) {
+                    Icon(
+                        imageVector = Icons.Rounded.AccountCircle,
+                        contentDescription = stringResource(R.string.profile_title),
+                        tint = MaterialTheme.colors.onPrimary
                     )
-                },
-                backgroundColor = MaterialTheme.colors.primary,
-                actions = {
-                    IconButton(onClick = navigateToProfile) {
-                        Icon(
-                            imageVector = Icons.Rounded.AccountCircle,
-                            contentDescription = stringResource(R.string.profile_title),
-                            tint = MaterialTheme.colors.onPrimary
-                        )
-                    }
                 }
-            )
-        }
-    ) { padding ->
-        TrainingList(
-            stateFlow = viewModel.flow,
-            modifier = Modifier.padding(padding),
-            onItemClick = { navigateToActivity(it) },
-            onRetryClick = { viewModel.load() },
-            onPullRefresh = { viewModel.refresh() }
+            }
         )
-    }
+    )
+    TrainingList(
+        stateFlow = viewModel.flow,
+        onItemClick = { navigateToActivity(it) },
+        onRetryClick = { viewModel.load() },
+        onPullRefresh = { viewModel.refresh() }
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun TrainingList(
     stateFlow: StateFlow<TrainingState>,
-    modifier: Modifier,
     onItemClick: (Long) -> Unit,
     onRetryClick: () -> Unit,
     onPullRefresh: () -> Unit
 ) {
     val state: TrainingState by stateFlow.collectAsState()
     val refreshState = rememberPullRefreshState(state.isRefreshing(), onPullRefresh)
-    Box(modifier = modifier.pullRefresh(refreshState)) {
+    Box(modifier = Modifier.pullRefresh(refreshState)) {
         when (state) {
             is TrainingState.Loading -> LoadingScreen()
             is TrainingState.Data -> ActivityItems((state as TrainingState.Data).activityCards, onItemClick)
             is TrainingState.Refreshing -> ActivityItems((state as TrainingState.Refreshing).activityCards, onItemClick)
             is TrainingState.Error -> RetryScreen(onRetryClick)
         }
-        PullRefreshIndicator(state.isRefreshing(), refreshState, Modifier.align(Alignment.TopCenter))
+        PullRefreshIndicator(
+            refreshing = state.isRefreshing(),
+            state = refreshState,
+            modifier = Modifier.align(Alignment.TopCenter),
+            contentColor = MaterialTheme.colors.primaryVariant
+        )
     }
 }
 

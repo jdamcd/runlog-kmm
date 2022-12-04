@@ -1,7 +1,18 @@
 package com.jdamcd.runlog.android.main
 
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -23,36 +34,61 @@ fun MainNavigation(
     signOut: () -> Unit
 ) {
     RunLogTheme {
-        NavHost(
-            modifier = modifier,
-            navController = navController,
-            startDestination = startDestination
+        var appBarState by remember { mutableStateOf(AppBarState()) }
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = appBarState.title,
+                            color = MaterialTheme.colors.onPrimary,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    backgroundColor = MaterialTheme.colors.primary,
+                    actions = appBarState.actions
+                )
+            }
         ) {
-            composable(ROUTE_HOME) {
-                TrainingScreen(
-                    viewModel = hiltViewModel(),
-                    navigateToActivity = { id -> navController.navigate(buildActivityRoute(id)) },
-                    navigateToProfile = { navController.navigate(ROUTE_PROFILE) }
-                )
-            }
-            composable(
-                route = "$ROUTE_ACTIVITY/{$ROUTE_ACTIVITY_ID}",
-                arguments = listOf(navArgument(ROUTE_ACTIVITY_ID) { type = NavType.LongType })
+            NavHost(
+                modifier = modifier.padding(it),
+                navController = navController,
+                startDestination = startDestination
             ) {
-                ActivityScreen(
-                    viewModel = hiltViewModel(),
-                    openLink = openLink
-                )
-            }
-            composable(ROUTE_PROFILE) {
-                ProfileScreen(
-                    viewModel = hiltViewModel(),
-                    onSignOutClick = signOut
-                )
+                composable(ROUTE_HOME) {
+                    TrainingScreen(
+                        viewModel = hiltViewModel(),
+                        hostAppBar = { state -> appBarState = state },
+                        navigateToActivity = { id -> navController.navigate(buildActivityRoute(id)) },
+                        navigateToProfile = { navController.navigate(ROUTE_PROFILE) }
+                    )
+                }
+                composable(
+                    route = "$ROUTE_ACTIVITY/{$ROUTE_ACTIVITY_ID}",
+                    arguments = listOf(navArgument(ROUTE_ACTIVITY_ID) { type = NavType.LongType })
+                ) {
+                    ActivityScreen(
+                        viewModel = hiltViewModel(),
+                        hostAppBar = { state -> appBarState = state },
+                        openLink = openLink
+                    )
+                }
+                composable(ROUTE_PROFILE) {
+                    ProfileScreen(
+                        viewModel = hiltViewModel(),
+                        hostAppBar = { state -> appBarState = state },
+                        onSignOutClick = signOut
+                    )
+                }
             }
         }
     }
 }
+
+data class AppBarState(
+    val title: String = "",
+    val actions: @Composable RowScope.() -> Unit = {}
+)
 
 const val ROUTE_HOME = "home"
 const val ROUTE_PROFILE = "profile"

@@ -15,9 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.runtime.Composable
@@ -34,6 +32,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jdamcd.runlog.android.R
+import com.jdamcd.runlog.android.main.AppBarState
 import com.jdamcd.runlog.android.ui.LoadingScreen
 import com.jdamcd.runlog.android.ui.RetryScreen
 import com.jdamcd.runlog.android.ui.previewBackground
@@ -44,46 +43,35 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
+    hostAppBar: (AppBarState) -> Unit,
     onSignOutClick: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.profile_title),
-                        color = MaterialTheme.colors.onPrimary,
-                        fontWeight = FontWeight.Bold
+    hostAppBar(
+        AppBarState(
+            title = stringResource(R.string.profile_title),
+            actions = {
+                IconButton(onClick = onSignOutClick) {
+                    Icon(
+                        imageVector = Icons.Rounded.ExitToApp,
+                        contentDescription = stringResource(R.string.sign_out),
+                        tint = MaterialTheme.colors.onPrimary
                     )
-                },
-                backgroundColor = MaterialTheme.colors.primary,
-                actions = {
-                    IconButton(onClick = onSignOutClick) {
-                        Icon(
-                            imageVector = Icons.Rounded.ExitToApp,
-                            contentDescription = stringResource(R.string.sign_out),
-                            tint = MaterialTheme.colors.onPrimary
-                        )
-                    }
                 }
-            )
-        }
-    ) { padding ->
-        ProfileStates(
-            stateFlow = viewModel.flow,
-            modifier = Modifier.padding(padding),
-            onRetryClick = { viewModel.load() }
+            }
         )
-    }
+    )
+    ProfileStates(
+        stateFlow = viewModel.flow,
+        onRetryClick = { viewModel.load() }
+    )
 }
 
 @Composable
 private fun ProfileStates(
     stateFlow: StateFlow<ProfileState>,
-    modifier: Modifier,
     onRetryClick: () -> Unit
 ) {
-    Box(modifier = modifier) {
+    Box {
         val state: ProfileState by stateFlow.collectAsState()
         when (state) {
             is ProfileState.Loading -> LoadingScreen()
