@@ -26,6 +26,7 @@ import kotlin.math.roundToInt
 internal class Mapper {
 
     private val datePattern = "EEEE dd MMM @ h:mma"
+    private val privateEmoji = "\uD83D\uDD12"
 
     var darkModeImages = false
 
@@ -33,7 +34,7 @@ internal class Mapper {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         return ActivityCard(
             id = activity.id,
-            name = activity.name,
+            name = mapName(activity.name, activity.private),
             type = mapType(activity.type),
             subtype = subtype,
             distance = activity.distance.formatKm(),
@@ -48,7 +49,7 @@ internal class Mapper {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         return ActivityDetails(
             id = activity.id,
-            name = activity.name,
+            name = mapName(activity.name, activity.private),
             description = activity.description?.ifEmpty { null },
             type = mapType(activity.type),
             subtype = subtype,
@@ -81,6 +82,9 @@ internal class Mapper {
             allRuns = mapStats(athleteStats.all_run_totals)
         )
     }
+
+    private fun mapName(name: String, private: Boolean) =
+        if (private) "$privateEmoji $name" else name
 
     private fun mapDuration(elapsedTime: Int, movingTime: Int, isRace: Boolean): String {
         val time = if (isRace) elapsedTime else movingTime
@@ -123,8 +127,8 @@ internal class Mapper {
             { it.split },
             { calculatePace(it.distance, it.moving_time) }
         ).orEmpty()
-        val min = paces.minOf { it.value }
-        val max = paces.minOf { it.value }
+        val min = paces.minOfOrNull { it.value } ?: 0
+        val max = paces.minOfOrNull { it.value } ?: 0
 
         val mappedSplits = splits?.filter { it.distance >= 200 }?.map {
             val paceSeconds = paces[it.split]!!

@@ -12,6 +12,7 @@ import kotlin.math.roundToInt
 fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
     id = 123L,
     name = "my activity",
+    private = false,
     type = "Run",
     workout_type = workout_type,
     distance = 10_100.0f,
@@ -24,6 +25,7 @@ fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
 fun detailedActivityModel() = ApiDetailedActivity(
     id = 123L,
     name = "my activity",
+    private = false,
     description = "my description",
     type = "Run",
     workout_type = 2,

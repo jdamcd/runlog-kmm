@@ -12,6 +12,7 @@ data class ApiToken(
 data class ApiSummaryActivity(
     val id: Long,
     val name: String,
+    val private: Boolean,
     val type: String,
     val workout_type: Int?,
     val distance: Float,
@@ -25,6 +26,7 @@ data class ApiSummaryActivity(
 data class ApiDetailedActivity(
     val id: Long,
     val name: String,
+    val private: Boolean,
     val description: String?,
     val type: String,
     val workout_type: Int?,

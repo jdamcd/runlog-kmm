@@ -58,6 +58,7 @@ struct Components_Previews: PreviewProvider {
         }
         .frame(height: 200)
         .padding()
+        .previewDisplayName("SplitBar")
 
         VStack(alignment: .leading, spacing: 20) {
             ActivityIcons(
@@ -87,6 +88,6 @@ struct Components_Previews: PreviewProvider {
                 subtype: ActivitySubtype.default_
             )
         }
-        .previewDisplayName("ff")
+        .previewDisplayName("ActivityIcons")
     }
 }
