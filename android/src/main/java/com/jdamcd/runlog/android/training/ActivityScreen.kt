@@ -187,10 +187,17 @@ private fun RunRideSummaryStats(activity: ActivityDetails) {
             title = R.string.activity_stat_pace,
             stat = activity.pace
         )
-        StatBox(
-            title = R.string.activity_stat_moving_time,
-            stat = activity.movingDuration
-        )
+        if (activity.subtype.isRace()) {
+            StatBox(
+                title = R.string.activity_stat_elapsed_time,
+                stat = activity.elapsedDuration
+            )
+        } else {
+            StatBox(
+                title = R.string.activity_stat_moving_time,
+                stat = activity.movingDuration
+            )
+        }
     }
     if (hasHeartrateStats(activity)) {
         Divider(modifier = Modifier.padding(horizontal = 16.dp))

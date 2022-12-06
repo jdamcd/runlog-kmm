@@ -110,10 +110,17 @@ private struct RunRideSummaryStats: View {
                 title: Copy.activity_stat_pace,
                 stat: activity.pace
             )
-            StatBox(
-                title: Copy.activity_stat_moving_time,
-                stat: activity.movingDuration
-            )
+            if activity.subtype.isRace() {
+                StatBox(
+                    title: Copy.activity_stat_elapsed_time,
+                    stat: activity.elapsedDuration
+                )
+            } else {
+                StatBox(
+                    title: Copy.activity_stat_moving_time,
+                    stat: activity.movingDuration
+                )
+            }
         }.frame(maxWidth: .infinity)
         if let effort = activity.effort,
            let avgHr = activity.averageHeartrate,
