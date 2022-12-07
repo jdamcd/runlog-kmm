@@ -10,10 +10,8 @@ class RunLogUITests: XCTestCase {
     }
 
     func testLaunchPerformance() {
-        if #available(iOS 14.0, *) {
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+        measure(metrics: [XCTApplicationLaunchMetric()]) {
+            XCUIApplication().launch()
         }
     }
 }

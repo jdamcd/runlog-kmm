@@ -1,4 +1,4 @@
-@testable import RunLog
+@testable import Kilometer
 import XCTest
 
 class ExtensionTests: XCTestCase {

@@ -285,6 +285,7 @@
 				7555FF98242A565B00829871 /* Sources */,
 				7555FF99242A565B00829871 /* Frameworks */,
 				7555FF9A242A565B00829871 /* Resources */,
+				4930954729414FC30019BEBB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -370,6 +371,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4930954729414FC30019BEBB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT/..\"\nexport JAVA_HOME=\"/Applications/Android Studio.app/Contents/jre/Contents/Home\"\n./gradlew :shared:main:embedAndSignAppleFrameworkForXcode\n";
+		};
 		7555FFB5242A651A00829871 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -635,7 +653,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5SCQUH4Y8L;
 				INFOPLIST_FILE = RunLogTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -645,7 +663,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RunLog.app/RunLog";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kilometer.app/Kilometer";
 			};
 			name = Debug;
 		};
@@ -657,7 +675,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5SCQUH4Y8L;
 				INFOPLIST_FILE = RunLogTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -667,7 +685,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RunLog.app/RunLog";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kilometer.app/Kilometer";
 			};
 			name = Release;
 		};
