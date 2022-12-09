@@ -2,6 +2,7 @@ import Foundation
 import RunLogShared
 import SwiftUI
 
+@MainActor
 class ProfileViewModel: ObservableObject {
     @Published var state: ProfileState = .loading
 
@@ -17,23 +18,17 @@ class ProfileViewModel: ObservableObject {
 
     func load() {
         state = .loading
-        strava.profile { result, _ in
+        Task {
+            let result = try await strava.profile()
             if let result = result as? ResultData<AthleteProfile> {
-                let update = ProfileState.data(ProfileState.Data(profile: result.data!))
-                self.updateState(to: update)
+                state = .data(ProfileState.Data(profile: result.data!))
             } else if let error = result as? ResultError {
                 if error.recoverable {
-                    self.updateState(to: .error)
+                    state = .error
                 } else {
-                    self.user.clear()
+                    user.clear()
                 }
             }
-        }
-    }
-
-    private func updateState(to: ProfileState) {
-        DispatchQueue.main.async {
-            self.state = to
         }
     }
 }

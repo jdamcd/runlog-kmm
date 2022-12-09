@@ -11,6 +11,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         self.strava = strava
     }
 
+    @MainActor
     func startLogin() {
         state = .loading
         let loginUrl = URL(string: strava.loginUrl)!
@@ -21,7 +22,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
             if let result {
                 self.handleCallback(result: result)
             } else if error != nil {
-                self.updateState(to: .idle)
+                self.state = .idle
             }
         }
         session.presentationContextProvider = self
@@ -29,33 +30,29 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         session.start()
     }
 
+    @MainActor
     private func handleCallback(result: URL) {
         if let code = result.paramValue("code"), let scope = result.paramValue("scope") {
             if scope.contains("activity:read_all") {
                 submitAuthCode(code: code)
             } else {
-                updateState(to: .permission_error)
+                state = .permission_error
             }
         } else {
-            updateState(to: .idle)
+            state = .idle
         }
     }
 
+    @MainActor
     private func submitAuthCode(code: String) {
         state = .loading
-        strava.authenticate(code: code) { result, _ in
+        Task {
+            let result = try await strava.authenticate(code: code)
             if result is LoginResult.Success {
-                print("Login success")
-                self.updateState(to: .success)
+                state = .success
             } else {
-                self.updateState(to: .idle)
+                state = .idle
             }
-        }
-    }
-
-    private func updateState(to: LoginState) {
-        DispatchQueue.main.async {
-            self.state = to
         }
     }
 

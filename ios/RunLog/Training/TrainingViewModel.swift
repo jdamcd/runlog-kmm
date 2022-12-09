@@ -1,6 +1,7 @@
 import Foundation
 import RunLogShared
 
+@MainActor
 class TrainingViewModel: ObservableObject {
     @Published var state: TrainingState = .loading
 
@@ -16,7 +17,7 @@ class TrainingViewModel: ObservableObject {
 
     func load() {
         if !state.isLoaded {
-            updateState(to: .loading)
+            state = .loading
             getActivities()
         }
     }
@@ -26,17 +27,16 @@ class TrainingViewModel: ObservableObject {
     }
 
     private func getActivities() {
-        strava.activities { result, _ in
+        Task {
+            let result = try await strava.activities()
             if let items = result as? ResultData<NSArray> {
                 let itemsArray = items.data as! [ActivityCard]
-                let update = TrainingState.data(
-                    TrainingState.Data(activities: itemsArray))
-                self.updateState(to: update)
+                state = .data(TrainingState.Data(activities: itemsArray))
             } else if let error = result as? ResultError {
                 if error.recoverable {
-                    self.updateState(to: .error)
+                    state = .error
                 } else {
-                    self.signOut()
+                    signOut()
                 }
             }
         }
@@ -44,12 +44,6 @@ class TrainingViewModel: ObservableObject {
 
     func setDarkMode(isEnabled: Bool) {
         strava.requestDarkModeImages(enabled: isEnabled)
-    }
-
-    private func updateState(to: TrainingState) {
-        DispatchQueue.main.async {
-            self.state = to
-        }
     }
 
     private func signOut() {

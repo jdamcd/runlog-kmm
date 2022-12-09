@@ -13,7 +13,7 @@ struct TrainingView: View {
                 case .loading:
                     ProgressView()
                 case .error:
-                    Button(action: viewModel.load) {
+                    Button(action: load) {
                         Text(Copy.retry)
                     }
                 case let .data(data):
@@ -34,10 +34,14 @@ struct TrainingView: View {
                 }
             )
             .onAppear {
-                viewModel.setDarkMode(isEnabled: colorScheme == .dark)
-                viewModel.load()
+                load()
             }
         }.accentColor(Color.asset(.primary))
+    }
+
+    private func load() {
+        viewModel.setDarkMode(isEnabled: colorScheme == .dark)
+        viewModel.load()
     }
 }
 

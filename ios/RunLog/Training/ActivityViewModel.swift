@@ -1,6 +1,7 @@
 import Foundation
 import RunLogShared
 
+@MainActor
 class ActivityViewModel: ObservableObject {
     @Published var state: ActivityState = .loading
 
@@ -12,19 +13,18 @@ class ActivityViewModel: ObservableObject {
 
     func load(id: Int64) {
         if !state.isLoaded {
-            updateState(to: .loading)
+            state = .loading
             getActivityDetails(id: id)
         }
     }
 
     private func getActivityDetails(id: Int64) {
-        strava.activityDetails(id: id) { result, _ in
+        Task {
+            let result = try await strava.activityDetails(id: id)
             if let data = result as? ResultData<ActivityDetails> {
-                let update = ActivityState.data(
-                    ActivityState.Data(activity: data.data!))
-                self.updateState(to: update)
+                state = .data(ActivityState.Data(activity: data.data!))
             } else if result is ResultError {
-                self.updateState(to: .error)
+                state = .error
             }
         }
     }
@@ -35,12 +35,6 @@ class ActivityViewModel: ObservableObject {
 
     func setDarkMode(isEnabled: Bool) {
         strava.requestDarkModeImages(enabled: isEnabled)
-    }
-
-    private func updateState(to: ActivityState) {
-        DispatchQueue.main.async {
-            self.state = to
-        }
     }
 }
 

@@ -12,7 +12,7 @@ struct ProfileView: View {
             case .loading:
                 ProgressView()
             case .error:
-                Button(action: viewModel.load) {
+                Button(action: load) {
                     Text(Copy.retry)
                 }
             case let .data(data):
@@ -29,8 +29,12 @@ struct ProfileView: View {
             }
         )
         .onAppear {
-            viewModel.load()
+            load()
         }
+    }
+
+    private func load() {
+        viewModel.load()
     }
 }
 
