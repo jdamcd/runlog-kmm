@@ -27,13 +27,21 @@ jobs:
       run: ./gradlew testDebugUnitTest
 
     - name: Run iOS tests
-      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.0'
+      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.0' -resultBundlePath TestResults
 
-    - name: Generate report
+    - name: Publish Kotlin results
       uses: dorny/test-reporter@v1.6.0
       if: always()
       with:
-        name: Kotlin tests
+        name: Kotlin results
         path: "**/build/test-results/**/TEST-*.xml"
         reporter: java-junit
+        fail-on-error: true
+
+    - name: Publish iOS results
+      uses: kishikawakatsumi/xcresulttool@v1.7.0
+      if: always()
+      with:
+        name: iOS results
+        path: TestResults.xcresult
         fail-on-error: true
