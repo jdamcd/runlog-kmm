@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build and test
     runs-on: macos-12
     steps:
 
@@ -26,7 +27,7 @@ jobs:
       run: ./gradlew testDebugUnitTest
 
     - name: Run iOS tests
-      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.1'
+      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.0'
 
     - name: Generate report
       uses: dorny/test-reporter@v1.6.0
