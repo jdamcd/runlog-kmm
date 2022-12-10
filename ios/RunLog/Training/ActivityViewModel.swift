@@ -33,13 +33,13 @@ class ActivityViewModel: ObservableObject {
         URL(string: strava.linkUrl(id: id))!
     }
 
-    func setDarkMode(isEnabled: Bool) {
+    func setDarkMode(_ isEnabled: Bool) {
         strava.requestDarkModeImages(enabled: isEnabled)
     }
 }
 
-enum ActivityState {
-    struct Data {
+enum ActivityState: Equatable {
+    struct Data: Equatable {
         let activity: ActivityDetails
     }
 

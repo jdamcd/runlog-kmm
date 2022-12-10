@@ -1,7 +1,7 @@
 @testable import Kilometer
 import XCTest
 
-class ExtensionTests: XCTestCase {
+class ExtensionsTest: XCTestCase {
     func testExtractsURLParameterByName() {
         let example = URL(string: "http://www.example.com/hello?myparam=abc")!
 

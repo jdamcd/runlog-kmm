@@ -24,7 +24,7 @@ struct ActivityView: View {
                 )
             }
         }.onAppear {
-            viewModel.setDarkMode(isEnabled: colorScheme == .dark)
+            viewModel.setDarkMode(colorScheme == .dark)
             viewModel.load(id: id)
         }
     }

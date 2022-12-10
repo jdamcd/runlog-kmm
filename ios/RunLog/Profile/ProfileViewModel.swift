@@ -23,9 +23,8 @@ class ProfileViewModel: ObservableObject {
             if let result = result as? ResultData<AthleteProfile> {
                 state = .data(ProfileState.Data(profile: result.data!))
             } else if let error = result as? ResultError {
-                if error.recoverable {
-                    state = .error
-                } else {
+                state = .error
+                if !error.recoverable {
                     user.clear()
                 }
             }
@@ -33,8 +32,8 @@ class ProfileViewModel: ObservableObject {
     }
 }
 
-enum ProfileState {
-    struct Data {
+enum ProfileState : Equatable {
+    struct Data : Equatable {
         let profile: AthleteProfile
     }
 

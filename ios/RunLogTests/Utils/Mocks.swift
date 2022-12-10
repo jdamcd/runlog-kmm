@@ -9,8 +9,8 @@ class StravaMock: Strava {
 
     var darkModeImages = false
 
-    func linkUrl(id _: Int64) -> String {
-        "testLinkUrl"
+    func linkUrl(id: Int64) -> String {
+        "testLinkUrl:\(id)"
     }
 
     func activities() async throws -> Result<NSArray> {
