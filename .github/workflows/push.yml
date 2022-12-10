@@ -34,7 +34,7 @@ jobs:
       if: always()
       with:
         name: Kotlin results
-        path: "**/build/test-results/**/TEST-*.xml"
+        path: '**/build/test-results/**/TEST-*.xml'
         reporter: java-junit
         fail-on-error: true
 
@@ -42,6 +42,5 @@ jobs:
       uses: kishikawakatsumi/xcresulttool@v1.7.0
       if: always()
       with:
-        name: iOS results
-        path: TestResults.xcresult
-        fail-on-error: true
+        title: iOS results
+        path: 'TestResults.xcresult'

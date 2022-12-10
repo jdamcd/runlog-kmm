@@ -411,8 +411,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\nsource ~/.zshrc\n./gradlew :shared:main:embedAndSignAppleFrameworkForXcode\n";
+			shellPath = /bin/zsh;
+			shellScript = "cd \"$SRCROOT/..\"\nif [ -f ~/.zshrc ]; then\n    source ~/.zshrc\nfi\n./gradlew :shared:main:embedAndSignAppleFrameworkForXcode\n";
 		};
 		7555FFB5242A651A00829871 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -429,7 +429,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "cd \"$SRCROOT/..\"\nsource ~/.zshrc\n./gradlew :shared:main:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/..\"\nif [ -f ~/.zshrc ]; then\n    source ~/.zshrc\nfi\n./gradlew :shared:main:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
