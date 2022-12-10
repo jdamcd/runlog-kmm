@@ -32,8 +32,8 @@ class ProfileViewModel: ObservableObject {
     }
 }
 
-enum ProfileState : Equatable {
-    struct Data : Equatable {
+enum ProfileState: Equatable {
+    struct Data: Equatable {
         let profile: AthleteProfile
     }
 

@@ -23,7 +23,7 @@ final class ProfileViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .data(ProfileState.Data(profile: profile)))
     }
-    
+
     func testLoadFailureSetsLoadingThenError() {
         mockStrava.profile = ResultError(error: KotlinThrowable(), recoverable: true)
 
@@ -32,7 +32,7 @@ final class ProfileViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .error)
     }
-    
+
     func testLogOutOnUnrecoverableError() {
         mockStrava.activities = ResultError(error: KotlinThrowable(), recoverable: false)
 

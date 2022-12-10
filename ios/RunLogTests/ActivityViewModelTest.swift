@@ -21,7 +21,7 @@ final class ActivityViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .data(ActivityState.Data(activity: activity)))
     }
-    
+
     func testLoadFailureSetsLoadingThenError() {
         mockStrava.activityDetails = ResultError(error: KotlinThrowable(), recoverable: true)
 
@@ -30,7 +30,7 @@ final class ActivityViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .error)
     }
-    
+
     func testLinkUrlPassesId() {
         XCTAssertEqual(URL(string: "testLinkUrl:123"), viewModel.linkUrl(id: 123))
     }
