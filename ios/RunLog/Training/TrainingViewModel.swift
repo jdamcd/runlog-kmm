@@ -29,9 +29,9 @@ class TrainingViewModel: ObservableObject {
     private func getActivities() {
         Task {
             let result = try await strava.activities()
-            if let items = result as? ResultData<NSArray> {
-                let itemsArray = items.data as! [ActivityCard]
-                state = .data(TrainingState.Data(activities: itemsArray))
+            if let result = result as? ResultData<NSArray> {
+                let items = result.data as! [ActivityCard]
+                state = .data(items)
             } else if let error = result as? ResultError {
                 state = .error
                 if !error.recoverable {
@@ -51,12 +51,8 @@ class TrainingViewModel: ObservableObject {
 }
 
 enum TrainingState: Equatable {
-    struct Data: Equatable {
-        let activities: [ActivityCard]
-    }
-
     case loading
-    case data(Data)
+    case data([ActivityCard])
     case error
 
     var isLoaded: Bool {

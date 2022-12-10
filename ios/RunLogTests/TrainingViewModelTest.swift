@@ -21,7 +21,7 @@ final class TrainingViewModelTest: XCTestCase {
         viewModel.load()
 
         XCTAssertEqual(viewModel.state, .loading)
-        waitUntil(viewModel.$state, equals: .data(TrainingState.Data(activities: [activity])))
+        waitUntil(viewModel.$state, equals: .data([activity]))
     }
 
     func testLoadFailureSetsLoadingThenError() {
@@ -52,7 +52,7 @@ final class TrainingViewModelTest: XCTestCase {
         viewModel.load()
 
         XCTAssertEqual(viewModel.state, TrainingState.loading)
-        waitUntil(viewModel.$state, equals: .data(TrainingState.Data(activities: [activity1])))
+        waitUntil(viewModel.$state, equals: .data([activity1]))
 
         // Refresh
         let activity2 = ActivityCard.with(id: 2)
@@ -60,8 +60,8 @@ final class TrainingViewModelTest: XCTestCase {
 
         viewModel.refresh()
 
-        XCTAssertEqual(viewModel.state, .data(TrainingState.Data(activities: [activity1])))
-        waitUntil(viewModel.$state, equals: .data(TrainingState.Data(activities: [activity2])))
+        XCTAssertEqual(viewModel.state, .data([activity1]))
+        waitUntil(viewModel.$state, equals: .data([activity2]))
     }
 
     func testRefreshLoadsIfNotLoaded() {
@@ -71,7 +71,7 @@ final class TrainingViewModelTest: XCTestCase {
         viewModel.refresh()
 
         XCTAssertEqual(viewModel.state, .loading)
-        waitUntil(viewModel.$state, equals: .data(TrainingState.Data(activities: [activity])))
+        waitUntil(viewModel.$state, equals: .data([activity]))
     }
 
     func testSetDarkModeUpdatesInteractor() {

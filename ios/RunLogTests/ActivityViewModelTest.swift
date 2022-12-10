@@ -19,7 +19,7 @@ final class ActivityViewModelTest: XCTestCase {
         viewModel.load(id: 1)
 
         XCTAssertEqual(viewModel.state, .loading)
-        waitUntil(viewModel.$state, equals: .data(ActivityState.Data(activity: activity)))
+        waitUntil(viewModel.$state, equals: .data(activity))
     }
 
     func testLoadFailureSetsLoadingThenError() {

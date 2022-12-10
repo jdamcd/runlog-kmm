@@ -16,9 +16,9 @@ struct TrainingView: View {
                     Button(action: load) {
                         Text(Copy.retry)
                     }
-                case let .data(data):
+                case let .data(items):
                     ActivitiesList(
-                        activities: data.activities,
+                        activities: items,
                         refresh: {
                             viewModel.refresh()
                         }

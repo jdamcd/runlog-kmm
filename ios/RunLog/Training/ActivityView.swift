@@ -17,9 +17,9 @@ struct ActivityView: View {
                 Button(action: { viewModel.load(id: id) }) {
                     Text(Copy.retry)
                 }
-            case let .data(data):
+            case let .data(activity):
                 ActivityDetailsView(
-                    activity: data.activity,
+                    activity: activity,
                     openOnWeb: { viewModel.linkUrl(id: id) }
                 )
             }

@@ -21,8 +21,8 @@ class ActivityViewModel: ObservableObject {
     private func getActivityDetails(id: Int64) {
         Task {
             let result = try await strava.activityDetails(id: id)
-            if let data = result as? ResultData<ActivityDetails> {
-                state = .data(ActivityState.Data(activity: data.data!))
+            if let result = result as? ResultData<ActivityDetails> {
+                state = .data(result.data!)
             } else if result is ResultError {
                 state = .error
             }
@@ -39,12 +39,8 @@ class ActivityViewModel: ObservableObject {
 }
 
 enum ActivityState: Equatable {
-    struct Data: Equatable {
-        let activity: ActivityDetails
-    }
-
     case loading
-    case data(Data)
+    case data(ActivityDetails)
     case error
 
     var isLoaded: Bool {

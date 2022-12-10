@@ -21,7 +21,7 @@ class ProfileViewModel: ObservableObject {
         Task {
             let result = try await strava.profile()
             if let result = result as? ResultData<AthleteProfile> {
-                state = .data(ProfileState.Data(profile: result.data!))
+                state = .data(result.data!)
             } else if let error = result as? ResultError {
                 state = .error
                 if !error.recoverable {
@@ -33,11 +33,7 @@ class ProfileViewModel: ObservableObject {
 }
 
 enum ProfileState: Equatable {
-    struct Data: Equatable {
-        let profile: AthleteProfile
-    }
-
     case loading
-    case data(Data)
+    case data(AthleteProfile)
     case error
 }

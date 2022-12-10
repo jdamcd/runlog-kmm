@@ -15,8 +15,8 @@ struct ProfileView: View {
                 Button(action: load) {
                     Text(Copy.retry)
                 }
-            case let .data(data):
-                ProfileDetailsView(profile: data.profile)
+            case let .data(profile):
+                ProfileDetailsView(profile: profile)
             }
         }
         .navigationBarTitle(Copy.profile_title, displayMode: .inline)

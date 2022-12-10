@@ -21,7 +21,7 @@ final class ProfileViewModelTest: XCTestCase {
         viewModel.load()
 
         XCTAssertEqual(viewModel.state, .loading)
-        waitUntil(viewModel.$state, equals: .data(ProfileState.Data(profile: profile)))
+        waitUntil(viewModel.$state, equals: .data(profile))
     }
 
     func testLoadFailureSetsLoadingThenError() {
