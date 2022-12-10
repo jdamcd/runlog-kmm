@@ -22,14 +22,17 @@ jobs:
     - name: Assemble
       run: ./gradlew spotlessCheck assembleDebug
 
-    - name: Run tests
+    - name: Run Shared and Android tests
       run: ./gradlew testDebugUnitTest
+
+    - name: Run iOS tests
+      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.1'
 
     - name: Generate report
       uses: dorny/test-reporter@v1.6.0
       if: always()
       with:
-        name: JUnit Tests
+        name: Kotlin tests
         path: "**/build/test-results/**/TEST-*.xml"
         reporter: java-junit
         fail-on-error: true
