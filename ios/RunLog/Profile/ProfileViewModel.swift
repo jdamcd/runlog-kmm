@@ -9,8 +9,8 @@ class ProfileViewModel: ObservableObject {
     private let user: UserState
     private let strava: Strava
 
-    init(user: UserState = UserState(),
-         strava: Strava = SharedModule().buildStrava(userState: UserState()))
+    init(user: UserState = PersistingUserState(),
+         strava: Strava = SharedModule().buildStrava(userState: PersistingUserState()))
     {
         self.user = user
         self.strava = strava

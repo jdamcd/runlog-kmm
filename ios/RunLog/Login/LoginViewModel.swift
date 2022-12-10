@@ -7,7 +7,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
 
     private let strava: Strava
 
-    init(strava: Strava = SharedModule().buildStrava(userState: UserState())) {
+    init(strava: Strava = SharedModule().buildStrava(userState: PersistingUserState())) {
         self.strava = strava
     }
 

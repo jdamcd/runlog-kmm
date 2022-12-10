@@ -4,21 +4,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-actual class UserState(context: Context) {
+actual class PersistingUserState(context: Context) : UserState {
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    actual var accessToken: String
+    actual override var accessToken: String
         get() = prefs.getString(ACCESS_TOKEN, "")!!
         set(accessToken) = prefs.edit { putString(ACCESS_TOKEN, accessToken) }
 
-    actual var refreshToken: String
+    actual override var refreshToken: String
         get() = prefs.getString(REFRESH_TOKEN, "")!!
         set(refreshToken) = prefs.edit { putString(REFRESH_TOKEN, refreshToken) }
 
-    actual fun isLoggedIn() = accessToken.isNotEmpty()
+    actual override fun isLoggedIn() = accessToken.isNotEmpty()
 
-    actual fun clear() {
+    actual override fun clear() {
         prefs.edit { clear() }
     }
 

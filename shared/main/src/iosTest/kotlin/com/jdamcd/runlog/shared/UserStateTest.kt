@@ -6,11 +6,11 @@ import kotlin.test.Test
 
 class UserStateTest {
 
-    lateinit var userState: UserState
+    lateinit var userState: PersistingUserState
 
     @BeforeTest
     fun setUp() {
-        userState = UserState()
+        userState = PersistingUserState()
         userState.clear()
     }
 
