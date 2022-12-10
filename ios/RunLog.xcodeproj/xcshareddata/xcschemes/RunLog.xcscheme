@@ -47,6 +47,11 @@
                BlueprintName = "RunLogUITests"
                ReferencedContainer = "container:RunLog.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "RunLogUITests/testLaunchPerformance()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

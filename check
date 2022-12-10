@@ -1,2 +1,6 @@
 swiftformat .
 ./gradlew spotlessApply assembleDebug testDebugUnitTest
+xcodebuild test -project ios/RunLog.xcodeproj \
+   -scheme RunLog \
+   -sdk iphonesimulator \
+   -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.1'
