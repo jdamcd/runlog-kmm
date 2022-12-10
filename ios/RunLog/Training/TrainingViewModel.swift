@@ -33,16 +33,15 @@ class TrainingViewModel: ObservableObject {
                 let itemsArray = items.data as! [ActivityCard]
                 state = .data(TrainingState.Data(activities: itemsArray))
             } else if let error = result as? ResultError {
-                if error.recoverable {
-                    state = .error
-                } else {
+                state = .error
+                if !error.recoverable {
                     signOut()
                 }
             }
         }
     }
 
-    func setDarkMode(isEnabled: Bool) {
+    func setDarkMode(_ isEnabled: Bool) {
         strava.requestDarkModeImages(enabled: isEnabled)
     }
 
@@ -51,8 +50,8 @@ class TrainingViewModel: ObservableObject {
     }
 }
 
-enum TrainingState {
-    struct Data {
+enum TrainingState: Equatable {
+    struct Data: Equatable {
         let activities: [ActivityCard]
     }
 

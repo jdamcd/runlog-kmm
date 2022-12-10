@@ -40,7 +40,7 @@ struct TrainingView: View {
     }
 
     private func load() {
-        viewModel.setDarkMode(isEnabled: colorScheme == .dark)
+        viewModel.setDarkMode(colorScheme == .dark)
         viewModel.load()
     }
 }

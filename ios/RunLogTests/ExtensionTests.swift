@@ -15,6 +15,6 @@ class ExtensionTests: XCTestCase {
 
         let result = example.paramValue("nope")
 
-        XCTAssertEqual(nil, result)
+        XCTAssertNil(result)
     }
 }

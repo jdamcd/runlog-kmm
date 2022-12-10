@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		493095492942906D0019BEBB /* TrainingViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493095482942906D0019BEBB /* TrainingViewModelTest.swift */; };
+		4930954D2944E4DF0019BEBB /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4930954C2944E4DF0019BEBB /* TestUtils.swift */; };
+		4930954F2944E5A10019BEBB /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4930954E2944E5A10019BEBB /* Mocks.swift */; };
+		493095512944EB8E0019BEBB /* Fixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493095502944EB8E0019BEBB /* Fixtures.swift */; };
 		493412E3253CDD7300B15E2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493412E2253CDD7300B15E2E /* Extensions.swift */; };
 		4948ECE625378A0D008CE3EE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948ECE525378A0D008CE3EE /* LoginViewModel.swift */; };
 		494EACF1253E0FF300BBE267 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494EACF0253E0FF300BBE267 /* App.swift */; };
@@ -61,6 +65,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		493095482942906D0019BEBB /* TrainingViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModelTest.swift; sourceTree = "<group>"; };
+		4930954C2944E4DF0019BEBB /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		4930954E2944E5A10019BEBB /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		493095502944EB8E0019BEBB /* Fixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fixtures.swift; sourceTree = "<group>"; };
 		493412E2253CDD7300B15E2E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4948ECE525378A0D008CE3EE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		494EACF0253E0FF300BBE267 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -115,6 +123,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4930954A2944E48C0019BEBB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4930954C2944E4DF0019BEBB /* TestUtils.swift */,
+				4930954E2944E5A10019BEBB /* Mocks.swift */,
+				493095502944EB8E0019BEBB /* Fixtures.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		494EACF8253E1E8E00BBE267 /* Training */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,7 +231,9 @@
 		7555FF94242A565B00829871 /* RunLogTests */ = {
 			isa = PBXGroup;
 			children = (
+				4930954A2944E48C0019BEBB /* Utils */,
 				7555FF95242A565B00829871 /* ExtensionTests.swift */,
+				493095482942906D0019BEBB /* TrainingViewModelTest.swift */,
 				7555FF97242A565B00829871 /* Info.plist */,
 			);
 			path = RunLogTests;
@@ -434,7 +454,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493095492942906D0019BEBB /* TrainingViewModelTest.swift in Sources */,
+				4930954D2944E4DF0019BEBB /* TestUtils.swift in Sources */,
 				7555FF96242A565B00829871 /* ExtensionTests.swift in Sources */,
+				493095512944EB8E0019BEBB /* Fixtures.swift in Sources */,
+				4930954F2944E5A10019BEBB /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
