@@ -7,19 +7,19 @@ class ProfileViewModel: ObservableObject {
     @Published var state: ProfileState = .loading
 
     private let user: UserState
-    private let strava: Strava
+    private let stravaProfile: StravaProfile
 
     init(user: UserState = PersistingUserState(),
-         strava: Strava = SharedModule().buildStrava(userState: PersistingUserState()))
+         stravaProfile: StravaProfile = SharedModule().stravaProfile(user: PersistingUserState()))
     {
         self.user = user
-        self.strava = strava
+        self.stravaProfile = stravaProfile
     }
 
     func load() {
         state = .loading
         Task {
-            let result = try await strava.profile()
+            let result = try await stravaProfile.profile()
             if let result = result as? ResultData<AthleteProfile> {
                 state = .data(result.data!)
             } else if let error = result as? ResultError {

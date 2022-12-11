@@ -18,5 +18,11 @@ internal class AppModule {
     fun provideUserState(@ApplicationContext context: Context): UserState = PersistingUserState(context)
 
     @Provides
-    fun provideStrava(userState: UserState) = SharedModule.buildStrava(userState)
+    fun provideStravaLogin(userState: UserState) = SharedModule.stravaLogin(userState)
+
+    @Provides
+    fun provideStravaActivity(userState: UserState) = SharedModule.stravaActivity(userState)
+
+    @Provides
+    fun provideStravaProfile(userState: UserState) = SharedModule.stravaProfile(userState)
 }

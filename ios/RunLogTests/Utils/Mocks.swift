@@ -1,17 +1,12 @@
 import Foundation
 import RunLogShared
 
-class StravaMock: Strava {
+class ActivityMock: StravaActivity {
     var activities: Result<NSArray> = ResultError(error: KotlinThrowable(), recoverable: false)
     var activityDetails: Result<ActivityDetails> = ResultError(error: KotlinThrowable(), recoverable: false)
     var loginResult: LoginResult = .Success()
-    var profile: Result<AthleteProfile> = ResultError(error: KotlinThrowable(), recoverable: false)
 
     var darkModeImages = false
-
-    func linkUrl(id: Int64) -> String {
-        "testLinkUrl:\(id)"
-    }
 
     func activities() async throws -> Result<NSArray> {
         activities
@@ -21,21 +16,21 @@ class StravaMock: Strava {
         activityDetails
     }
 
-    func authenticate(code _: String) async throws -> LoginResult {
-        loginResult
-    }
-
-    func profile() async throws -> Result<AthleteProfile> {
-        profile
+    func linkUrl(id: Int64) -> String {
+        "testLinkUrl:\(id)"
     }
 
     func requestDarkModeImages(enabled: Bool) {
         darkModeImages = enabled
     }
+}
 
-    var authScheme = "testAuthScheme"
+class ProfileMock: StravaProfile {
+    var profile: Result<AthleteProfile> = ResultError(error: KotlinThrowable(), recoverable: false)
 
-    var loginUrl = "testLoginUrl"
+    func profile() async throws -> Result<AthleteProfile> {
+        profile
+    }
 }
 
 class UserStateMock: UserState {

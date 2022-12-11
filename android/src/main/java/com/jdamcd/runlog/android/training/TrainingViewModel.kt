@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.Result
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TrainingViewModel @Inject constructor(
-    private val strava: Strava
+    private val stravaActivity: StravaActivity
 ) : ViewModel(), LifecycleObserver {
 
     private val _mutableFlow = MutableStateFlow<TrainingState>(TrainingState.Loading)
@@ -40,12 +40,12 @@ class TrainingViewModel @Inject constructor(
     }
 
     fun setDarkTheme(enabled: Boolean) {
-        strava.requestDarkModeImages(enabled)
+        stravaActivity.requestDarkModeImages(enabled)
     }
 
     private fun getActivities() {
         viewModelScope.launch {
-            when (val result = strava.activities()) {
+            when (val result = stravaActivity.activities()) {
                 is Result.Data -> {
                     _mutableFlow.value = TrainingState.Data(result.data)
                 }

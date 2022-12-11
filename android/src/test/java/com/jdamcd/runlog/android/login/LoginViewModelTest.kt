@@ -3,7 +3,7 @@ package com.jdamcd.runlog.android.login
 import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.shared.LoginResult
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaLogin
 import com.jdamcd.runlog.shared.UserState
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,7 @@ class LoginViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
-    private val strava: Strava = mock()
+    private val stravaLogin: StravaLogin = mock()
     private val userState: UserState = mock()
 
     private lateinit var viewModel: LoginViewModel
@@ -29,7 +29,7 @@ class LoginViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = LoginViewModel(strava, userState)
+        viewModel = LoginViewModel(stravaLogin, userState)
     }
 
     @Test
@@ -46,7 +46,7 @@ class LoginViewModelTest {
 
     @Test
     fun `submitAuthCode success emits loading then success`() = runTest {
-        whenever(strava.authenticate(code)).thenReturn(LoginResult.Success)
+        whenever(stravaLogin.authenticate(code)).thenReturn(LoginResult.Success)
 
         viewModel.flow.test {
             awaitItem() shouldBe LoginState.Idle
@@ -61,7 +61,7 @@ class LoginViewModelTest {
 
     @Test
     fun `submitAuthCode error emits loading then idle`() = runTest {
-        whenever(strava.authenticate(code)).thenReturn(LoginResult.Error(Throwable()))
+        whenever(stravaLogin.authenticate(code)).thenReturn(LoginResult.Error(Throwable()))
 
         viewModel.flow.test {
             awaitItem() shouldBe LoginState.Idle

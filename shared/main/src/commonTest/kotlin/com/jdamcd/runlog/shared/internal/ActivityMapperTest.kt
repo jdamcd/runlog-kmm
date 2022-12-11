@@ -4,21 +4,19 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
-import com.jdamcd.runlog.shared.AthleteProfile
-import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class MapperTest {
+class ActivityMapperTest {
 
-    private lateinit var mapper: Mapper
+    private lateinit var mapper: ActivityMapper
 
     @BeforeTest
     fun setUp() {
-        mapper = Mapper()
+        mapper = ActivityMapper()
     }
 
     @Test
@@ -133,28 +131,6 @@ class MapperTest {
                     )
                 ),
                 hasHeartrate = true
-            )
-        )
-    }
-
-    @Test
-    fun mapsAthleteAndStatsToProfile() {
-        mapper.mapProfile(athleteModel(), athleteStatsModel()) shouldBe AthleteProfile(
-            id = 123L,
-            username = "jdamcd",
-            name = "Jamie McDonald",
-            imageUrl = "image.url",
-            recentRuns = AthleteStats(
-                distance = "100k",
-                pace = "5:33 /km"
-            ),
-            yearRuns = AthleteStats(
-                distance = "1,000k",
-                pace = "5:33 /km"
-            ),
-            allRuns = AthleteStats(
-                distance = "5,000k",
-                pace = "5:33 /km"
             )
         )
     }

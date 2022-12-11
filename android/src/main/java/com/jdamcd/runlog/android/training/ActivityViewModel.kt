@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.android.main.ROUTE_ACTIVITY_ID
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.Result
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val strava: Strava
+    private val stravaActivity: StravaActivity
 ) : ViewModel(), LifecycleObserver {
 
     private val id: Long
@@ -33,7 +33,7 @@ class ActivityViewModel @Inject constructor(
     fun load() {
         _mutableFlow.value = ActivityState.Loading
         viewModelScope.launch {
-            when (val result = strava.activityDetails(id)) {
+            when (val result = stravaActivity.activityDetails(id)) {
                 is Result.Data -> {
                     _mutableFlow.value = ActivityState.Data(result.data)
                 }
@@ -44,10 +44,10 @@ class ActivityViewModel @Inject constructor(
         }
     }
 
-    fun activityWebLink() = strava.linkUrl(id)
+    fun activityWebLink() = stravaActivity.linkUrl(id)
 
     fun setDarkTheme(enabled: Boolean) {
-        strava.requestDarkModeImages(enabled)
+        stravaActivity.requestDarkModeImages(enabled)
     }
 }
 

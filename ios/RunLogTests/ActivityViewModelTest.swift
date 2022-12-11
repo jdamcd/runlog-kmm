@@ -5,16 +5,16 @@ import XCTest
 @MainActor
 final class ActivityViewModelTest: XCTestCase {
     var viewModel: ActivityViewModel!
-    var mockStrava: StravaMock!
+    var mockActivity: ActivityMock!
 
     override func setUp() {
-        mockStrava = StravaMock()
-        viewModel = ActivityViewModel(strava: mockStrava)
+        mockActivity = ActivityMock()
+        viewModel = ActivityViewModel(stravaActivity: mockActivity)
     }
 
     func testLoadSuccessSetsLoadingThenData() {
         let activity = ActivityDetails.with(id: 1)
-        mockStrava.activityDetails = ResultData(data: activity)
+        mockActivity.activityDetails = ResultData(data: activity)
 
         viewModel.load(id: 1)
 
@@ -23,7 +23,7 @@ final class ActivityViewModelTest: XCTestCase {
     }
 
     func testLoadFailureSetsLoadingThenError() {
-        mockStrava.activityDetails = ResultError(error: KotlinThrowable(), recoverable: true)
+        mockActivity.activityDetails = ResultError(error: KotlinThrowable(), recoverable: true)
 
         viewModel.load(id: 1)
 

@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.android.util.athleteProfile
 import com.jdamcd.runlog.shared.Result
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaProfile
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -19,19 +19,19 @@ class ProfileViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
-    private val strava: Strava = mock()
+    private val stravaProfile: StravaProfile = mock()
 
     private lateinit var viewModel: ProfileViewModel
 
     @Before
     fun setUp() {
-        viewModel = ProfileViewModel(strava)
+        viewModel = ProfileViewModel(stravaProfile)
     }
 
     @Test
     fun `load success emits loading then data`() = runTest {
         val profile = athleteProfile
-        whenever(strava.profile()).thenReturn(Result.Data(profile))
+        whenever(stravaProfile.profile()).thenReturn(Result.Data(profile))
 
         viewModel.flow.test {
             viewModel.load()
@@ -44,7 +44,7 @@ class ProfileViewModelTest {
 
     @Test
     fun `load failure emits loading then error`() = runTest {
-        whenever(strava.profile()).thenReturn(Result.Error(Throwable(), recoverable = true))
+        whenever(stravaProfile.profile()).thenReturn(Result.Error(Throwable(), recoverable = true))
 
         viewModel.flow.test {
             viewModel.load()

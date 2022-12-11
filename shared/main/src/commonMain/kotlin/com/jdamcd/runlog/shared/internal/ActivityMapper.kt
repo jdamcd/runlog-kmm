@@ -4,14 +4,9 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
-import com.jdamcd.runlog.shared.AthleteProfile
-import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
-import com.jdamcd.runlog.shared.api.ApiActivityStats
-import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiDetailedActivity
-import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
 import com.jdamcd.runlog.shared.api.ApiPolylineMap
 import com.jdamcd.runlog.shared.api.ApiSplit
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
@@ -21,9 +16,10 @@ import com.jdamcd.runlog.shared.formatDuration
 import com.jdamcd.runlog.shared.formatElevation
 import com.jdamcd.runlog.shared.formatKm
 import com.jdamcd.runlog.shared.formatPace
+import com.jdamcd.runlog.shared.internal.Utils.calculatePace
 import kotlin.math.roundToInt
 
-internal class Mapper {
+internal class ActivityMapper {
 
     private val datePattern = "EEEE dd MMM @ h:mma"
     private val privateEmoji = "\uD83D\uDD12"
@@ -71,18 +67,6 @@ internal class Mapper {
         )
     }
 
-    fun mapProfile(athlete: ApiDetailedAthlete, athleteStats: ApiActivityStats): AthleteProfile {
-        return AthleteProfile(
-            id = athlete.id,
-            username = athlete.username,
-            name = "${athlete.firstname} ${athlete.lastname}".trim(),
-            imageUrl = athlete.profile,
-            recentRuns = mapStats(athleteStats.recent_run_totals),
-            yearRuns = mapStats(athleteStats.ytd_run_totals),
-            allRuns = mapStats(athleteStats.all_run_totals)
-        )
-    }
-
     private fun mapName(name: String, private: Boolean) =
         if (private) "$privateEmoji $name" else name
 
@@ -105,21 +89,9 @@ internal class Mapper {
         return startDateLocal.formatDate(datePattern).uppercase()
     }
 
-    private fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
-        val distanceKm = distanceMetres / 1000
-        return (timeSeconds / distanceKm).roundToInt() // seconds per km
-    }
-
     private fun mapMap(map: ApiPolylineMap?): String? {
         return map?.takeIf { it.summary_polyline.isNotEmpty() }
             ?.let { MapboxStatic.makeUrl(it.summary_polyline, darkMode = darkModeImages) }
-    }
-
-    private fun mapStats(stats: ApiActivityTotal): AthleteStats {
-        return AthleteStats(
-            distance = stats.distance.formatKm(),
-            pace = calculatePace(stats.distance, stats.moving_time).formatPace()
-        )
     }
 
     private fun mapSplits(splits: List<ApiSplit>?): KmSplits? {

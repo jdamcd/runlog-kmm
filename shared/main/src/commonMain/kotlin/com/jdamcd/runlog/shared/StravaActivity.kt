@@ -1,19 +1,10 @@
 package com.jdamcd.runlog.shared
 
-interface Strava {
-    suspend fun authenticate(code: String): LoginResult
+interface StravaActivity {
     suspend fun activities(): Result<List<ActivityCard>>
     suspend fun activityDetails(id: Long): Result<ActivityDetails>
-    suspend fun profile(): Result<AthleteProfile>
-    val loginUrl: String
-    val authScheme: String
     fun linkUrl(id: Long): String
     fun requestDarkModeImages(enabled: Boolean)
-}
-
-sealed class LoginResult {
-    object Success : LoginResult()
-    data class Error(val error: Throwable) : LoginResult()
 }
 
 sealed class Result<T> {
@@ -84,18 +75,3 @@ enum class ActivitySubtype {
 
     fun isRace() = this == RACE
 }
-
-data class AthleteProfile(
-    val id: Long,
-    val username: String,
-    val name: String,
-    val imageUrl: String?,
-    val recentRuns: AthleteStats,
-    val yearRuns: AthleteStats,
-    val allRuns: AthleteStats
-)
-
-data class AthleteStats(
-    val distance: String,
-    val pace: String
-)

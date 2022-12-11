@@ -5,10 +5,10 @@ import RunLogShared
 class ActivityViewModel: ObservableObject {
     @Published var state: ActivityState = .loading
 
-    private let strava: Strava
+    private let stravaActivity: StravaActivity
 
-    init(strava: Strava = SharedModule().buildStrava(userState: PersistingUserState())) {
-        self.strava = strava
+    init(stravaActivity: StravaActivity = SharedModule().stravaActivity(user: PersistingUserState())) {
+        self.stravaActivity = stravaActivity
     }
 
     func load(id: Int64) {
@@ -20,7 +20,7 @@ class ActivityViewModel: ObservableObject {
 
     private func getActivityDetails(id: Int64) {
         Task {
-            let result = try await strava.activityDetails(id: id)
+            let result = try await stravaActivity.activityDetails(id: id)
             if let result = result as? ResultData<ActivityDetails> {
                 state = .data(result.data!)
             } else if result is ResultError {
@@ -30,11 +30,11 @@ class ActivityViewModel: ObservableObject {
     }
 
     func linkUrl(id: Int64) -> URL {
-        URL(string: strava.linkUrl(id: id))!
+        URL(string: stravaActivity.linkUrl(id: id))!
     }
 
     func setDarkMode(_ isEnabled: Bool) {
-        strava.requestDarkModeImages(enabled: isEnabled)
+        stravaActivity.requestDarkModeImages(enabled: isEnabled)
     }
 }
 

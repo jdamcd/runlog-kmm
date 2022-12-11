@@ -5,19 +5,19 @@ import RunLogShared
 class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
     @Published var state: LoginState = .idle
 
-    private let strava: Strava
+    private let stravaLogin: StravaLogin
 
-    init(strava: Strava = SharedModule().buildStrava(userState: PersistingUserState())) {
-        self.strava = strava
+    init(stravaLogin: StravaLogin = SharedModule().stravaLogin(user: PersistingUserState())) {
+        self.stravaLogin = stravaLogin
     }
 
     @MainActor
     func startLogin() {
         state = .loading
-        let loginUrl = URL(string: strava.loginUrl)!
+        let loginUrl = URL(string: stravaLogin.loginUrl)!
         let session = ASWebAuthenticationSession(
             url: loginUrl,
-            callbackURLScheme: strava.authScheme
+            callbackURLScheme: stravaLogin.authScheme
         ) { result, error in
             if let result {
                 self.handleCallback(result: result)
@@ -47,7 +47,7 @@ class LoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentatio
     private func submitAuthCode(code: String) {
         state = .loading
         Task {
-            let result = try await strava.authenticate(code: code)
+            let result = try await stravaLogin.authenticate(code: code)
             if result is LoginResult.Success {
                 state = .success
             } else {

@@ -5,7 +5,7 @@ import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.android.util.activityCard1
 import com.jdamcd.runlog.android.util.activityCard2
 import com.jdamcd.runlog.shared.Result
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaActivity
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -20,19 +20,19 @@ class TrainingViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
-    private val strava: Strava = mock()
+    private val stravaActivity: StravaActivity = mock()
 
     private lateinit var viewModel: TrainingViewModel
 
     @Before
     fun setUp() {
-        viewModel = TrainingViewModel(strava)
+        viewModel = TrainingViewModel(stravaActivity)
     }
 
     @Test
     fun `load success emits loading then data`() = runTest {
         val activities = listOf(activityCard1)
-        whenever(strava.activities()).thenReturn(Result.Data(activities))
+        whenever(stravaActivity.activities()).thenReturn(Result.Data(activities))
 
         viewModel.flow.test {
             viewModel.load()
@@ -45,7 +45,7 @@ class TrainingViewModelTest {
 
     @Test
     fun `load failure emits loading then error`() = runTest {
-        whenever(strava.activities()).thenReturn(Result.Error(Throwable(), recoverable = true))
+        whenever(stravaActivity.activities()).thenReturn(Result.Error(Throwable(), recoverable = true))
 
         viewModel.flow.test {
             viewModel.load()
@@ -60,7 +60,7 @@ class TrainingViewModelTest {
     fun `refresh replays current data then update`() = runTest {
         val load = listOf(activityCard1)
         val refresh = listOf(activityCard1, activityCard2)
-        whenever(strava.activities()).thenReturn(Result.Data(load), Result.Data(refresh))
+        whenever(stravaActivity.activities()).thenReturn(Result.Data(load), Result.Data(refresh))
 
         viewModel.flow.test {
             viewModel.load()
@@ -80,7 +80,7 @@ class TrainingViewModelTest {
     @Test
     fun `refresh emits loading if no current data`() = runTest {
         val activities = listOf(activityCard1)
-        whenever(strava.activities()).thenReturn(Result.Data(activities))
+        whenever(stravaActivity.activities()).thenReturn(Result.Data(activities))
 
         viewModel.flow.test {
             viewModel.refresh()

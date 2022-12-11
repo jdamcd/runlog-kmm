@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.LoginResult
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaLogin
 import com.jdamcd.runlog.shared.UserState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val strava: Strava,
+    private val stravaLogin: StravaLogin,
     private val userState: UserState
 ) : ViewModel(), LifecycleObserver {
 
@@ -23,13 +23,13 @@ class LoginViewModel @Inject constructor(
 
     fun startLogin(): String {
         _mutableFlow.value = LoginState.Loading
-        return strava.loginUrl
+        return stravaLogin.loginUrl
     }
 
     fun submitAuthCode(code: String) {
         _mutableFlow.value = LoginState.Loading
         viewModelScope.launch {
-            when (strava.authenticate(code)) {
+            when (stravaLogin.authenticate(code)) {
                 is LoginResult.Success -> _mutableFlow.value = LoginState.Success
                 is LoginResult.Error -> _mutableFlow.value = LoginState.Idle
             }

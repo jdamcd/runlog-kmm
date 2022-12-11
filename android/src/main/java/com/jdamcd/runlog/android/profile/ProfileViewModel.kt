@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.Result
-import com.jdamcd.runlog.shared.Strava
+import com.jdamcd.runlog.shared.StravaProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val strava: Strava
+    private val stravaProfile: StravaProfile
 ) : ViewModel(), LifecycleObserver {
 
     private val _mutableFlow = MutableStateFlow<ProfileState>(ProfileState.Loading)
@@ -27,7 +27,7 @@ class ProfileViewModel @Inject constructor(
     fun load() {
         _mutableFlow.value = ProfileState.Loading
         viewModelScope.launch {
-            when (val result = strava.profile()) {
+            when (val result = stravaProfile.profile()) {
                 is Result.Data -> {
                     _mutableFlow.value = ProfileState.Data(result.data)
                 }

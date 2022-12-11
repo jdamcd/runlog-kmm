@@ -5,18 +5,18 @@ import XCTest
 @MainActor
 final class ProfileViewModelTest: XCTestCase {
     var viewModel: ProfileViewModel!
-    var mockStrava: StravaMock!
+    var mockProfile: ProfileMock!
     var mockUserState: UserStateMock!
 
     override func setUp() {
-        mockStrava = StravaMock()
+        mockProfile = ProfileMock()
         mockUserState = UserStateMock()
-        viewModel = ProfileViewModel(user: mockUserState, strava: mockStrava)
+        viewModel = ProfileViewModel(user: mockUserState, stravaProfile: mockProfile)
     }
 
     func testLoadSuccessSetsLoadingThenData() {
         let profile = AthleteProfile.with(id: 1)
-        mockStrava.profile = ResultData(data: profile)
+        mockProfile.profile = ResultData(data: profile)
 
         viewModel.load()
 
@@ -25,7 +25,7 @@ final class ProfileViewModelTest: XCTestCase {
     }
 
     func testLoadFailureSetsLoadingThenError() {
-        mockStrava.profile = ResultError(error: KotlinThrowable(), recoverable: true)
+        mockProfile.profile = ResultError(error: KotlinThrowable(), recoverable: true)
 
         viewModel.load()
 
@@ -34,7 +34,7 @@ final class ProfileViewModelTest: XCTestCase {
     }
 
     func testLogOutOnUnrecoverableError() {
-        mockStrava.activities = ResultError(error: KotlinThrowable(), recoverable: false)
+        mockProfile.profile = ResultError(error: KotlinThrowable(), recoverable: false)
 
         viewModel.load()
         XCTAssertEqual(viewModel.state, .loading)

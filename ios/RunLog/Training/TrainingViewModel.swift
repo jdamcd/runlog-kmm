@@ -6,13 +6,13 @@ class TrainingViewModel: ObservableObject {
     @Published var state: TrainingState = .loading
 
     private let user: UserState
-    private let strava: Strava
+    private let stravaActivity: StravaActivity
 
     init(user: UserState = PersistingUserState(),
-         strava: Strava = SharedModule().buildStrava(userState: PersistingUserState()))
+         stravaActivity: StravaActivity = SharedModule().stravaActivity(user: PersistingUserState()))
     {
         self.user = user
-        self.strava = strava
+        self.stravaActivity = stravaActivity
     }
 
     func load() {
@@ -28,7 +28,7 @@ class TrainingViewModel: ObservableObject {
 
     private func getActivities() {
         Task {
-            let result = try await strava.activities()
+            let result = try await stravaActivity.activities()
             if let result = result as? ResultData<NSArray> {
                 let items = result.data as! [ActivityCard]
                 state = .data(items)
@@ -42,7 +42,7 @@ class TrainingViewModel: ObservableObject {
     }
 
     func setDarkMode(_ isEnabled: Bool) {
-        strava.requestDarkModeImages(enabled: isEnabled)
+        stravaActivity.requestDarkModeImages(enabled: isEnabled)
     }
 
     private func signOut() {
