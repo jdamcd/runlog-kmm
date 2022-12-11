@@ -7,16 +7,29 @@ import com.jdamcd.runlog.shared.internal.ActivityMapper
 import com.jdamcd.runlog.shared.internal.LoginInteractor
 import com.jdamcd.runlog.shared.internal.ProfileInteractor
 import com.jdamcd.runlog.shared.internal.ProfileMapper
+import kotlin.native.concurrent.ThreadLocal
 
+@ThreadLocal
 object SharedModule {
+
     fun stravaLogin(user: UserState): StravaLogin =
-        LoginInteractor(StravaApi(UserWrapper(user)))
+        LoginInteractor(createApi(user))
 
     fun stravaActivity(user: UserState): StravaActivity =
-        ActivityInteractor(StravaApi(UserWrapper(user)), ActivityMapper())
+        ActivityInteractor(createApi(user), ActivityMapper())
 
     fun stravaProfile(user: UserState): StravaProfile =
-        ProfileInteractor(StravaApi(UserWrapper(user)), ProfileMapper())
+        ProfileInteractor(createApi(user), ProfileMapper())
+
+    private fun createApi(user: UserState): StravaApi {
+        if (user.hashCode() != userHash || api == null) {
+            userHash = user.hashCode()
+            api = StravaApi(UserWrapper(user))
+        }
+        return api!!
+    }
+    private var userHash = 0
+    private var api: StravaApi? = null
 }
 
 internal class UserWrapper(private val user: UserState) : TokenProvider {

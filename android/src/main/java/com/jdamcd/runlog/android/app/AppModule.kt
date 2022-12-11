@@ -9,12 +9,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal class AppModule {
 
     @Provides
+    @Singleton
     fun provideUserState(@ApplicationContext context: Context): UserState = PersistingUserState(context)
 
     @Provides
