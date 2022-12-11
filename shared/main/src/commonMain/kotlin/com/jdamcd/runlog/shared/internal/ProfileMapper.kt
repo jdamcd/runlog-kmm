@@ -5,8 +5,6 @@ import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
-import com.jdamcd.runlog.shared.formatKm
-import com.jdamcd.runlog.shared.formatPace
 import com.jdamcd.runlog.shared.internal.Utils.calculatePace
 
 internal class ProfileMapper {

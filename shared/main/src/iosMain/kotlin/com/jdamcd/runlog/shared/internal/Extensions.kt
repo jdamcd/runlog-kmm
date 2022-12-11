@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared
+package com.jdamcd.runlog.shared.internal
 
 import platform.Foundation.NSDateFormatter
 import platform.Foundation.NSISO8601DateFormatter

@@ -11,11 +11,6 @@ import com.jdamcd.runlog.shared.api.ApiPolylineMap
 import com.jdamcd.runlog.shared.api.ApiSplit
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.api.MapboxStatic
-import com.jdamcd.runlog.shared.formatDate
-import com.jdamcd.runlog.shared.formatDuration
-import com.jdamcd.runlog.shared.formatElevation
-import com.jdamcd.runlog.shared.formatKm
-import com.jdamcd.runlog.shared.formatPace
 import com.jdamcd.runlog.shared.internal.Utils.calculatePace
 import kotlin.math.roundToInt
 
