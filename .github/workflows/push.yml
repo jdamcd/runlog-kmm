@@ -7,9 +7,9 @@ on:
   pull_request:
 
 jobs:
-  build:
-    name: Build and test
-    runs-on: macos-12
+  shared:
+    name: Shared & Android app
+    runs-on: ubuntu-latest
     steps:
 
     - uses: actions/checkout@v3
@@ -20,14 +20,11 @@ jobs:
        distribution: 'adopt'
        java-version: '11'
 
-    - name: Assemble
+    - name: Build
       run: ./gradlew spotlessCheck assembleDebug
 
-    - name: Run Shared and Android tests
+    - name: Test
       run: ./gradlew testDebugUnitTest
-
-    - name: Run iOS tests
-      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.0' -resultBundlePath TestResults
 
     - name: Publish Kotlin results
       uses: dorny/test-reporter@v1.6.0
@@ -37,6 +34,22 @@ jobs:
         path: '**/build/test-results/**/TEST-*.xml'
         reporter: java-junit
         fail-on-error: true
+
+  ios:
+    name: iOS app
+    runs-on: macos-12
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Test
+      run: xcodebuild test -project ios/RunLog.xcodeproj -scheme RunLog -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=16.0' -resultBundlePath TestResults
 
     - name: Publish iOS results
       uses: kishikawakatsumi/xcresulttool@v1.7.0
