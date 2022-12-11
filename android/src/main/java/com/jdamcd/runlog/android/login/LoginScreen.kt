@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.ui.RunLogTheme
+import com.jdamcd.runlog.android.ui.white
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -90,7 +90,7 @@ private fun ConnectLoadable(
                 }
             }
             is LoginState.Loading, LoginState.Success -> {
-                CircularProgressIndicator(color = MaterialTheme.colors.background)
+                CircularProgressIndicator(color = white)
             }
         }
     }
