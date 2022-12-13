@@ -104,13 +104,13 @@ class StravaApi(private val tokenProvider: TokenProvider) {
 
     companion object {
         const val BASE_URL = "https://www.strava.com/api/v3"
-        const val AUTH_SCHEME = "runlog-auth"
+        const val AUTH_SCHEME = "km-auth"
 
         fun loginUrl(clientId: String = BuildKonfig.CLIENT_ID) =
             URLBuilder("https://strava.com/oauth/mobile/authorize").apply {
                 parameters.apply {
                     append("client_id", clientId)
-                    append("redirect_uri", "$AUTH_SCHEME://jdamcd.com")
+                    append("redirect_uri", "$AUTH_SCHEME://kilometer.dev")
                     append("response_type", "code")
                     append("approval_prompt", "auto")
                     append("scope", "activity:read_all")

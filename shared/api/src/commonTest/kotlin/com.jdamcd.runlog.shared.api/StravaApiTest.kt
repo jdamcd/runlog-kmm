@@ -7,7 +7,7 @@ class StravaApiTest {
 
     @Test
     fun createsLoginUrlWithParameters() {
-        StravaApi.loginUrl(clientId = "123") shouldBe "https://strava.com/oauth/mobile/authorize?client_id=123&redirect_uri=runlog-auth%3A%2F%2Fjdamcd.com&response_type=code&approval_prompt=auto&scope=activity%3Aread_all"
+        StravaApi.loginUrl(clientId = "123") shouldBe "https://strava.com/oauth/mobile/authorize?client_id=123&redirect_uri=km-auth%3A%2F%2Fkilometer.dev&response_type=code&approval_prompt=auto&scope=activity%3Aread_all"
     }
 
     @Test

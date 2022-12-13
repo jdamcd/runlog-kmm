@@ -29,7 +29,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="runlog-auth" />
+                <data android:scheme="km-auth" />
             </intent-filter>
         </activity>
 

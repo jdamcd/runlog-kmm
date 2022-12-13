@@ -27,7 +27,7 @@
 			<string>com.jdamcd.runlog</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>runlog-auth</string>
+				<string>km-auth</string>
 			</array>
 		</dict>
 	</array>
