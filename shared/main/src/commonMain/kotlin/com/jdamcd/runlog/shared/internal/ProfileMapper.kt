@@ -5,6 +5,8 @@ import com.jdamcd.runlog.shared.AthleteStats
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
+import com.jdamcd.runlog.shared.internal.Formatter.formatKm
+import com.jdamcd.runlog.shared.internal.Formatter.formatPace
 import com.jdamcd.runlog.shared.internal.Utils.calculatePace
 
 internal class ProfileMapper {
@@ -23,8 +25,8 @@ internal class ProfileMapper {
 
     private fun mapStats(stats: ApiActivityTotal): AthleteStats {
         return AthleteStats(
-            distance = stats.distance.formatKm(),
-            pace = calculatePace(stats.distance, stats.moving_time).formatPace()
+            distance = formatKm(stats.distance),
+            pace = formatPace(calculatePace(stats.distance, stats.moving_time))
         )
     }
 }

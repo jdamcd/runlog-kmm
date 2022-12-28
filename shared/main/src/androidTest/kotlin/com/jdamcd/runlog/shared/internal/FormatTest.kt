@@ -1,5 +1,9 @@
 package com.jdamcd.runlog.shared.internal
 
+import com.jdamcd.runlog.shared.internal.Formatter.formatDuration
+import com.jdamcd.runlog.shared.internal.Formatter.formatElevation
+import com.jdamcd.runlog.shared.internal.Formatter.formatKm
+import com.jdamcd.runlog.shared.internal.Formatter.formatPace
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
@@ -7,62 +11,62 @@ class FormatTest {
 
     @Test
     fun formatsMetresToKmWithSingleDecimal() {
-        10_123.0f.formatKm() shouldBe "10.1k"
+        formatKm(10_123.0f) shouldBe "10.1k"
     }
 
     @Test
     fun formatsRoundKmsWithNoDecimal() {
-        10_000.0f.formatKm() shouldBe "10k"
+        formatKm(10_000.0f) shouldBe "10k"
     }
 
     @Test
     fun formatsDistanceOver1000KmWithoutDecimal() {
-        1_001_234.5f.formatKm() shouldBe "1,001k"
+        formatKm(1_001_234.5f) shouldBe "1,001k"
     }
 
     @Test
     fun formatsDistanceWithoutUnit() {
-        10_123.0f.formatKm(withUnit = false) shouldBe "10.1"
+        formatKm(10_123.0f, withUnit = false) shouldBe "10.1"
     }
 
     @Test
     fun formatsElevationWithSingleDecimal() {
-        123.45f.formatElevation() shouldBe "123.4m"
+        formatElevation(123.45f) shouldBe "123.4m"
     }
 
     @Test
     fun formatsRoundElevationWithNoDecimal() {
-        123.0f.formatElevation() shouldBe "123m"
+        formatElevation(123.0f) shouldBe "123m"
     }
 
     @Test
     fun formatsElevationWithoutUnit() {
-        123.45f.formatElevation(withUnit = false) shouldBe "123.4"
+        formatElevation(123.45f, withUnit = false) shouldBe "123.4"
     }
 
     @Test
     fun formatsPacePerKmFromSeconds() {
-        301.formatPace() shouldBe "5:01 /km"
+        formatPace(301) shouldBe "5:01 /km"
     }
 
     @Test
     fun formatsPaceWithoutUnit() {
-        301.formatPace(withUnit = false) shouldBe "5:01"
+        formatPace(301, withUnit = false) shouldBe "5:01"
     }
 
     @Test
     fun formatDurationLessThan10Mins() {
-        540.formatDuration() shouldBe "9:00"
+        formatDuration(540) shouldBe "9:00"
     }
 
     @Test
     fun formatsDurationLessThanAnHour() {
-        3540.formatDuration() shouldBe "59:00"
+        formatDuration(3540) shouldBe "59:00"
     }
 
     @Test
     fun formatsDurationMoreThanAnHour() {
-        3660.formatDuration() shouldBe "1:01:00"
+        formatDuration(3660) shouldBe "1:01:00"
     }
 
     @Test

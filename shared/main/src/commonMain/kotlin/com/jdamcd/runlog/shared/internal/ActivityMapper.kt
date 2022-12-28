@@ -11,6 +11,10 @@ import com.jdamcd.runlog.shared.api.ApiPolylineMap
 import com.jdamcd.runlog.shared.api.ApiSplit
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.api.MapboxStatic
+import com.jdamcd.runlog.shared.internal.Formatter.formatDuration
+import com.jdamcd.runlog.shared.internal.Formatter.formatElevation
+import com.jdamcd.runlog.shared.internal.Formatter.formatKm
+import com.jdamcd.runlog.shared.internal.Formatter.formatPace
 import com.jdamcd.runlog.shared.internal.Utils.calculatePace
 import kotlin.math.roundToInt
 
@@ -28,7 +32,7 @@ internal class ActivityMapper {
             name = mapName(activity.name, activity.private),
             type = mapType(activity.type),
             subtype = subtype,
-            distance = activity.distance.formatKm(),
+            distance = formatKm(activity.distance),
             duration = mapDuration(activity.elapsed_time, activity.moving_time, subtype.isRace()),
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
             start = mapStartTime(activity.start_date_local),
@@ -45,12 +49,12 @@ internal class ActivityMapper {
             type = mapType(activity.type),
             subtype = subtype,
             kudos = activity.kudos_count,
-            distance = activity.distance.formatKm(),
-            elapsedDuration = activity.elapsed_time.formatDuration(),
-            movingDuration = activity.moving_time.formatDuration(),
-            elevationGain = activity.total_elevation_gain.formatElevation(),
-            elevationLow = activity.elev_low?.formatElevation(),
-            elevationHigh = activity.elev_high?.formatElevation(),
+            distance = formatKm(activity.distance),
+            elapsedDuration = formatDuration(activity.elapsed_time),
+            movingDuration = formatDuration(activity.moving_time),
+            elevationGain = formatElevation(activity.total_elevation_gain),
+            elevationLow = activity.elev_low?.let { formatElevation(it) },
+            elevationHigh = activity.elev_high?.let { formatElevation(it) },
             effort = activity.suffer_score?.roundToInt(),
             calories = activity.calories.roundToInt(),
             averageHeartrate = activity.average_heartrate?.roundToInt(),
@@ -67,7 +71,7 @@ internal class ActivityMapper {
 
     private fun mapDuration(elapsedTime: Int, movingTime: Int, isRace: Boolean): String {
         val time = if (isRace) elapsedTime else movingTime
-        return time.formatDuration()
+        return formatDuration(time)
     }
 
     private fun mapPace(
@@ -77,7 +81,7 @@ internal class ActivityMapper {
         isRace: Boolean
     ): String {
         val time = if (isRace) elapsedTime else movingTime
-        return calculatePace(distanceMetres, time).formatPace()
+        return formatPace(calculatePace(distanceMetres, time))
     }
 
     private fun mapStartTime(startDateLocal: String): String {
@@ -101,13 +105,13 @@ internal class ActivityMapper {
             val paceSeconds = paces[it.split]!!
             Split(
                 number = it.split,
-                distance = it.distance.formatKm(withUnit = false),
+                distance = formatKm(it.distance, withUnit = false),
                 isPartial = it.distance < 950, // Not always returned as exactly 1000m
-                elapsedDuration = it.elapsed_time.formatDuration(),
-                movingDuration = it.moving_time.formatDuration(),
+                elapsedDuration = formatDuration(it.elapsed_time),
+                movingDuration = formatDuration(it.moving_time),
                 elevation = it.elevation_difference.roundToInt(),
                 averageHeartrate = it.average_heartrate?.roundToInt(),
-                pace = paceSeconds.formatPace(withUnit = false),
+                pace = formatPace(paceSeconds, withUnit = false),
                 paceSeconds = paceSeconds,
                 paceZone = it.pace_zone,
                 visualisation = visualiseRelativePace(paceSeconds, min, max)
