@@ -7,7 +7,28 @@ import com.jdamcd.runlog.shared.internal.ActivityMapper
 import com.jdamcd.runlog.shared.internal.LoginInteractor
 import com.jdamcd.runlog.shared.internal.ProfileInteractor
 import com.jdamcd.runlog.shared.internal.ProfileMapper
+import org.koin.core.context.startKoin
+import org.koin.core.module.Module
+import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.module
 import kotlin.native.concurrent.ThreadLocal
+
+fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
+    startKoin {
+        appDeclaration()
+        modules(commonModule(), platformModule())
+    }
+
+expect fun platformModule(): Module
+
+fun initKoin() = initKoin {}
+
+fun commonModule() = module {
+    single<StravaLogin> { LoginInteractor(get()) }
+    single<StravaActivity> { ActivityInteractor(get(), get()) }
+    single<StravaProfile> { ProfileInteractor(get(), get()) }
+    single { StravaApi(get()) }
+}
 
 @ThreadLocal
 object SharedModule {
