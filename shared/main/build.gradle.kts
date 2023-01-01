@@ -24,6 +24,7 @@ kotlin {
                 implementation(project(":shared:api"))
                 implementation(project(":shared:utils"))
                 implementation(Dependency.kotlinCoroutines)
+                implementation(Dependency.koin)
             }
         }
         val commonTest by getting {
