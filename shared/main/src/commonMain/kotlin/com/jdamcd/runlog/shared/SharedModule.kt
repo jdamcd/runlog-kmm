@@ -25,8 +25,9 @@ fun initKoin() = initKoin {}
 
 fun commonModule() = module {
     single<StravaLogin> { LoginInteractor(get()) }
-    single<StravaActivity> { ActivityInteractor(get(), get()) }
-    single<StravaProfile> { ProfileInteractor(get(), get()) }
+    single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
+    single<StravaProfile> { ProfileInteractor(get(), ProfileMapper()) }
+    single<TokenProvider> { UserWrapper(get()) }
     single { StravaApi(get()) }
 }
 

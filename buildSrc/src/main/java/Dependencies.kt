@@ -65,6 +65,7 @@ object Dependency {
     const val composeIconsExtended = "androidx.compose.material:material-icons-extended"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Version.constraintLayout}"
     const val coil = "io.coil-kt:coil-compose:${Version.coil}"
+    const val koinAndroid = "io.insert-koin:koin-android:${Version.koin}"
 
     // iOS
     const val ktoriOS = "io.ktor:ktor-client-ios:${Version.ktor}"

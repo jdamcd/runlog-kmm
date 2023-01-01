@@ -1,30 +1,33 @@
 package com.jdamcd.runlog.android.app
 
-import android.content.Context
-import com.jdamcd.runlog.shared.PersistingUserState
-import com.jdamcd.runlog.shared.SharedModule
+import com.jdamcd.runlog.shared.StravaActivity
+import com.jdamcd.runlog.shared.StravaLogin
+import com.jdamcd.runlog.shared.StravaProfile
 import com.jdamcd.runlog.shared.UserState
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+
+/*
+ * Bridge between Koin in the shared multiplatform modules and Hilt in the Android project.
+ */
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class AppModule {
+internal class AppModule : KoinComponent {
 
     @Provides
-    @Singleton
-    fun provideUserState(@ApplicationContext context: Context): UserState = PersistingUserState(context)
+    fun provideUserState(): UserState = get()
 
     @Provides
-    fun provideStravaLogin(userState: UserState) = SharedModule.stravaLogin(userState)
+    fun provideStravaLogin(): StravaLogin = get()
 
     @Provides
-    fun provideStravaActivity(userState: UserState) = SharedModule.stravaActivity(userState)
+    fun provideStravaActivity(): StravaActivity = get()
 
     @Provides
-    fun provideStravaProfile(userState: UserState) = SharedModule.stravaProfile(userState)
+    fun provideStravaProfile(): StravaProfile = get()
 }
