@@ -20,8 +20,6 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
         modules(commonModule(), platformModule())
     }
 
-expect fun platformModule(): Module
-
 fun commonModule() = module {
     single<StravaLogin> { LoginInteractor(get()) }
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
@@ -30,11 +28,14 @@ fun commonModule() = module {
     single { StravaApi(get()) }
 }
 
+expect fun platformModule(): Module
+
+// Called from iOS
 @Suppress("unused")
 fun initKoin() = initKoin {}
 
 @Suppress("unused")
-class SharedModule : KoinComponent {
+class IosDI : KoinComponent {
     fun userState(): UserState = get()
     fun stravaLogin(): StravaLogin = get()
     fun stravaActivity(): StravaActivity = get()

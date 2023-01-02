@@ -8,8 +8,8 @@ class TrainingViewModel: ObservableObject {
     private let user: UserState
     private let stravaActivity: StravaActivity
 
-    init(user: UserState = SharedModule().userState(),
-         stravaActivity: StravaActivity = SharedModule().stravaActivity())
+    init(user: UserState = IosDI().userState(),
+         stravaActivity: StravaActivity = IosDI().stravaActivity())
     {
         self.user = user
         self.stravaActivity = stravaActivity
