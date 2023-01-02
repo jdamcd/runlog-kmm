@@ -7,6 +7,7 @@ object Version {
     // Native
     const val ktor = "2.1.2"
     const val coroutines = "1.6.4-native-mt"
+    const val koin = "3.2.2"
 
     // Android
     const val hilt = "2.44"
@@ -40,6 +41,7 @@ object Dependency {
     const val ktorLog = "io.ktor:ktor-client-logging:${Version.ktor}"
     const val ktorSerialize = "io.ktor:ktor-serialization-kotlinx-json:${Version.ktor}"
     const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
+    const val koin = "io.insert-koin:koin-core:${Version.koin}"
 
     // Android
     const val ktorAndroid = "io.ktor:ktor-client-android:${Version.ktor}"
@@ -63,6 +65,7 @@ object Dependency {
     const val composeIconsExtended = "androidx.compose.material:material-icons-extended"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Version.constraintLayout}"
     const val coil = "io.coil-kt:coil-compose:${Version.coil}"
+    const val koinAndroid = "io.insert-koin:koin-android:${Version.koin}"
 
     // iOS
     const val ktoriOS = "io.ktor:ktor-client-ios:${Version.ktor}"

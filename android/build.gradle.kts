@@ -17,6 +17,7 @@ dependencies {
     implementation(Dependency.hilt)
     implementation(Dependency.hiltCompose)
     implementation(Dependency.coil)
+    implementation(Dependency.koinAndroid)
     kapt(Dependency.hiltCompiler)
     kapt(Dependency.lifecycleCompiler)
 

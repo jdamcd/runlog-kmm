@@ -7,29 +7,38 @@ import com.jdamcd.runlog.shared.internal.ActivityMapper
 import com.jdamcd.runlog.shared.internal.LoginInteractor
 import com.jdamcd.runlog.shared.internal.ProfileInteractor
 import com.jdamcd.runlog.shared.internal.ProfileMapper
-import kotlin.native.concurrent.ThreadLocal
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.context.startKoin
+import org.koin.core.module.Module
+import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.module
 
-@ThreadLocal
-object SharedModule {
+fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
+    appDeclaration()
+    modules(commonModule(), platformModule())
+}
 
-    fun stravaLogin(user: UserState): StravaLogin =
-        LoginInteractor(createApi(user))
+fun commonModule() = module {
+    single<StravaLogin> { LoginInteractor(get()) }
+    single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
+    single<StravaProfile> { ProfileInteractor(get(), ProfileMapper()) }
+    single<TokenProvider> { UserWrapper(get()) }
+    single { StravaApi(get()) }
+}
 
-    fun stravaActivity(user: UserState): StravaActivity =
-        ActivityInteractor(createApi(user), ActivityMapper())
+expect fun platformModule(): Module
 
-    fun stravaProfile(user: UserState): StravaProfile =
-        ProfileInteractor(createApi(user), ProfileMapper())
+// Called from iOS
+@Suppress("unused")
+fun initKoin() = initKoin {}
 
-    private fun createApi(user: UserState): StravaApi {
-        if (user.hashCode() != userHash || api == null) {
-            userHash = user.hashCode()
-            api = StravaApi(UserWrapper(user))
-        }
-        return api!!
-    }
-    private var userHash = 0
-    private var api: StravaApi? = null
+@Suppress("unused")
+class IosDI : KoinComponent {
+    fun userState(): UserState = get()
+    fun stravaLogin(): StravaLogin = get()
+    fun stravaActivity(): StravaActivity = get()
+    fun stravaProfile(): StravaProfile = get()
 }
 
 internal class UserWrapper(private val user: UserState) : TokenProvider {
