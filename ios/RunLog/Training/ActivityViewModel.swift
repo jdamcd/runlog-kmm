@@ -7,7 +7,7 @@ class ActivityViewModel: ObservableObject {
 
     private let stravaActivity: StravaActivity
 
-    init(stravaActivity: StravaActivity = SharedModule().stravaActivity(user: User.sharedInstance)) {
+    init(stravaActivity: StravaActivity = SharedModule().stravaActivity()) {
         self.stravaActivity = stravaActivity
     }
 

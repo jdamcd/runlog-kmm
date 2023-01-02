@@ -6,7 +6,7 @@ class UserAuth: ObservableObject {
 
     private let userState: UserState
 
-    init(userState: UserState = PersistingUserState()) {
+    init(userState: UserState = SharedModule().userState()) {
         self.userState = userState
         loggedIn = userState.isLoggedIn()
     }

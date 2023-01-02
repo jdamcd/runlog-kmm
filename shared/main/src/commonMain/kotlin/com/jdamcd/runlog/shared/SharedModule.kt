@@ -7,11 +7,12 @@ import com.jdamcd.runlog.shared.internal.ActivityMapper
 import com.jdamcd.runlog.shared.internal.LoginInteractor
 import com.jdamcd.runlog.shared.internal.ProfileInteractor
 import com.jdamcd.runlog.shared.internal.ProfileMapper
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import kotlin.native.concurrent.ThreadLocal
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
@@ -21,8 +22,6 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
 
 expect fun platformModule(): Module
 
-fun initKoin() = initKoin {}
-
 fun commonModule() = module {
     single<StravaLogin> { LoginInteractor(get()) }
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
@@ -31,27 +30,15 @@ fun commonModule() = module {
     single { StravaApi(get()) }
 }
 
-@ThreadLocal
-object SharedModule {
+@Suppress("unused")
+fun initKoin() = initKoin {}
 
-    fun stravaLogin(user: UserState): StravaLogin =
-        LoginInteractor(createApi(user))
-
-    fun stravaActivity(user: UserState): StravaActivity =
-        ActivityInteractor(createApi(user), ActivityMapper())
-
-    fun stravaProfile(user: UserState): StravaProfile =
-        ProfileInteractor(createApi(user), ProfileMapper())
-
-    private fun createApi(user: UserState): StravaApi {
-        if (user.hashCode() != userHash || api == null) {
-            userHash = user.hashCode()
-            api = StravaApi(UserWrapper(user))
-        }
-        return api!!
-    }
-    private var userHash = 0
-    private var api: StravaApi? = null
+@Suppress("unused")
+class SharedModule : KoinComponent {
+    fun userState(): UserState = get()
+    fun stravaLogin(): StravaLogin = get()
+    fun stravaActivity(): StravaActivity = get()
+    fun stravaProfile(): StravaProfile = get()
 }
 
 internal class UserWrapper(private val user: UserState) : TokenProvider {
