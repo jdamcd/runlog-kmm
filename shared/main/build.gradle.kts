@@ -23,8 +23,8 @@ kotlin {
             dependencies {
                 implementation(project(":shared:api"))
                 implementation(project(":shared:utils"))
-                implementation(Dependency.kotlinCoroutines)
-                implementation(Dependency.koin)
+                implementation(Dependency.coroutines)
+                implementation(Dependency.Koin.core)
             }
         }
         val commonTest by getting {
@@ -38,7 +38,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.ktxCore)
+                implementation(Dependency.Ktx.core)
             }
         }
         val androidTest by getting {

@@ -34,47 +34,58 @@ object Version {
 }
 
 object Dependency {
-    // Native
-    const val ktorCore = "io.ktor:ktor-client-core:${Version.ktor}"
-    const val ktorContentNegotiation = "io.ktor:ktor-client-content-negotiation:${Version.ktor}"
-    const val ktorAuth = "io.ktor:ktor-client-auth:${Version.ktor}"
-    const val ktorLog = "io.ktor:ktor-client-logging:${Version.ktor}"
-    const val ktorSerialize = "io.ktor:ktor-serialization-kotlinx-json:${Version.ktor}"
-    const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
-    const val koin = "io.insert-koin:koin-core:${Version.koin}"
+    object Ktor {
+        const val core = "io.ktor:ktor-client-core:${Version.ktor}"
+        const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:${Version.ktor}"
+        const val auth = "io.ktor:ktor-client-auth:${Version.ktor}"
+        const val log = "io.ktor:ktor-client-logging:${Version.ktor}"
+        const val serialize = "io.ktor:ktor-serialization-kotlinx-json:${Version.ktor}"
+        const val ios = "io.ktor:ktor-client-ios:${Version.ktor}"
+        const val android = "io.ktor:ktor-client-android:${Version.ktor}"
+    }
+    object Koin {
+        const val core = "io.insert-koin:koin-core:${Version.koin}"
+        const val android = "io.insert-koin:koin-android:${Version.koin}"
+    }
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
 
     // Android
-    const val ktorAndroid = "io.ktor:ktor-client-android:${Version.ktor}"
-    const val ktxCore = "androidx.core:core-ktx:${Version.ktxCore}"
-    const val ktxActvitiy = "androidx.activity:activity-ktx:${Version.ktxActivity}"
-    const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycle}"
-    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-common-java8:${Version.lifecycle}"
+    object Ktx {
+        const val core = "androidx.core:core-ktx:${Version.ktxCore}"
+        const val activity = "androidx.activity:activity-ktx:${Version.ktxActivity}"
+    }
+    object Lifecycle {
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycle}"
+        const val compiler = "androidx.lifecycle:lifecycle-common-java8:${Version.lifecycle}"
+    }
+    object Hilt {
+        const val core = "com.google.dagger:hilt-android:${Version.hilt}"
+        const val compiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
+        const val compose = "androidx.hilt:hilt-navigation-compose:${Version.hiltCompose}"
+    }
+    object Compose {
+        const val bom = "androidx.compose:compose-bom:${Version.composeBom}"
+        const val ui = "androidx.compose.ui:ui"
+        const val foundation = "androidx.compose.foundation:foundation"
+        const val activity = "androidx.activity:activity-compose"
+        const val tooling = "androidx.compose.ui:ui-tooling"
+        const val material = "androidx.compose.material:material"
+        const val icons = "androidx.compose.material:material-icons-core"
+        const val iconsExtended = "androidx.compose.material:material-icons-extended"
+        const val navigation = "androidx.navigation:navigation-compose:${Version.navigationCompose}"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Version.constraintLayout}"
+    }
     const val material = "com.google.android.material:material:${Version.material}"
     const val splash = "androidx.core:core-splashscreen:${Version.splash}"
-    const val hilt = "com.google.dagger:hilt-android:${Version.hilt}"
-    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
-    const val hiltCompose = "androidx.hilt:hilt-navigation-compose:${Version.hiltCompose}"
-    const val composeNavigation = "androidx.navigation:navigation-compose:${Version.navigationCompose}"
-    const val composeBom = "androidx.compose:compose-bom:${Version.composeBom}"
-    const val composeUi = "androidx.compose.ui:ui"
-    const val composeFoundation = "androidx.compose.foundation:foundation"
-    const val composeActivity = "androidx.activity:activity-compose"
-    const val composeTooling = "androidx.compose.ui:ui-tooling"
-    const val composeMaterial = "androidx.compose.material:material"
-    const val composeIcons = "androidx.compose.material:material-icons-core"
-    const val composeIconsExtended = "androidx.compose.material:material-icons-extended"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Version.constraintLayout}"
     const val coil = "io.coil-kt:coil-compose:${Version.coil}"
-    const val koinAndroid = "io.insert-koin:koin-android:${Version.koin}"
-
-    // iOS
-    const val ktoriOS = "io.ktor:ktor-client-ios:${Version.ktor}"
 
     // Test
+    object Mockito {
+        const val core = "org.mockito:mockito-inline:${Version.mockito}"
+        const val kotlin = "org.mockito.kotlin:mockito-kotlin:${Version.mockitoKotlin}"
+    }
     const val junit = "junit:junit:${Version.junit}"
     const val kotestAssert = "io.kotest:kotest-assertions-core:${Version.kotest}"
-    const val mockito = "org.mockito:mockito-inline:${Version.mockito}"
-    const val mockitoKotlin = "org.mockito.kotlin:mockito-kotlin:${Version.mockitoKotlin}"
     const val turbine = "app.cash.turbine:turbine:${Version.turbine}"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutinesTest}"
     const val archTest = "androidx.arch.core:core-testing:${Version.archTest}"

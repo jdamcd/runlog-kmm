@@ -19,12 +19,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:utils"))
-                implementation(Dependency.ktorCore)
-                implementation(Dependency.ktorContentNegotiation)
-                implementation(Dependency.ktorAuth)
-                implementation(Dependency.ktorLog)
-                implementation(Dependency.ktorSerialize)
-                implementation(Dependency.kotlinCoroutines)
+                implementation(Dependency.Ktor.core)
+                implementation(Dependency.Ktor.contentNegotiation)
+                implementation(Dependency.Ktor.auth)
+                implementation(Dependency.Ktor.log)
+                implementation(Dependency.Ktor.serialize)
+                implementation(Dependency.coroutines)
             }
         }
         val commonTest by getting {
@@ -38,7 +38,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.ktorAndroid)
+                implementation(Dependency.Ktor.android)
             }
         }
         val androidTest by getting {
@@ -53,7 +53,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(Dependency.ktoriOS)
+                implementation(Dependency.Ktor.ios)
             }
         }
         val iosX64Test by getting
