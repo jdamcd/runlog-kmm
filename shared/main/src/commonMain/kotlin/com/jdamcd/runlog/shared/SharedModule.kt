@@ -20,11 +20,10 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 }
 
 fun commonModule() = module {
+    single { StravaApi(get()) }
     single<StravaLogin> { LoginInteractor(get()) }
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
     single<StravaProfile> { ProfileInteractor(get(), ProfileMapper()) }
-    single<TokenProvider> { UserWrapper(get()) }
-    single { StravaApi(get()) }
 }
 
 expect fun platformModule(): Module
@@ -39,19 +38,4 @@ class IosDI : KoinComponent {
     fun stravaLogin(): StravaLogin = get()
     fun stravaActivity(): StravaActivity = get()
     fun stravaProfile(): StravaProfile = get()
-}
-
-internal class UserWrapper(private val user: UserState) : TokenProvider {
-
-    override var accessToken: String
-        get() = user.accessToken
-        set(value) { user.accessToken = value }
-
-    override var refreshToken: String
-        get() = user.refreshToken
-        set(value) { user.refreshToken = value }
-
-    override fun isLoggedIn(): Boolean {
-        return user.isLoggedIn()
-    }
 }

@@ -1,5 +1,7 @@
 package com.jdamcd.runlog.shared
 
+import com.jdamcd.runlog.shared.api.TokenProvider
+
 interface UserState {
     var accessToken: String
     var refreshToken: String
@@ -7,7 +9,7 @@ interface UserState {
     fun clear()
 }
 
-expect class PersistingUserState : UserState {
+expect class PersistingUserState : UserState, TokenProvider {
     override var accessToken: String
     override var refreshToken: String
     override fun isLoggedIn(): Boolean

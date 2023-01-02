@@ -1,9 +1,10 @@
 package com.jdamcd.runlog.shared
 
+import com.jdamcd.runlog.shared.api.TokenProvider
 import platform.Foundation.NSUserDefaults
 import platform.Foundation.setValue
 
-actual class PersistingUserState : UserState {
+actual class PersistingUserState : UserState, TokenProvider {
 
     private val defaults: NSUserDefaults = NSUserDefaults(suiteName = DEFAULTS_NAME)
 
