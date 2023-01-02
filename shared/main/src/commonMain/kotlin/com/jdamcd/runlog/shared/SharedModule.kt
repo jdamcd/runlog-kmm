@@ -1,7 +1,6 @@
 package com.jdamcd.runlog.shared
 
 import com.jdamcd.runlog.shared.api.StravaApi
-import com.jdamcd.runlog.shared.api.TokenProvider
 import com.jdamcd.runlog.shared.internal.ActivityInteractor
 import com.jdamcd.runlog.shared.internal.ActivityMapper
 import com.jdamcd.runlog.shared.internal.LoginInteractor
