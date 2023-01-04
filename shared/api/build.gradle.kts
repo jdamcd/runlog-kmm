@@ -7,7 +7,7 @@ plugins {
     id("kotlinx-serialization")
     id("com.codingfeline.buildkonfig")
 }
-group = "com.jdamcd.runlog"
+group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
@@ -41,9 +41,7 @@ kotlin {
                 implementation(Dependency.Ktor.android)
             }
         }
-        val androidTest by getting {
-            dependencies {}
-        }
+        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -74,11 +72,6 @@ android {
     defaultConfig {
         minSdk = AndroidVersion.minimum
         targetSdk = AndroidVersion.target
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
     }
     namespace = "com.jdamcd.runlog.shared.api"
 }

@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
-group = "com.jdamcd.runlog"
+group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
@@ -77,11 +77,6 @@ android {
     defaultConfig {
         minSdk = AndroidVersion.minimum
         targetSdk = AndroidVersion.target
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
     }
     namespace = "com.jdamcd.runlog.shared"
 }
