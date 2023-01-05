@@ -8,6 +8,7 @@ object Version {
     const val ktor = "2.1.2"
     const val coroutines = "1.6.4-native-mt"
     const val koin = "3.2.2"
+    const val sqldelight = "1.5.4"
 
     // Android
     const val hilt = "2.44"
@@ -46,6 +47,10 @@ object Dependency {
     object Koin {
         const val core = "io.insert-koin:koin-core:${Version.koin}"
         const val android = "io.insert-koin:koin-android:${Version.koin}"
+    }
+    object SqlDelight {
+        const val android = "com.squareup.sqldelight:android-driver:${Version.sqldelight}"
+        const val native = "com.squareup.sqldelight:native-driver:${Version.sqldelight}"
     }
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
 

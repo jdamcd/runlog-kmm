@@ -10,6 +10,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:${Version.androidGradle}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Version.buildKonfig}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${Version.sqldelight}")
     }
 }
 group = "com.jdamcd.runlog"
