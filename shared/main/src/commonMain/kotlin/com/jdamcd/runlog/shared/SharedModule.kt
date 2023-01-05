@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.shared
 
 import com.jdamcd.runlog.shared.api.StravaApi
+import com.jdamcd.runlog.shared.database.databaseModule
 import com.jdamcd.runlog.shared.internal.ActivityInteractor
 import com.jdamcd.runlog.shared.internal.ActivityMapper
 import com.jdamcd.runlog.shared.internal.LoginInteractor
@@ -15,7 +16,11 @@ import org.koin.dsl.module
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
-    modules(commonModule(), platformModule())
+    modules(
+        commonModule(),
+        platformModule(),
+        databaseModule()
+    )
 }
 
 fun commonModule() = module {

@@ -22,6 +22,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:api"))
+                implementation(project(":shared:database"))
                 implementation(project(":shared:utils"))
                 implementation(Dependency.coroutines)
                 implementation(Dependency.Koin.core)

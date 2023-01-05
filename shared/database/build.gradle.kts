@@ -15,6 +15,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:utils"))
+                implementation(Dependency.Koin.core)
             }
         }
         val commonTest by getting {
