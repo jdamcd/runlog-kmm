@@ -15,6 +15,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "RunLogShared"
+            linkerOpts.add("-lsqlite3")
         }
     }
 
