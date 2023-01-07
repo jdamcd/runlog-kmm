@@ -1,0 +1,18 @@
+CREATE TABLE athlete (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO athlete(id, name)
+VALUES (?, ?);
+
+insertFullAthlete:
+INSERT INTO athlete(id, name)
+VALUES ?;
+
+selectAll:
+SELECT * FROM athlete;
+
+deleteAll:
+DELETE FROM athlete;

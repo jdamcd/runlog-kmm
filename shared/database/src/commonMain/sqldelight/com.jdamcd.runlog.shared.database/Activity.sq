@@ -1,0 +1,18 @@
+CREATE TABLE activity (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO activity(id, name)
+VALUES (?, ?);
+
+insertFullActivity:
+INSERT INTO activity(id, name)
+VALUES ?;
+
+selectAll:
+SELECT * FROM activity;
+
+deleteAll:
+DELETE FROM activity;

@@ -1,31 +1,20 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.squareup.sqldelight")
 }
 group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
     android()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "RunLogShared"
-            linkerOpts.add("-lsqlite3")
-        }
-    }
-
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":shared:api"))
-                implementation(project(":shared:database"))
                 implementation(project(":shared:utils"))
-                implementation(Dependency.coroutines)
                 implementation(Dependency.Koin.core)
             }
         }
@@ -40,14 +29,10 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.Ktx.core)
+                implementation(Dependency.SqlDelight.android)
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(Dependency.kotestAssert)
-            }
-        }
+        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -56,7 +41,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {}
+            dependencies {
+                implementation(Dependency.SqlDelight.native)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -66,9 +53,6 @@ kotlin {
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
-            dependencies {
-                implementation(Dependency.kotestAssert)
-            }
         }
     }
 }
@@ -80,5 +64,11 @@ android {
         minSdk = AndroidVersion.minimum
         targetSdk = AndroidVersion.target
     }
-    namespace = "com.jdamcd.runlog.shared"
+    namespace = "com.jdamcd.runlog.shared.database"
+}
+
+sqldelight {
+    database("RunLogDB") {
+        packageName = "com.jdamcd.runlog.shared.database"
+    }
 }

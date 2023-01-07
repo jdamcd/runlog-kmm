@@ -18,4 +18,5 @@ include(":android")
 
 include(":shared:main")
 include(":shared:api")
+include(":shared:database")
 include(":shared:utils")
