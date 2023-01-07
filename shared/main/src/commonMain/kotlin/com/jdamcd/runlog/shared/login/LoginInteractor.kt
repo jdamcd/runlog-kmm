@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.login
 
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.StravaLogin

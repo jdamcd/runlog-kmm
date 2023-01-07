@@ -1,11 +1,11 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.util
 
-import com.jdamcd.runlog.shared.internal.Formatter.formatDuration
-import com.jdamcd.runlog.shared.internal.Formatter.formatElevation
-import com.jdamcd.runlog.shared.internal.Formatter.formatKm
-import com.jdamcd.runlog.shared.internal.Formatter.formatPace
+import com.jdamcd.runlog.shared.util.Formatter.formatDuration
+import com.jdamcd.runlog.shared.util.Formatter.formatElevation
+import com.jdamcd.runlog.shared.util.Formatter.formatKm
+import com.jdamcd.runlog.shared.util.Formatter.formatPace
 import io.kotest.matchers.shouldBe
-import org.junit.Test
+import kotlin.test.Test
 
 class FormatTest {
 

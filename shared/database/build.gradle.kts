@@ -32,7 +32,11 @@ kotlin {
                 implementation(Dependency.SqlDelight.android)
             }
         }
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation(Dependency.SqlDelight.jvm)
+            }
+        }
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
