@@ -65,7 +65,6 @@ class ProfileMapperTest {
         )
     }
 
-    // TODO: Move to DB module
     private fun athleteDbModel() = AthleteWithStats(
         id = 123L,
         username = "jdamcd",
