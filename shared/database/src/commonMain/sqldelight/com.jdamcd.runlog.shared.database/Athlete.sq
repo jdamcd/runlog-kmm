@@ -1,18 +1,40 @@
 CREATE TABLE athlete (
     id INTEGER NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL
+    username TEXT NOT NULL,
+    name TEXT NOT NULL,
+    imageUrl TEXT,
+    isUser INTEGER AS Boolean DEFAULT 0
 );
 
-insert:
-INSERT OR REPLACE INTO athlete(id, name)
-VALUES (?, ?);
+CREATE TABLE runStats (
+    id INTEGER NOT NULL PRIMARY KEY,
+    recentDistance REAL AS Float NOT NULL,
+    recentPace INTEGER AS Int NOT NULL,
+    yearDistance REAL AS Float NOT NULL,
+    yearPace INTEGER AS Int NOT NULL,
+    allDistance REAL AS Float NOT NULL,
+    allPace INTEGER AS Int NOT NULL
+);
 
-insertFullAthlete:
-INSERT INTO athlete(id, name)
+CREATE VIEW athleteWithStats AS
+SELECT
+    athlete.*,
+    runStats.*
+FROM athlete
+JOIN runStats ON athlete.id = runStats.id;
+
+insertAthlete:
+INSERT OR REPLACE INTO athlete(id, username, name, imageUrl, isUser)
 VALUES ?;
 
-selectAll:
-SELECT * FROM athlete;
+insertRunStats:
+INSERT OR REPLACE INTO runStats(id, recentDistance, recentPace, yearDistance, yearPace, allDistance, allPace)
+VALUES ?;
+
+selectUser:
+SELECT * FROM athleteWithStats
+WHERE isUser = 1;
 
 deleteAll:
 DELETE FROM athlete;
+DELETE FROM runStats;

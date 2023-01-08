@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.activity
 
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
@@ -11,11 +11,12 @@ import com.jdamcd.runlog.shared.api.ApiPolylineMap
 import com.jdamcd.runlog.shared.api.ApiSplit
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import com.jdamcd.runlog.shared.api.MapboxStatic
-import com.jdamcd.runlog.shared.internal.Formatter.formatDuration
-import com.jdamcd.runlog.shared.internal.Formatter.formatElevation
-import com.jdamcd.runlog.shared.internal.Formatter.formatKm
-import com.jdamcd.runlog.shared.internal.Formatter.formatPace
-import com.jdamcd.runlog.shared.internal.Utils.calculatePace
+import com.jdamcd.runlog.shared.util.Formatter.formatDuration
+import com.jdamcd.runlog.shared.util.Formatter.formatElevation
+import com.jdamcd.runlog.shared.util.Formatter.formatKm
+import com.jdamcd.runlog.shared.util.Formatter.formatPace
+import com.jdamcd.runlog.shared.util.Utils.calculatePace
+import com.jdamcd.runlog.shared.util.formatDate
 import kotlin.math.roundToInt
 
 internal class ActivityMapper {

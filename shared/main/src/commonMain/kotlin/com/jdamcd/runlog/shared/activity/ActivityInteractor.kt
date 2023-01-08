@@ -1,11 +1,11 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.activity
 
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.StravaActivity
-import com.jdamcd.runlog.shared.api.AuthException
 import com.jdamcd.runlog.shared.api.StravaApi
+import com.jdamcd.runlog.shared.util.tryCall
 
 internal class ActivityInteractor(
     private val stravaApi: StravaApi,
@@ -28,13 +28,5 @@ internal class ActivityInteractor(
 
     override fun requestDarkModeImages(enabled: Boolean) {
         mapper.darkModeImages = enabled
-    }
-}
-
-inline fun <T> tryCall(call: () -> Result<T>): Result<T> {
-    return try {
-        call.invoke()
-    } catch (error: Throwable) {
-        Result.Error(error, recoverable = error !is AuthException)
     }
 }

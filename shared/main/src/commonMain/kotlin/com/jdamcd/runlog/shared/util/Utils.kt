@@ -1,5 +1,7 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.util
 
+import com.jdamcd.runlog.shared.Result
+import com.jdamcd.runlog.shared.api.AuthException
 import kotlin.math.roundToInt
 
 expect fun String.format(p1: Int, p2: Int): String
@@ -45,5 +47,13 @@ internal object Utils {
     fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
         val distanceKm = distanceMetres / 1000
         return (timeSeconds / distanceKm).roundToInt() // seconds per km
+    }
+}
+
+inline fun <T> tryCall(call: () -> Result<T>): Result<T> {
+    return try {
+        call.invoke()
+    } catch (error: Throwable) {
+        Result.Error(error, recoverable = error !is AuthException)
     }
 }

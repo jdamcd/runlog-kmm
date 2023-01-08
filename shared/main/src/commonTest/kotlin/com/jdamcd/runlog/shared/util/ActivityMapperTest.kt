@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.util
 
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
@@ -6,6 +6,7 @@ import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
+import com.jdamcd.runlog.shared.activity.ActivityMapper
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
 import kotlin.test.Test

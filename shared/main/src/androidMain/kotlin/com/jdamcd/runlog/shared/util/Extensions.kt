@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.internal
+package com.jdamcd.runlog.shared.util
 
 import java.text.DecimalFormat
 import java.time.ZonedDateTime
