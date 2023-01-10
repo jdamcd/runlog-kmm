@@ -1,7 +1,10 @@
 package com.jdamcd.runlog.shared
 
+import kotlinx.coroutines.flow.Flow
+
 interface StravaProfile {
     suspend fun profile(): Result<AthleteProfile>
+    fun profileFlow(): Flow<AthleteProfile>
 }
 
 data class AthleteProfile(

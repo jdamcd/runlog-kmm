@@ -16,6 +16,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared:utils"))
                 implementation(Dependency.Koin.core)
+                implementation(Dependency.SqlDelight.coroutines)
             }
         }
         val commonTest by getting {
@@ -25,6 +26,7 @@ kotlin {
                 implementation(kotlin("test-junit"))
                 implementation(Dependency.junit)
                 implementation(Dependency.kotestAssert)
+                implementation(Dependency.coroutinesTest)
             }
         }
         val androidMain by getting {

@@ -1,8 +1,11 @@
 package com.jdamcd.runlog.shared.database
 
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
+import kotlinx.coroutines.flow.Flow
 
 class AthleteDao(database: RunLogDB) {
 
@@ -15,7 +18,13 @@ class AthleteDao(database: RunLogDB) {
         }
     }
 
-    fun getUser(): AthleteWithStats {
+    fun user(): AthleteWithStats {
         return athleteQueries.selectUser().executeAsOne()
+    }
+
+    fun userFlow(): Flow<AthleteWithStats?> {
+        return athleteQueries.selectUser()
+            .asFlow()
+            .mapToOneOrNull()
     }
 }
