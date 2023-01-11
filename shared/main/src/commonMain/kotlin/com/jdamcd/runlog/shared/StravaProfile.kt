@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 interface StravaProfile {
     suspend fun profile(): Result<AthleteProfile>
     fun profileFlow(): Flow<AthleteProfile>
+    fun refresh()
 }
 
 data class AthleteProfile(

@@ -20,9 +20,13 @@ internal class ProfileInteractor(
     }
 
     override fun profileFlow(): Flow<AthleteProfile> {
+        refresh()
+        return repository.loadProfile()
+    }
+
+    override fun refresh() {
         coroutineScope.launch {
             repository.fetchProfile()
         }
-        return repository.loadProfile()
     }
 }

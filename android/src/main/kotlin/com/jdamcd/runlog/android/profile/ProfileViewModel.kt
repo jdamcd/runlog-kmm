@@ -4,12 +4,11 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.AthleteProfile
-import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.StravaProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,30 +16,17 @@ class ProfileViewModel @Inject constructor(
     private val stravaProfile: StravaProfile
 ) : ViewModel(), LifecycleObserver {
 
-    private val _mutableFlow = MutableStateFlow<ProfileState>(ProfileState.Loading)
-    val flow = _mutableFlow as StateFlow<ProfileState>
+    val flow = stravaProfile.profileFlow()
+        .map { ProfileState.Data(it) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ProfileState.Loading)
 
-    init {
-        load()
-    }
-
-    fun load() {
-        _mutableFlow.value = ProfileState.Loading
-        viewModelScope.launch {
-            when (val result = stravaProfile.profile()) {
-                is Result.Data -> {
-                    _mutableFlow.value = ProfileState.Data(result.data)
-                }
-                is Result.Error -> {
-                    _mutableFlow.value = ProfileState.Error(result.recoverable)
-                }
-            }
-        }
+    fun refresh() {
+        stravaProfile.refresh()
     }
 }
 
 sealed class ProfileState {
     object Loading : ProfileState()
     data class Data(val profile: AthleteProfile) : ProfileState()
-    data class Error(val recoverable: Boolean) : ProfileState()
+    object Error : ProfileState()
 }

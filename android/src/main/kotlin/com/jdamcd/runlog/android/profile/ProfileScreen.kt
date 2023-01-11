@@ -62,7 +62,7 @@ fun ProfileScreen(
     )
     ProfileStates(
         stateFlow = viewModel.flow,
-        onRetryClick = { viewModel.load() }
+        onRetryClick = { viewModel.refresh() }
     )
 }
 

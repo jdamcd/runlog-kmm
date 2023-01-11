@@ -26,15 +26,17 @@ class ActivityMock: StravaActivity {
 }
 
 class ProfileMock: StravaProfile {
-    func profileFlow() -> Kotlinx_coroutines_coreFlow {
-        NSObject() as! Kotlinx_coroutines_coreFlow
-    }
-
     var profile: Result<AthleteProfile> = ResultError(error: KotlinThrowable(), recoverable: false)
 
     func profile() async throws -> Result<AthleteProfile> {
         profile
     }
+
+    func profileFlow() -> Kotlinx_coroutines_coreFlow {
+        NSObject() as! Kotlinx_coroutines_coreFlow
+    }
+
+    func refresh() {}
 }
 
 class UserStateMock: UserState {
