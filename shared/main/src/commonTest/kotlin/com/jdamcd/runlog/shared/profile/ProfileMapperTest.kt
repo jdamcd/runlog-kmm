@@ -1,8 +1,9 @@
-package com.jdamcd.runlog.shared.util
+package com.jdamcd.runlog.shared.profile
 
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
-import com.jdamcd.runlog.shared.profile.ProfileMapper
+import com.jdamcd.runlog.shared.util.athleteModel
+import com.jdamcd.runlog.shared.util.athleteStatsModel
 import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
