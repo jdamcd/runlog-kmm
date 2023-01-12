@@ -4,11 +4,6 @@ import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.api.AuthException
 import kotlin.math.roundToInt
 
-expect fun String.format(p1: Int, p2: Int): String
-expect fun String.format(p1: Int, p2: Int, p3: Int): String
-expect fun Float.formatDecimal(pattern: String): String
-expect fun String.formatDate(pattern: String): String
-
 internal object Formatter {
 
     fun formatKm(distance: Float, withUnit: Boolean = true): String {
@@ -42,12 +37,9 @@ internal object Formatter {
     }
 }
 
-internal object Utils {
-
-    fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
-        val distanceKm = distanceMetres / 1000
-        return (timeSeconds / distanceKm).roundToInt() // seconds per km
-    }
+fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
+    val distanceKm = distanceMetres / 1000
+    return (timeSeconds / distanceKm).roundToInt() // seconds per km
 }
 
 inline fun <T> tryCall(call: () -> Result<T>): Result<T> {

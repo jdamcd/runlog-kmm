@@ -15,7 +15,7 @@ import com.jdamcd.runlog.shared.util.Formatter.formatDuration
 import com.jdamcd.runlog.shared.util.Formatter.formatElevation
 import com.jdamcd.runlog.shared.util.Formatter.formatKm
 import com.jdamcd.runlog.shared.util.Formatter.formatPace
-import com.jdamcd.runlog.shared.util.Utils.calculatePace
+import com.jdamcd.runlog.shared.util.calculatePace
 import com.jdamcd.runlog.shared.util.formatDate
 import kotlin.math.roundToInt
 

@@ -7,7 +7,7 @@ import com.jdamcd.runlog.shared.api.ApiActivityTotal
 import com.jdamcd.runlog.shared.api.ApiDetailedAthlete
 import com.jdamcd.runlog.shared.util.Formatter.formatKm
 import com.jdamcd.runlog.shared.util.Formatter.formatPace
-import com.jdamcd.runlog.shared.util.Utils.calculatePace
+import com.jdamcd.runlog.shared.util.calculatePace
 import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
