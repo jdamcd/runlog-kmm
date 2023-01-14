@@ -16,7 +16,7 @@ final class TrainingViewModelTest: XCTestCase {
 
     func testLoadSuccessSetsLoadingThenData() {
         let activity = ActivityCard.with(id: 1)
-        mockActivity.activities = ResultData(data: NSArray(array: [activity]))
+        mockActivity.activities = ResultData(value: NSArray(array: [activity]))
 
         viewModel.load()
 
@@ -25,7 +25,7 @@ final class TrainingViewModelTest: XCTestCase {
     }
 
     func testLoadFailureSetsLoadingThenError() {
-        mockActivity.activities = ResultError(error: KotlinThrowable(), recoverable: true)
+        mockActivity.activities = ResultError(error: KotlinThrowable())
 
         viewModel.load()
 
@@ -34,20 +34,10 @@ final class TrainingViewModelTest: XCTestCase {
         XCTAssertTrue(mockUserState.isLoggedIn())
     }
 
-    func testLogOutOnUnrecoverableError() {
-        mockActivity.activities = ResultError(error: KotlinThrowable(), recoverable: false)
-
-        viewModel.load()
-        XCTAssertEqual(viewModel.state, .loading)
-
-        waitUntil(viewModel.$state, equals: .error)
-        XCTAssertFalse(mockUserState.isLoggedIn())
-    }
-
     func testRefreshUpdatesDataWithoutLoadingState() {
         // First load
         let activity1 = ActivityCard.with(id: 1)
-        mockActivity.activities = ResultData(data: NSArray(array: [activity1]))
+        mockActivity.activities = ResultData(value: NSArray(array: [activity1]))
 
         viewModel.load()
 
@@ -56,7 +46,7 @@ final class TrainingViewModelTest: XCTestCase {
 
         // Refresh
         let activity2 = ActivityCard.with(id: 2)
-        mockActivity.activities = ResultData(data: NSArray(array: [activity2]))
+        mockActivity.activities = ResultData(value: NSArray(array: [activity2]))
 
         viewModel.refresh()
 
@@ -66,7 +56,7 @@ final class TrainingViewModelTest: XCTestCase {
 
     func testRefreshLoadsIfNotLoaded() {
         let activity = ActivityCard.with(id: 1)
-        mockActivity.activities = ResultData(data: NSArray(array: [activity]))
+        mockActivity.activities = ResultData(value: NSArray(array: [activity]))
 
         viewModel.refresh()
 

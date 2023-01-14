@@ -18,24 +18,24 @@ class AthleteDaoTest {
     }
 
     @Test
-    fun testInsertUser() {
+    fun insertsUser() {
         dao.insert(athlete(), runStats())
 
         val user = dao.user()
-        user.id shouldBe 123L
+        user?.id shouldBe 123L
     }
 
     @Test
-    fun testUpdateUser() {
+    fun updatesUser() {
         dao.insert(athlete(), runStats())
-        dao.user().imageUrl shouldBe null
+        dao.user()?.imageUrl shouldBe null
 
         dao.insert(athlete(imageUrl = "image.url"), runStats())
-        dao.user().imageUrl shouldBe "image.url"
+        dao.user()?.imageUrl shouldBe "image.url"
     }
 
     @Test
-    fun testUserFlow() = runTest {
+    fun userFlowEmitsRecord() = runTest {
         dao.insert(athlete(), runStats())
 
         val user = dao.userFlow().first()
@@ -43,7 +43,12 @@ class AthleteDaoTest {
     }
 
     @Test
-    fun testEmptyUserFlow() = runTest {
+    fun userIsNullForNoRecord() {
+        dao.user() shouldBe null
+    }
+
+    @Test
+    fun userFlowEmitsNullforNoRecord() = runTest {
         dao.userFlow().first() shouldBe null
     }
 }

@@ -30,13 +30,10 @@ class TrainingViewModel: ObservableObject {
         Task {
             let result = try await stravaActivity.activities()
             if let result = result as? ResultData<NSArray> {
-                let items = result.data as! [ActivityCard]
+                let items = result.value as! [ActivityCard]
                 state = .data(items)
-            } else if let error = result as? ResultError {
+            } else if result is ResultError {
                 state = .error
-                if !error.recoverable {
-                    signOut()
-                }
             }
         }
     }

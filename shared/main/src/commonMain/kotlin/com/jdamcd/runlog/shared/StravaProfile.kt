@@ -1,11 +1,13 @@
 package com.jdamcd.runlog.shared
 
+import com.jdamcd.runlog.shared.util.RefreshState
+import com.jdamcd.runlog.shared.util.Result
 import kotlinx.coroutines.flow.Flow
 
 interface StravaProfile {
     suspend fun profile(): Result<AthleteProfile>
-    fun profileFlow(): Flow<AthleteProfile>
-    fun refresh()
+    fun profileFlow(): Flow<Result<AthleteProfile>>
+    suspend fun refresh(): RefreshState
 }
 
 data class AthleteProfile(

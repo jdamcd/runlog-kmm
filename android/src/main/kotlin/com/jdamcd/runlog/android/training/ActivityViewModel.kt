@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.android.main.ROUTE_ACTIVITY_ID
 import com.jdamcd.runlog.shared.ActivityDetails
-import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.StravaActivity
+import com.jdamcd.runlog.shared.util.ifError
+import com.jdamcd.runlog.shared.util.ifSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,14 +34,9 @@ class ActivityViewModel @Inject constructor(
     fun load() {
         _mutableFlow.value = ActivityState.Loading
         viewModelScope.launch {
-            when (val result = stravaActivity.activityDetails(id)) {
-                is Result.Data -> {
-                    _mutableFlow.value = ActivityState.Data(result.data)
-                }
-                is Result.Error -> {
-                    _mutableFlow.value = ActivityState.Error(result.recoverable)
-                }
-            }
+            val result = stravaActivity.activityDetails(id)
+            result.ifSuccess { _mutableFlow.value = ActivityState.Data(it) }
+            result.ifError { _mutableFlow.value = ActivityState.Error }
         }
     }
 
@@ -54,5 +50,5 @@ class ActivityViewModel @Inject constructor(
 sealed class ActivityState {
     object Loading : ActivityState()
     data class Data(val activity: ActivityDetails) : ActivityState()
-    data class Error(val recoverable: Boolean) : ActivityState()
+    object Error : ActivityState()
 }

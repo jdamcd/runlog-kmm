@@ -22,7 +22,7 @@ class ActivityViewModel: ObservableObject {
         Task {
             let result = try await stravaActivity.activityDetails(id: id)
             if let result = result as? ResultData<ActivityDetails> {
-                state = .data(result.data!)
+                state = .data(result.value!)
             } else if result is ResultError {
                 state = .error
             }
