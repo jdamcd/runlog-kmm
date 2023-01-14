@@ -2,7 +2,7 @@ package com.jdamcd.runlog.shared.util
 
 object MultiLog {
 
-    private const val TAG = "RunLog"
+    private const val TAG = "RunLogShared"
     private val output = LogOutput()
 
     fun debug(message: String) {

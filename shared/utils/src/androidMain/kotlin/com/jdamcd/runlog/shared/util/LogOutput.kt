@@ -2,7 +2,7 @@ package com.jdamcd.runlog.shared.util
 
 import android.util.Log
 
-actual class LogOutput actual constructor() {
+actual class LogOutput {
 
     actual fun debug(tag: String, message: String) {
         Log.d(tag, message)
