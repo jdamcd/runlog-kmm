@@ -7,7 +7,6 @@ import com.jdamcd.runlog.shared.database.ActivityDao
 import com.jdamcd.runlog.shared.database.AthleteDao
 import com.jdamcd.runlog.shared.database.databaseModule
 import com.jdamcd.runlog.shared.login.LoginInteractor
-import com.jdamcd.runlog.shared.profile.ProfileInteractor
 import com.jdamcd.runlog.shared.profile.ProfileMapper
 import com.jdamcd.runlog.shared.profile.ProfileRepository
 import org.koin.core.component.KoinComponent
@@ -32,8 +31,7 @@ fun commonModule() = module {
     single { ActivityDao(get()) }
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
     single { AthleteDao(get()) }
-    single { ProfileRepository(get(), get(), ProfileMapper()) }
-    single<StravaProfile> { ProfileInteractor(get()) }
+    single<StravaProfile> { ProfileRepository(get(), get(), ProfileMapper()) }
 }
 
 expect fun platformModule(): Module

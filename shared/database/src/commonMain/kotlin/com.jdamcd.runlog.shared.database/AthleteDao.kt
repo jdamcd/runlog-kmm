@@ -18,8 +18,9 @@ class AthleteDao(database: RunLogDB) {
         }
     }
 
-    fun user(): AthleteWithStats {
-        return athleteQueries.selectUser().executeAsOne()
+    fun user(): AthleteWithStats? {
+        return athleteQueries.selectUser()
+            .executeAsOneOrNull()
     }
 
     fun userFlow(): Flow<AthleteWithStats?> {

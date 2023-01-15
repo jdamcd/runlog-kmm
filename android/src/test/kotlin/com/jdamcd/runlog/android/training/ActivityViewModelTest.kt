@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.shared.ActivityDetails
-import com.jdamcd.runlog.shared.Result
 import com.jdamcd.runlog.shared.StravaActivity
+import com.jdamcd.runlog.shared.util.Result
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -48,13 +48,13 @@ class ActivityViewModelTest {
 
     @Test
     fun `load failure emits loading then error`() = runTest {
-        whenever(stravaActivity.activityDetails(123L)).thenReturn(Result.Error(Throwable(), recoverable = true))
+        whenever(stravaActivity.activityDetails(123L)).thenReturn(Result.Error(Throwable()))
 
         viewModel.flow.test {
             viewModel.load()
 
             awaitItem() shouldBe ActivityState.Loading
-            awaitItem() shouldBe ActivityState.Error(recoverable = true)
+            awaitItem() shouldBe ActivityState.Error
             cancelAndConsumeRemainingEvents()
         }
     }

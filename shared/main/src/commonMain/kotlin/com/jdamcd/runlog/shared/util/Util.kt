@@ -1,7 +1,5 @@
 package com.jdamcd.runlog.shared.util
 
-import com.jdamcd.runlog.shared.Result
-import com.jdamcd.runlog.shared.api.AuthException
 import kotlin.math.roundToInt
 
 internal object Formatter {
@@ -40,12 +38,4 @@ internal object Formatter {
 fun calculatePace(distanceMetres: Float, timeSeconds: Int): Int {
     val distanceKm = distanceMetres / 1000
     return (timeSeconds / distanceKm).roundToInt() // seconds per km
-}
-
-inline fun <T> tryCall(call: () -> Result<T>): Result<T> {
-    return try {
-        call.invoke()
-    } catch (error: Throwable) {
-        Result.Error(error, recoverable = error !is AuthException)
-    }
 }

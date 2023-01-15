@@ -14,7 +14,7 @@ final class ActivityViewModelTest: XCTestCase {
 
     func testLoadSuccessSetsLoadingThenData() {
         let activity = ActivityDetails.with(id: 1)
-        mockActivity.activityDetails = ResultData(data: activity)
+        mockActivity.activityDetails = ResultData(value: activity)
 
         viewModel.load(id: 1)
 
@@ -23,7 +23,7 @@ final class ActivityViewModelTest: XCTestCase {
     }
 
     func testLoadFailureSetsLoadingThenError() {
-        mockActivity.activityDetails = ResultError(error: KotlinThrowable(), recoverable: true)
+        mockActivity.activityDetails = ResultError(error: KotlinThrowable())
 
         viewModel.load(id: 1)
 

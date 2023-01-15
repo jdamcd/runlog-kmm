@@ -1,15 +1,12 @@
 package com.jdamcd.runlog.shared
 
+import com.jdamcd.runlog.shared.util.Result
+
 interface StravaActivity {
     suspend fun activities(): Result<List<ActivityCard>>
     suspend fun activityDetails(id: Long): Result<ActivityDetails>
     fun linkUrl(id: Long): String
     fun requestDarkModeImages(enabled: Boolean)
-}
-
-sealed class Result<T> {
-    data class Data<T>(val data: T) : Result<T>()
-    data class Error<Nothing>(val error: Throwable, val recoverable: Boolean) : Result<Nothing>()
 }
 
 data class ActivityCard(

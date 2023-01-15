@@ -1,25 +1,22 @@
 package com.jdamcd.runlog.shared.profile
 
 import com.jdamcd.runlog.shared.AthleteProfile
+import com.jdamcd.runlog.shared.StravaProfile
 import com.jdamcd.runlog.shared.api.StravaApi
 import com.jdamcd.runlog.shared.database.AthleteDao
 import com.jdamcd.runlog.shared.util.MultiLog
+import com.jdamcd.runlog.shared.util.RefreshState
+import com.jdamcd.runlog.shared.util.Result
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 internal class ProfileRepository(
     private val stravaApi: StravaApi,
     private val dao: AthleteDao,
     private val mapper: ProfileMapper
-) {
+) : StravaProfile {
 
-    suspend fun profile(): AthleteProfile {
-        fetchProfile()
-        return mapper.dbToUi(dao.user())
-    }
-
-    suspend fun fetchProfile(): UpdateResult {
+    override suspend fun refresh(): RefreshState {
         return try {
             val athlete = stravaApi.athlete()
             val stats = stravaApi.athleteStats(athlete.id)
@@ -28,23 +25,26 @@ internal class ProfileRepository(
                 mapper.athleteToDb(athlete, isUser = true),
                 mapper.runStatsToDb(athlete.id, stats)
             )
-            UpdateResult.Success
+            RefreshState.SUCCESS
         } catch (e: Exception) {
             MultiLog.error("Failed to update profile: ${e.message}")
-            UpdateResult.Failure
+            RefreshState.ERROR
         }
     }
 
-    fun loadProfile(): Flow<AthleteProfile> {
+    @Deprecated("Move to fetch & flow")
+    override suspend fun profile(): Result<AthleteProfile> {
+        refresh()
+        return dao.user()?.let {
+            Result.Data(mapper.dbToUi(it))
+        } ?: Result.Empty
+    }
+
+    override fun profileFlow(): Flow<Result<AthleteProfile>> {
         return dao.userFlow().map {
             it?.let {
-                mapper.dbToUi(it)
-            }
-        }.filterNotNull()
+                Result.Data(mapper.dbToUi(it))
+            } ?: Result.Empty
+        }
     }
-}
-
-sealed class UpdateResult {
-    object Success : UpdateResult()
-    object Failure : UpdateResult()
 }

@@ -6,13 +6,9 @@ import SwiftUI
 class ProfileViewModel: ObservableObject {
     @Published var state: ProfileState = .loading
 
-    private let user: UserState
     private let stravaProfile: StravaProfile
 
-    init(user: UserState = IosDI().userState(),
-         stravaProfile: StravaProfile = IosDI().stravaProfile())
-    {
-        self.user = user
+    init(stravaProfile: StravaProfile = IosDI().stravaProfile()) {
         self.stravaProfile = stravaProfile
     }
 
@@ -21,12 +17,9 @@ class ProfileViewModel: ObservableObject {
         Task {
             let result = try await stravaProfile.profile()
             if let result = result as? ResultData<AthleteProfile> {
-                state = .data(result.data!)
-            } else if let error = result as? ResultError {
+                state = .data(result.value!)
+            } else if result is ResultError {
                 state = .error
-                if !error.recoverable {
-                    user.clear()
-                }
             }
         }
     }
