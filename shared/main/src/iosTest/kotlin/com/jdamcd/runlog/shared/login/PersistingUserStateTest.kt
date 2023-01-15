@@ -1,12 +1,12 @@
-package com.jdamcd.runlog.shared
+package com.jdamcd.runlog.shared.login
 
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class UserStateTest {
+class PersistingUserStateTest {
 
-    lateinit var userState: PersistingUserState
+    private lateinit var userState: PersistingUserState
 
     @BeforeTest
     fun setUp() {

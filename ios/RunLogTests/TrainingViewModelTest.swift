@@ -6,12 +6,10 @@ import XCTest
 final class TrainingViewModelTest: XCTestCase {
     var viewModel: TrainingViewModel!
     var mockActivity: ActivityMock!
-    var mockUserState: UserStateMock!
 
     override func setUp() {
         mockActivity = ActivityMock()
-        mockUserState = UserStateMock()
-        viewModel = TrainingViewModel(user: mockUserState, stravaActivity: mockActivity)
+        viewModel = TrainingViewModel(stravaActivity: mockActivity)
     }
 
     func testLoadSuccessSetsLoadingThenData() {
@@ -31,7 +29,6 @@ final class TrainingViewModelTest: XCTestCase {
 
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .error)
-        XCTAssertTrue(mockUserState.isLoggedIn())
     }
 
     func testRefreshUpdatesDataWithoutLoadingState() {

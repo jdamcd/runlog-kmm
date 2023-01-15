@@ -5,13 +5,9 @@ import RunLogShared
 class TrainingViewModel: ObservableObject {
     @Published var state: TrainingState = .loading
 
-    private let user: UserState
     private let stravaActivity: StravaActivity
 
-    init(user: UserState = IosDI().userState(),
-         stravaActivity: StravaActivity = IosDI().stravaActivity())
-    {
-        self.user = user
+    init(stravaActivity: StravaActivity = IosDI().stravaActivity()) {
         self.stravaActivity = stravaActivity
     }
 
@@ -40,10 +36,6 @@ class TrainingViewModel: ObservableObject {
 
     func setDarkMode(_ isEnabled: Bool) {
         stravaActivity.requestDarkModeImages(enabled: isEnabled)
-    }
-
-    private func signOut() {
-        user.clear()
     }
 }
 

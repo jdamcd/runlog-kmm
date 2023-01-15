@@ -41,18 +41,14 @@ class ProfileMock: StravaProfile {
     }
 }
 
-class UserStateMock: UserState {
+class UserManagerMock: UserManager {
     var loggedIn = true
 
     func isLoggedIn() -> Bool {
         loggedIn
     }
 
-    func clear() {
+    func logOut() {
         loggedIn = false
     }
-
-    var accessToken = "testAccessToken"
-
-    var refreshToken = "testRefreshToken"
 }

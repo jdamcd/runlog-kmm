@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.StravaLogin
-import com.jdamcd.runlog.shared.UserState
+import com.jdamcd.runlog.shared.UserManager
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -21,7 +21,7 @@ class LoginViewModelTest {
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
     private val stravaLogin: StravaLogin = mock()
-    private val userState: UserState = mock()
+    private val userState: UserManager = mock()
 
     private lateinit var viewModel: LoginViewModel
 
@@ -75,9 +75,9 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `signOut clears user state`() {
+    fun `signOut clears user state`() = runTest {
         viewModel.signOut()
 
-        verify(userState).clear()
+        verify(userState).logOut()
     }
 }

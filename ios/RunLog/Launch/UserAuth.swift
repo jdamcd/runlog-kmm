@@ -4,19 +4,19 @@ import RunLogShared
 class UserAuth: ObservableObject {
     @Published var loggedIn: Bool
 
-    private let userState: UserState
+    private let userManager: UserManager
 
-    init(userState: UserState = IosDI().userState()) {
-        self.userState = userState
-        loggedIn = userState.isLoggedIn()
+    init(userManager: UserManager = IosDI().userManager()) {
+        self.userManager = userManager
+        loggedIn = userManager.isLoggedIn()
     }
 
     func onLoginSuccess() {
         loggedIn = true
     }
 
-    func signOut() {
-        userState.clear()
+    func logOut() {
+        userManager.logOut()
         loggedIn = false
     }
 }

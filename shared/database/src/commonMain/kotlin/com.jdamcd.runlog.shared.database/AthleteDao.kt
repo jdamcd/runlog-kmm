@@ -9,23 +9,27 @@ import kotlinx.coroutines.flow.Flow
 
 class AthleteDao(database: RunLogDB) {
 
-    private val athleteQueries = database.athleteQueries
+    private val queries = database.athleteQueries
 
     fun insert(athlete: Athlete, runStats: RunStats) {
-        athleteQueries.transaction {
-            athleteQueries.insertAthlete(athlete)
-            athleteQueries.insertRunStats(runStats)
+        queries.transaction {
+            queries.insertAthlete(athlete)
+            queries.insertRunStats(runStats)
         }
     }
 
     fun user(): AthleteWithStats? {
-        return athleteQueries.selectUser()
+        return queries.selectUser()
             .executeAsOneOrNull()
     }
 
     fun userFlow(): Flow<AthleteWithStats?> {
-        return athleteQueries.selectUser()
+        return queries.selectUser()
             .asFlow()
             .mapToOneOrNull()
+    }
+
+    internal fun clear() {
+        queries.deleteAll()
     }
 }

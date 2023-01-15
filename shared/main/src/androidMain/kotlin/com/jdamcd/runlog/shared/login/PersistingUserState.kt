@@ -1,11 +1,11 @@
-package com.jdamcd.runlog.shared
+package com.jdamcd.runlog.shared.login
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.jdamcd.runlog.shared.api.TokenProvider
 
-actual class PersistingUserState(context: Context) : UserState, TokenProvider {
+internal actual class PersistingUserState(context: Context) : TokenProvider {
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
@@ -19,7 +19,7 @@ actual class PersistingUserState(context: Context) : UserState, TokenProvider {
 
     actual override fun isLoggedIn() = accessToken.isNotEmpty()
 
-    actual override fun clear() {
+    actual fun clear() {
         prefs.edit { clear() }
     }
 

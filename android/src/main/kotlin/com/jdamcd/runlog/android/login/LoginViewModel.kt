@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.StravaLogin
-import com.jdamcd.runlog.shared.UserState
+import com.jdamcd.runlog.shared.UserManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val stravaLogin: StravaLogin,
-    private val userState: UserState
+    private val userManager: UserManager
 ) : ViewModel(), LifecycleObserver {
 
     private val _mutableFlow = MutableStateFlow<LoginState>(LoginState.Idle)
@@ -36,7 +36,9 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun signOut() = userState.clear()
+    fun signOut() {
+        userManager.logOut()
+    }
 }
 
 sealed class LoginState {

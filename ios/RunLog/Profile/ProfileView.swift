@@ -22,7 +22,7 @@ struct ProfileView: View {
         .navigationBarTitle(Copy.profile_title, displayMode: .inline)
         .navigationBarItems(trailing:
             Button {
-                userAuth.signOut()
+                userAuth.logOut()
             } label: {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
                     .foregroundColor(Color.asset(.primary))

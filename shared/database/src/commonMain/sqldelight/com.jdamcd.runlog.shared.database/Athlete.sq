@@ -35,6 +35,7 @@ selectUser:
 SELECT * FROM athleteWithStats
 WHERE isUser = 1;
 
-deleteAll:
-DELETE FROM athlete;
-DELETE FROM runStats;
+deleteAll {
+    DELETE FROM athlete;
+    DELETE FROM runStats;
+}

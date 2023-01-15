@@ -3,7 +3,7 @@ package com.jdamcd.runlog.android.app
 import com.jdamcd.runlog.shared.StravaActivity
 import com.jdamcd.runlog.shared.StravaLogin
 import com.jdamcd.runlog.shared.StravaProfile
-import com.jdamcd.runlog.shared.UserState
+import com.jdamcd.runlog.shared.UserManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ import org.koin.core.component.get
 internal class AppModule : KoinComponent {
 
     @Provides
-    fun provideUserState(): UserState = get()
+    fun provideUserManager(): UserManager = get()
 
     @Provides
     fun provideStravaLogin(): StravaLogin = get()

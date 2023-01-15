@@ -27,8 +27,8 @@ class ProfileViewModel @Inject constructor(
             when (profile) {
                 is Result.Data -> ProfileState.Data(profile.value)
                 else -> when (refreshState) {
-                    RefreshState.ERROR, RefreshState.SUCCESS -> ProfileState.Error
-                    RefreshState.LOADING -> ProfileState.Loading
+                    RefreshState.LOADING, RefreshState.SUCCESS -> ProfileState.Loading
+                    RefreshState.ERROR -> ProfileState.Error
                 }
             }
         }

@@ -5,6 +5,7 @@ import com.jdamcd.runlog.shared.activity.ActivityMapper
 import com.jdamcd.runlog.shared.api.StravaApi
 import com.jdamcd.runlog.shared.database.ActivityDao
 import com.jdamcd.runlog.shared.database.AthleteDao
+import com.jdamcd.runlog.shared.database.DatabaseUtil
 import com.jdamcd.runlog.shared.database.databaseModule
 import com.jdamcd.runlog.shared.login.LoginInteractor
 import com.jdamcd.runlog.shared.profile.ProfileMapper
@@ -32,6 +33,8 @@ fun commonModule() = module {
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
     single { AthleteDao(get()) }
     single<StravaProfile> { ProfileRepository(get(), get(), ProfileMapper()) }
+    single { DatabaseUtil(get(), get()) }
+    single<UserManager> { UserManagerImpl(get(), get()) }
 }
 
 expect fun platformModule(): Module
@@ -42,7 +45,7 @@ fun initKoin() = initKoin {}
 
 @Suppress("unused")
 class IosDI : KoinComponent {
-    fun userState(): UserState = get()
+    fun userManager(): UserManager = get()
     fun stravaLogin(): StravaLogin = get()
     fun stravaActivity(): StravaActivity = get()
     fun stravaProfile(): StravaProfile = get()

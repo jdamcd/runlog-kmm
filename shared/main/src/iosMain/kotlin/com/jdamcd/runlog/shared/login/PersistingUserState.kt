@@ -1,10 +1,10 @@
-package com.jdamcd.runlog.shared
+package com.jdamcd.runlog.shared.login
 
 import com.jdamcd.runlog.shared.api.TokenProvider
 import platform.Foundation.NSUserDefaults
 import platform.Foundation.setValue
 
-actual class PersistingUserState : UserState, TokenProvider {
+internal actual class PersistingUserState : TokenProvider {
 
     private val defaults: NSUserDefaults = NSUserDefaults(suiteName = DEFAULTS_NAME)
 
@@ -18,7 +18,7 @@ actual class PersistingUserState : UserState, TokenProvider {
 
     actual override fun isLoggedIn() = accessToken.isNotEmpty()
 
-    actual override fun clear() {
+    actual fun clear() {
         defaults.removeObjectForKey(ACCESS_TOKEN)
         defaults.removeObjectForKey(REFRESH_TOKEN)
     }
