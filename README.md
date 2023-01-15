@@ -1,6 +1,6 @@
 # RunLog
 
-"Kilometer" is a work-in-progress KMM (Kotlin Multiplatform Mobile) Strava app. It calls the [Strava API](https://developers.strava.com) via a `shared` Kotlin module. The iOS and Android apps are thin UI clients (views and MVVM view models) in SwiftUI and Jetpack Compose.
+"Kilometer" is a work-in-progress KMM (Kotlin Multiplatform Mobile) Strava app. It calls the [Strava API](https://developers.strava.com) via `shared` Kotlin modules. The iOS and Android apps are thin UI clients (views and MVVM view models) using SwiftUI and Jetpack Compose.
 
 ![Screenshots: login, activity feed, activity details](screenshots.png)
 
