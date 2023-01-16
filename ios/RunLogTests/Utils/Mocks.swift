@@ -26,14 +26,18 @@ class ActivityMock: StravaActivity {
 }
 
 class ProfileMock: StravaProfile {
-    var profile: Result<AthleteProfile> = ResultError(error: KotlinThrowable())
+    var refreshState = RefreshState.loading
+
+    private var callCount = 0
+    var profile: [Result<AthleteProfile>] = []
 
     func refresh() async throws -> RefreshState {
-        RefreshState.loading
+        refreshState
     }
 
     func profile() async throws -> Result<AthleteProfile> {
-        profile
+        callCount += 1
+        return profile[callCount - 1]
     }
 
     func profileFlow() -> Kotlinx_coroutines_coreFlow {

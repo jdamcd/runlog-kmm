@@ -32,9 +32,7 @@ internal class ProfileRepository(
         }
     }
 
-    @Deprecated("Move to fetch & flow")
     override suspend fun profile(): Result<AthleteProfile> {
-        refresh()
         return dao.user()?.let {
             Result.Data(mapper.dbToUi(it))
         } ?: Result.Empty

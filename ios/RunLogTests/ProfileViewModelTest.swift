@@ -12,9 +12,10 @@ final class ProfileViewModelTest: XCTestCase {
         viewModel = ProfileViewModel(stravaProfile: mockProfile)
     }
 
-    func testLoadSuccessSetsLoadingThenData() {
+    func testLoadSuccessWithRefreshSuccess() {
         let profile = AthleteProfile.with(id: 1)
-        mockProfile.profile = ResultData(value: profile)
+        mockProfile.profile = [ResultData(value: profile), ResultData(value: profile)]
+        mockProfile.refreshState = RefreshState.success
 
         viewModel.load()
 
@@ -22,12 +23,35 @@ final class ProfileViewModelTest: XCTestCase {
         waitUntil(viewModel.$state, equals: .data(profile))
     }
 
-    func testLoadFailureSetsLoadingThenError() {
-        mockProfile.profile = ResultError(error: KotlinThrowable())
+    func testLoadSuccessWithRefreshError() {
+        let profile = AthleteProfile.with(id: 1)
+        mockProfile.profile = [ResultData(value: profile), ResultError(error: KotlinThrowable())]
+        mockProfile.refreshState = RefreshState.error
+
+        viewModel.load()
+
+        XCTAssertEqual(viewModel.state, .loading)
+        waitUntil(viewModel.$state, equals: .data(profile))
+    }
+
+    func testLoadErrorWithRefreshError() {
+        mockProfile.profile = [ResultError(error: KotlinThrowable()), ResultError(error: KotlinThrowable())]
+        mockProfile.refreshState = RefreshState.error
 
         viewModel.load()
 
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .error)
+    }
+
+    func testLoadErrorWithRefreshSuccess() {
+        let profile = AthleteProfile.with(id: 1)
+        mockProfile.profile = [ResultError(error: KotlinThrowable()), ResultData(value: profile)]
+        mockProfile.refreshState = RefreshState.success
+
+        viewModel.load()
+
+        XCTAssertEqual(viewModel.state, .loading)
+        waitUntil(viewModel.$state, equals: .data(profile))
     }
 }
