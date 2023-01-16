@@ -41,7 +41,6 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = AndroidVersion.minimum
-        targetSdk = AndroidVersion.target
     }
     namespace = "com.jdamcd.runlog.shared.utils"
 }
