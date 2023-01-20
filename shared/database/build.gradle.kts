@@ -34,7 +34,7 @@ kotlin {
                 implementation(Dependency.SqlDelight.android)
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(Dependency.SqlDelight.jvm)
             }
