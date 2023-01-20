@@ -1,6 +1,6 @@
 object Version {
     // Build
-    const val kotlin = "1.7.20"
+    const val kotlin = "1.8.0"
     const val androidGradle = "7.4.0"
     const val buildKonfig = "0.13.3"
 
@@ -8,13 +8,13 @@ object Version {
     const val ktor = "2.1.2"
     const val coroutines = "1.6.4-native-mt"
     const val koin = "3.2.2"
-    const val sqldelight = "1.5.4"
+    const val sqldelight = "1.5.5"
 
     // Android
     const val hilt = "2.44"
     const val hiltCompose = "1.0.0"
     const val composeBom = "2022.10.00"
-    const val composeCompiler = "1.3.2"
+    const val composeCompiler = "1.4.0"
     const val constraintLayout = "1.0.1"
     const val material = "1.7.0"
     const val splash = "1.0.0"
