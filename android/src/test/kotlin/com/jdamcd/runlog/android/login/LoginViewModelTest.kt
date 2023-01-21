@@ -6,22 +6,25 @@ import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.StravaLogin
 import com.jdamcd.runlog.shared.UserManager
 import io.kotest.matchers.shouldBe
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.runs
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class LoginViewModelTest {
 
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
-    private val stravaLogin: StravaLogin = mock()
-    private val userState: UserManager = mock()
+    private val stravaLogin: StravaLogin = mockk()
+    private val userState: UserManager = mockk()
 
     private lateinit var viewModel: LoginViewModel
 
@@ -34,6 +37,8 @@ class LoginViewModelTest {
 
     @Test
     fun `startLogin emits loading`() = runTest {
+        every { stravaLogin.loginUrl } returns "url"
+
         viewModel.flow.test {
             awaitItem() shouldBe LoginState.Idle
 
@@ -46,7 +51,7 @@ class LoginViewModelTest {
 
     @Test
     fun `submitAuthCode success emits loading then success`() = runTest {
-        whenever(stravaLogin.authenticate(code)).thenReturn(LoginResult.Success)
+        coEvery { stravaLogin.authenticate(code) } returns LoginResult.Success
 
         viewModel.flow.test {
             awaitItem() shouldBe LoginState.Idle
@@ -61,7 +66,7 @@ class LoginViewModelTest {
 
     @Test
     fun `submitAuthCode error emits loading then idle`() = runTest {
-        whenever(stravaLogin.authenticate(code)).thenReturn(LoginResult.Error(Throwable()))
+        coEvery { stravaLogin.authenticate(code) } returns LoginResult.Error(Throwable())
 
         viewModel.flow.test {
             awaitItem() shouldBe LoginState.Idle
@@ -76,8 +81,10 @@ class LoginViewModelTest {
 
     @Test
     fun `signOut clears user state`() = runTest {
+        every { userState.logOut() } just runs
+
         viewModel.signOut()
 
-        verify(userState).logOut()
+        verify { userState.logOut() }
     }
 }

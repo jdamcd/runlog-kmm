@@ -27,6 +27,7 @@ object Version {
     // Test
     const val junit = "4.13.2"
     const val kotest = "5.5.2"
+    const val mockk = "1.13.3"
     const val mockito = "4.8.1"
     const val mockitoKotlin = "4.0.0"
     const val turbine = "0.12.1"
@@ -87,11 +88,8 @@ object Dependency {
     const val coil = "io.coil-kt:coil-compose:${Version.coil}"
 
     // Test
-    object Mockito {
-        const val core = "org.mockito:mockito-inline:${Version.mockito}"
-        const val kotlin = "org.mockito.kotlin:mockito-kotlin:${Version.mockitoKotlin}"
-    }
     const val junit = "junit:junit:${Version.junit}"
+    const val mockk = "io.mockk:mockk:${Version.mockk}"
     const val kotestAssert = "io.kotest:kotest-assertions-core:${Version.kotest}"
     const val turbine = "app.cash.turbine:turbine:${Version.turbine}"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutinesTest}"

@@ -34,9 +34,8 @@ dependencies {
     implementation(Dependency.Compose.constraintLayout)
 
     // Tests
-    testImplementation(Dependency.Mockito.core)
-    testImplementation(Dependency.Mockito.kotlin)
     testImplementation(Dependency.kotestAssert)
+    testImplementation(Dependency.mockk)
     testImplementation(Dependency.coroutinesTest)
     testImplementation(Dependency.archTest)
     testImplementation(Dependency.turbine)

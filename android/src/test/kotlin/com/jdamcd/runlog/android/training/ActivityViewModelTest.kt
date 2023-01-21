@@ -7,14 +7,15 @@ import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.StravaActivity
 import com.jdamcd.runlog.shared.util.Result
 import io.kotest.matchers.shouldBe
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class ActivityViewModelTest {
@@ -22,8 +23,8 @@ class ActivityViewModelTest {
     @get:Rule
     val coroutineRule = TestCoroutinesRule()
 
-    private val stravaActivity: StravaActivity = mock()
-    private val activityDetails: ActivityDetails = mock()
+    private val stravaActivity: StravaActivity = mockk()
+    private val activityDetails: ActivityDetails = mockk()
 
     private lateinit var viewModel: ActivityViewModel
 
@@ -35,7 +36,7 @@ class ActivityViewModelTest {
 
     @Test
     fun `load success emits loading then data`() = runTest {
-        whenever(stravaActivity.activityDetails(123L)).thenReturn(Result.Data(activityDetails))
+        coEvery { stravaActivity.activityDetails(123L) } returns Result.Data(activityDetails)
 
         viewModel.flow.test {
             viewModel.load()
@@ -48,7 +49,7 @@ class ActivityViewModelTest {
 
     @Test
     fun `load failure emits loading then error`() = runTest {
-        whenever(stravaActivity.activityDetails(123L)).thenReturn(Result.Error(Throwable()))
+        coEvery { stravaActivity.activityDetails(123L) } returns Result.Error(Throwable())
 
         viewModel.flow.test {
             viewModel.load()
@@ -61,8 +62,10 @@ class ActivityViewModelTest {
 
     @Test
     fun `generateLink forwards ID to make URL`() {
+        every { stravaActivity.linkUrl(123L) } returns "url/123"
+
         viewModel.activityWebLink()
 
-        verify(stravaActivity).linkUrl(123L)
+        verify { stravaActivity.linkUrl(123L) }
     }
 }
