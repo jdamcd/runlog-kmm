@@ -20,7 +20,7 @@ class UserManagerImpl internal constructor(
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun logOut() {
-        // Fire and forget (can't call suspend function from Swift ObservableObject)
+        // Fire and forget to avoid blocking logout
         GlobalScope.launch {
             userState.clear()
             database.clear()

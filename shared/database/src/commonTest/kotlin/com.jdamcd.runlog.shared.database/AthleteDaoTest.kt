@@ -10,11 +10,11 @@ import kotlin.test.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class AthleteDaoTest {
 
-    private lateinit var dao: AthleteDao
+    private lateinit var dao: SqlAthleteDao
 
     @BeforeTest
     fun setUp() {
-        dao = AthleteDao(RunLogDB(testDbDriver()))
+        dao = SqlAthleteDao(RunLogDB(testDbDriver()))
         dao.clear()
     }
 

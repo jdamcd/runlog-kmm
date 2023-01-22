@@ -2,11 +2,8 @@ package com.jdamcd.runlog.shared
 
 import com.jdamcd.runlog.shared.activity.ActivityInteractor
 import com.jdamcd.runlog.shared.activity.ActivityMapper
-import com.jdamcd.runlog.shared.api.StravaApi
-import com.jdamcd.runlog.shared.database.ActivityDao
-import com.jdamcd.runlog.shared.database.AthleteDao
-import com.jdamcd.runlog.shared.database.DatabaseUtil
-import com.jdamcd.runlog.shared.database.databaseModule
+import com.jdamcd.runlog.shared.api.apiModule
+import com.jdamcd.runlog.shared.database.dbModule
 import com.jdamcd.runlog.shared.login.LoginInteractor
 import com.jdamcd.runlog.shared.profile.ProfileMapper
 import com.jdamcd.runlog.shared.profile.ProfileRepository
@@ -22,18 +19,15 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     modules(
         commonModule(),
         platformModule(),
-        databaseModule()
+        dbModule(),
+        apiModule()
     )
 }
 
 fun commonModule() = module {
-    single { StravaApi(get()) }
     single<StravaLogin> { LoginInteractor(get()) }
-    single { ActivityDao(get()) }
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
-    single { AthleteDao(get()) }
     single<StravaProfile> { ProfileRepository(get(), get(), ProfileMapper()) }
-    single { DatabaseUtil(get(), get()) }
     single<UserManager> { UserManagerImpl(get(), get()) }
 }
 

@@ -7,29 +7,36 @@ import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
 import kotlinx.coroutines.flow.Flow
 
-class AthleteDao(database: RunLogDB) {
+interface AthleteDao {
+    fun insert(athlete: Athlete, runStats: RunStats)
+    fun user(): AthleteWithStats?
+    fun userFlow(): Flow<AthleteWithStats?>
+    fun clear()
+}
+
+internal class SqlAthleteDao(database: RunLogDB) : AthleteDao {
 
     private val queries = database.athleteQueries
 
-    fun insert(athlete: Athlete, runStats: RunStats) {
+    override fun insert(athlete: Athlete, runStats: RunStats) {
         queries.transaction {
             queries.insertAthlete(athlete)
             queries.insertRunStats(runStats)
         }
     }
 
-    fun user(): AthleteWithStats? {
+    override fun user(): AthleteWithStats? {
         return queries.selectUser()
             .executeAsOneOrNull()
     }
 
-    fun userFlow(): Flow<AthleteWithStats?> {
+    override fun userFlow(): Flow<AthleteWithStats?> {
         return queries.selectUser()
             .asFlow()
             .mapToOneOrNull()
     }
 
-    internal fun clear() {
+    override fun clear() {
         queries.deleteAll()
     }
 }

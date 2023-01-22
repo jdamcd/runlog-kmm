@@ -4,6 +4,7 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.StravaActivity
 import com.jdamcd.runlog.shared.api.StravaApi
+import com.jdamcd.runlog.shared.api.StravaUrl
 import com.jdamcd.runlog.shared.util.Result
 import com.jdamcd.runlog.shared.util.tryCall
 
@@ -24,7 +25,7 @@ internal class ActivityInteractor(
         Result.Data(mapper.mapActivityDetails(activityDetails))
     }
 
-    override fun linkUrl(id: Long) = StravaApi.linkUrl(id)
+    override fun linkUrl(id: Long) = StravaUrl.linkUrl(id)
 
     override fun requestDarkModeImages(enabled: Boolean) {
         mapper.darkModeImages = enabled

@@ -3,6 +3,7 @@ package com.jdamcd.runlog.shared.login
 import com.jdamcd.runlog.shared.LoginResult
 import com.jdamcd.runlog.shared.StravaLogin
 import com.jdamcd.runlog.shared.api.StravaApi
+import com.jdamcd.runlog.shared.api.StravaUrl
 
 internal class LoginInteractor(
     private val stravaApi: StravaApi
@@ -17,7 +18,7 @@ internal class LoginInteractor(
         }
     }
 
-    override val loginUrl = StravaApi.loginUrl()
+    override val loginUrl = StravaUrl.loginUrl()
 
-    override val authScheme = StravaApi.AUTH_SCHEME
+    override val authScheme = StravaUrl.AUTH_SCHEME
 }

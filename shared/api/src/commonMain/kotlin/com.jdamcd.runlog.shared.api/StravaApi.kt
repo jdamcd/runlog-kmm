@@ -17,13 +17,21 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.URLBuilder
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
+interface StravaApi {
+    suspend fun tokenRefresh(refreshToken: String): ApiToken
+    suspend fun tokenExchange(code: String)
+    suspend fun activities(pageSize: Int = 100, page: Int = 1): List<ApiSummaryActivity>
+    suspend fun activity(id: Long): ApiDetailedActivity
+    suspend fun athlete(): ApiDetailedAthlete
+    suspend fun athleteStats(id: Long): ApiActivityStats
+}
+
 @OptIn(ExperimentalSerializationApi::class)
-class StravaApi(private val tokenProvider: TokenProvider) {
+internal class KtorStravaApi(private val tokenProvider: TokenProvider) : StravaApi {
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -69,7 +77,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }
     }
 
-    private suspend fun tokenRefresh(refreshToken: String): ApiToken {
+    override suspend fun tokenRefresh(refreshToken: String): ApiToken {
         return client.post("$BASE_URL/oauth/token") {
             parameter("refresh_token", refreshToken)
             parameter("client_id", BuildKonfig.CLIENT_ID)
@@ -78,7 +86,7 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }.body()
     }
 
-    suspend fun tokenExchange(code: String) {
+    override suspend fun tokenExchange(code: String) {
         client.post("$BASE_URL/oauth/token") {
             parameter("code", code)
             parameter("client_id", BuildKonfig.CLIENT_ID)
@@ -87,39 +95,23 @@ class StravaApi(private val tokenProvider: TokenProvider) {
         }.body<ApiToken>().let { tokenProvider.store(it.access_token, it.refresh_token) }
     }
 
-    suspend fun activities(pageSize: Int = 100, page: Int = 1): List<ApiSummaryActivity> =
+    override suspend fun activities(pageSize: Int, page: Int): List<ApiSummaryActivity> =
         client.get("$BASE_URL/athlete/activities") {
             parameter("per_page", pageSize)
             parameter("page", page)
         }.body()
 
-    suspend fun activity(id: Long): ApiDetailedActivity =
+    override suspend fun activity(id: Long): ApiDetailedActivity =
         client.get("$BASE_URL/activities/$id").body()
 
-    suspend fun athlete(): ApiDetailedAthlete =
+    override suspend fun athlete(): ApiDetailedAthlete =
         client.get("$BASE_URL/athlete").body()
 
-    suspend fun athleteStats(id: Long): ApiActivityStats =
+    override suspend fun athleteStats(id: Long): ApiActivityStats =
         client.get("$BASE_URL/athletes/$id/stats").body()
-
-    companion object {
-        const val BASE_URL = "https://www.strava.com/api/v3"
-        const val AUTH_SCHEME = "km-auth"
-
-        fun loginUrl(clientId: String = BuildKonfig.CLIENT_ID) =
-            URLBuilder("https://strava.com/oauth/mobile/authorize").apply {
-                parameters.apply {
-                    append("client_id", clientId)
-                    append("redirect_uri", "$AUTH_SCHEME://kilometer.dev")
-                    append("response_type", "code")
-                    append("approval_prompt", "auto")
-                    append("scope", "activity:read_all")
-                }
-            }.buildString()
-
-        fun linkUrl(id: Long) = "https://strava.com/activities/$id"
-    }
 }
+
+internal const val BASE_URL = "https://www.strava.com/api/v3"
 
 class AuthException(
     override val message: String,

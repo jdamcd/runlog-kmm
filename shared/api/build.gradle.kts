@@ -19,6 +19,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:utils"))
+                implementation(Dependency.Koin.core)
                 implementation(Dependency.Ktor.core)
                 implementation(Dependency.Ktor.contentNegotiation)
                 implementation(Dependency.Ktor.auth)
