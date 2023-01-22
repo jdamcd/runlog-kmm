@@ -15,10 +15,11 @@ class AthleteDaoTest {
     @BeforeTest
     fun setUp() {
         dao = AthleteDao(RunLogDB(testDbDriver()))
+        dao.clear()
     }
 
     @Test
-    fun insertsUser() {
+    fun `inserts user`() {
         dao.insert(athlete(), runStats())
 
         val user = dao.user()
@@ -26,7 +27,7 @@ class AthleteDaoTest {
     }
 
     @Test
-    fun updatesUser() {
+    fun `updates user`() {
         dao.insert(athlete(), runStats())
         dao.user()?.imageUrl shouldBe null
 
@@ -35,7 +36,16 @@ class AthleteDaoTest {
     }
 
     @Test
-    fun userFlowEmitsRecord() = runTest {
+    fun `deletes all athlete data`() {
+        dao.insert(athlete(), runStats())
+
+        dao.clear()
+
+        dao.user() shouldBe null
+    }
+
+    @Test
+    fun `user flow emits stored athlete data`() = runTest {
         dao.insert(athlete(), runStats())
 
         val user = dao.userFlow().first()
@@ -43,12 +53,23 @@ class AthleteDaoTest {
     }
 
     @Test
-    fun userIsNullForNoRecord() {
+    fun `user is null if not inserted`() {
         dao.user() shouldBe null
     }
 
     @Test
-    fun userFlowEmitsNullforNoRecord() = runTest {
+    fun `user flow emits null if not inserted`() = runTest {
         dao.userFlow().first() shouldBe null
+    }
+
+    @Test
+    fun `user flow emits data inserted after null`() = runTest {
+        val flow = dao.userFlow()
+
+        flow.first() shouldBe null
+        dao.insert(athlete(), runStats())
+
+        val user = flow.first()
+        user?.id shouldBe 123L
     }
 }

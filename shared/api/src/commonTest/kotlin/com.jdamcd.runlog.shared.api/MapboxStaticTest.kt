@@ -9,7 +9,7 @@ class MapboxStaticTest {
     private val encodedPolyline = "mfyvFvg_cMs@%7BBIiD%7DB_Hk@sD@OLH%5Dm@%7BCuLDeA%5BuAJ_BSwAi@yAYiC%7BBkFo@oDiA%7BCSsBgAiEc@aDeAyCw@uEqCeJAw@s@oCO%7DA%7BBqHOmAaAoDsHaMb@LSWQqCM%5Bg@Q%7D@iCc@_@a@cAmA%5DiEuEgC_EiJoJ%7BVkSaKcGUq@mBy@sFgE%7DF%7BCkOqEu@~@iCdFtBjAUnAwBfF_IpNwAtCqc@cNcJgJsH_JyMuMuO_Q_P%7DOkbAeeAyOeQ%7BU%7DUs@%7B@Ds@i@g@eD%7DAyCwB_QsNkMgJuW%7BSuN%7DIeYmPoA_@cIiEqCx@aE~CWAcA%7DLCiDg@cGk@%7BOq@kG@_C%7B@eK@%7DBm@sFiAsSAuBe@uEoAeT%5BoJ_@cEaf@hGyTlB_HvAcEjD%7DLxNqBvAyEdGaAnBwFvFmAJiDu@yCAcIeBiBeBgHyCsJgGcJmJ%7DPmRwAuBDQ%5Dq@%7DLyKgF%7BFu@eAk@iCWSyRfKk@%3FkBhA_Cj@uIrDwAsOeFnAaNnAwE%60AeP%60AmAG_%5BmHsCWSH%7BAlK_@VuHuA%7DN%7BDeBkBBoBxAmOtAoJZiEdA%7DEDyAiA_DyAkB@aBeHeEUm@yAgAm@P%5B%7CAs@v@kAbC%7D@vEq@zAMdBmCdE%7B@vCgDzGcCbHBh@%5D%7CAyB%7CFYbBw@rAwBpGkAfBC%7CCoArAuBrHsBvC%7BAbFyArASvCoAxBoA%7CDeC%7CAWhAl@~AExARXjBoCHe@aDuCgLwHoBy@HJ%7BBgAyCkCeAS%7D@eBkF%7DDkEsBg%5DyToAe@DRq@w@%7BIkGe@w@%7D@OkAiAkKcGiDoCqHuEwBwBcAa@k@NyDkDsAo@iNsKmB%5D_@%7D@g@_@mBg@aDyB%7DFqE%7BI%7DEiIyGuCyAoCeCiL%7BGmEuDiKcGoEqDm@y@aEkBuFoDmCeCkDwGuBmGgDwH%7DAmBsEcDeC_AiAtD%5DzBi@rBa@Ha@EiBuAuFaDS@a@z@M%7CAu@tBeAtAkE%7BAyEaCw@hCjEjCpAvARl@a@zAcFpHcEzLU%60OUzAeAhDFVpKlGnFbElRtLtNzJJh@sAfE%5BpAFPrMlIZMbB%7BFXAn@h@j@JlLnH%7CAvA%7CFdDhI%7CFdBt@xZlSpAh@lB~AZBn@v@jDzBvBdAdEhDfHbEzLjIjB%7CAVvAXZnLbIx@~BOdHdAdExBxBlDdBxGnHlB~@zFzAfDZ~@z@hBpDhClBdA@fDgAtDnAzAnAnBtEhEvCnBrExAlAbCj@rBHjHeBnAV~EdCHh@q@hDJlAmBpFmBzD@vAyArBCf@q@%60A%3Fx@eBrBKpAk@pBu@bBKz@_@b@%3F%5D_Ak@iAaCeDwA_EwD"
 
     @Test
-    fun generatesMapUrlWithUrlEncodedPolyline() {
+    fun `generates map URL with encoded polyline`() {
         val mapUrl = MapboxStatic.makeUrl(
             pathPolyline = polyline,
             accessToken = "mytoken"
@@ -19,7 +19,7 @@ class MapboxStaticTest {
     }
 
     @Test
-    fun generatesMapUrlWithRequestedSize() {
+    fun `generates map URL with requested size`() {
         val mapUrl = MapboxStatic.makeUrl(
             pathPolyline = "polyline",
             accessToken = "mytoken",
@@ -31,7 +31,7 @@ class MapboxStaticTest {
     }
 
     @Test
-    fun generatesMapUrlWithDarkModeStyling() {
+    fun `generates map URL with dark mode map style`() {
         val mapUrl = MapboxStatic.makeUrl(
             pathPolyline = "polyline",
             accessToken = "mytoken",

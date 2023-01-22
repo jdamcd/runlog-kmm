@@ -21,7 +21,7 @@ class ProfileMapperTest {
     }
 
     @Test
-    fun mapsApiDetailedAthleteToDbModel() {
+    fun `maps ApiDetailedAthlete to DB model`() {
         mapper.athleteToDb(athleteModel(), isUser = true) shouldBe Athlete(
             id = 123L,
             username = "jdamcd",
@@ -32,7 +32,7 @@ class ProfileMapperTest {
     }
 
     @Test
-    fun mapsApiActivityStatsToDbModel() {
+    fun `maps ApiActivityStats to DB model`() {
         mapper.runStatsToDb(id = 123L, athleteStatsModel()) shouldBe RunStats(
             id = 123L,
             recentDistance = 100_000.0f,
@@ -45,7 +45,7 @@ class ProfileMapperTest {
     }
 
     @Test
-    fun mapsAthleteWithStatsToUiModel() {
+    fun `maps AthleteWithStats to UI model`() {
         mapper.dbToUi(athleteDbModel()) shouldBe AthleteProfile(
             id = 123L,
             username = "jdamcd",

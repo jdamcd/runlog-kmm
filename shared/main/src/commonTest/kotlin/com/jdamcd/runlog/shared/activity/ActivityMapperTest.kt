@@ -22,7 +22,7 @@ class ActivityMapperTest {
     }
 
     @Test
-    fun mapsDefaultActivity() {
+    fun `maps default activity`() {
         mapper.mapActivityCard(activityModel()) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
@@ -37,7 +37,7 @@ class ActivityMapperTest {
     }
 
     @Test
-    fun mapsRaceActivityUsingElapsedTime() {
+    fun `maps race activity using elapsed time`() {
         mapper.mapActivityCard(activityModel(workout_type = 1)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
@@ -52,7 +52,7 @@ class ActivityMapperTest {
     }
 
     @Test
-    fun mapsLongRunActivity() {
+    fun `maps long run activity`() {
         mapper.mapActivityCard(activityModel(workout_type = 2)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
@@ -67,7 +67,7 @@ class ActivityMapperTest {
     }
 
     @Test
-    fun mapsWorkoutActivity() {
+    fun `maps workout activity`() {
         mapper.mapActivityCard(activityModel(workout_type = 3)) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
@@ -82,7 +82,7 @@ class ActivityMapperTest {
     }
 
     @Test
-    fun mapsDetailedActivity() {
+    fun `maps detailed activity`() {
         mapper.mapActivityDetails(detailedActivityModel()) shouldBe ActivityDetails(
             id = 123L,
             name = "my activity",
