@@ -28,8 +28,6 @@ object Version {
     const val junit = "4.13.2"
     const val kotest = "5.5.2"
     const val mockk = "1.13.3"
-    const val mockito = "4.8.1"
-    const val mockitoKotlin = "4.0.0"
     const val turbine = "0.12.1"
     const val archTest = "2.1.0"
     const val coroutinesTest = "1.6.4"
