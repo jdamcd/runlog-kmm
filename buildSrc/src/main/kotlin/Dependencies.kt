@@ -4,11 +4,12 @@ object Version {
     const val androidGradle = "7.4.0"
     const val buildKonfig = "0.13.3"
 
-    // Native
+    // Shared
     const val ktor = "2.1.2"
     const val coroutines = "1.6.4-native-mt"
     const val koin = "3.2.2"
     const val sqldelight = "1.5.5"
+    const val dateTime = "0.4.0"
 
     // Android
     const val hilt = "2.44"
@@ -54,6 +55,7 @@ object Dependency {
         const val coroutines = "com.squareup.sqldelight:coroutines-extensions:${Version.sqldelight}"
     }
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
+    const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Version.dateTime}"
 
     // Android
     object Ktx {

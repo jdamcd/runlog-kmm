@@ -11,8 +11,9 @@ import com.jdamcd.runlog.shared.util.calculatePace
 import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
+import kotlinx.datetime.Clock
 
-internal class ProfileMapper {
+internal class ProfileMapper(private val clock: Clock) {
 
     fun athleteToDb(
         athlete: ApiDetailedAthlete,
@@ -23,7 +24,8 @@ internal class ProfileMapper {
             username = athlete.username,
             name = "${athlete.firstname} ${athlete.lastname}".trim(),
             imageUrl = athlete.profile,
-            isUser = isUser
+            isUser = isUser,
+            lastUpdated = clock.now().epochSeconds
         )
     }
 
@@ -38,7 +40,8 @@ internal class ProfileMapper {
             yearDistance = activityStats.ytd_run_totals.distance,
             yearPace = pace(activityStats.ytd_run_totals),
             allDistance = activityStats.all_run_totals.distance,
-            allPace = pace(activityStats.all_run_totals)
+            allPace = pace(activityStats.all_run_totals),
+            lastUpdated = clock.now().epochSeconds
         )
     }
 

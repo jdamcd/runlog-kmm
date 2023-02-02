@@ -8,6 +8,8 @@ import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
 import io.kotest.matchers.shouldBe
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -17,7 +19,7 @@ class ProfileMapperTest {
 
     @BeforeTest
     fun setUp() {
-        mapper = ProfileMapper()
+        mapper = ProfileMapper(MockClock)
     }
 
     @Test
@@ -27,7 +29,8 @@ class ProfileMapperTest {
             username = "jdamcd",
             name = "Jamie McDonald",
             imageUrl = "image.url",
-            isUser = true
+            isUser = true,
+            lastUpdated = 456L
         )
     }
 
@@ -40,7 +43,8 @@ class ProfileMapperTest {
             yearDistance = 1_000_000.0f,
             yearPace = 333,
             allDistance = 5_000_000.0f,
-            allPace = 333
+            allPace = 333,
+            lastUpdated = 456L
         )
     }
 
@@ -72,7 +76,7 @@ class ProfileMapperTest {
         name = "Jamie McDonald",
         imageUrl = "image.url",
         isUser = true,
-        id_ = 123L,
+        lastUpdated = 456L,
         recentDistance = 100_000.0f,
         recentPace = 333,
         yearDistance = 1_000_000.0f,
@@ -80,4 +84,10 @@ class ProfileMapperTest {
         allDistance = 5_000_000.0f,
         allPace = 333
     )
+}
+
+private object MockClock : Clock {
+    override fun now(): Instant {
+        return Instant.fromEpochSeconds(456L)
+    }
 }

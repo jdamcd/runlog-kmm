@@ -7,6 +7,7 @@ import com.jdamcd.runlog.shared.database.dbModule
 import com.jdamcd.runlog.shared.login.LoginInteractor
 import com.jdamcd.runlog.shared.profile.ProfileMapper
 import com.jdamcd.runlog.shared.profile.ProfileRepository
+import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -25,9 +26,10 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 }
 
 fun commonModule() = module {
+    single<Clock> { Clock.System }
     single<StravaLogin> { LoginInteractor(get()) }
     single<StravaActivity> { ActivityInteractor(get(), ActivityMapper()) }
-    single<StravaProfile> { ProfileRepository(get(), get(), ProfileMapper()) }
+    single<StravaProfile> { ProfileRepository(get(), get(), ProfileMapper(get())) }
     single<UserManager> { UserManagerImpl(get(), get()) }
 }
 

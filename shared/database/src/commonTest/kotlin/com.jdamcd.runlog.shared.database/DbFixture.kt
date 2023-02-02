@@ -8,7 +8,8 @@ fun athlete(imageUrl: String? = null) = Athlete(
     username = "jdamcd",
     name = "Jamie McDonald",
     imageUrl = imageUrl,
-    isUser = true
+    isUser = true,
+    lastUpdated = 456L
 )
 
 fun runStats() = RunStats(
@@ -18,5 +19,6 @@ fun runStats() = RunStats(
     yearDistance = 1_000_000.0f,
     yearPace = 333,
     allDistance = 5_000_000.0f,
-    allPace = 333
+    allPace = 333,
+    lastUpdated = 456L
 )

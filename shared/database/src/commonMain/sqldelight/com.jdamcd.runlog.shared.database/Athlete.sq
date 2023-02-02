@@ -3,7 +3,8 @@ CREATE TABLE athlete (
     username TEXT NOT NULL,
     name TEXT NOT NULL,
     imageUrl TEXT,
-    isUser INTEGER AS Boolean DEFAULT 0
+    isUser INTEGER AS Boolean DEFAULT 0,
+    lastUpdated INTEGER NOT NULL
 );
 
 CREATE TABLE runStats (
@@ -13,22 +14,28 @@ CREATE TABLE runStats (
     yearDistance REAL AS Float NOT NULL,
     yearPace INTEGER AS Int NOT NULL,
     allDistance REAL AS Float NOT NULL,
-    allPace INTEGER AS Int NOT NULL
+    allPace INTEGER AS Int NOT NULL,
+    lastUpdated INTEGER NOT NULL
 );
 
 CREATE VIEW athleteWithStats AS
 SELECT
     athlete.*,
-    runStats.*
+    runStats.recentDistance,
+    runStats.recentPace,
+    runStats.yearDistance,
+    runStats.yearPace,
+    runStats.allDistance,
+    runStats.allPace
 FROM athlete
 JOIN runStats ON athlete.id = runStats.id;
 
 insertAthlete:
-INSERT OR REPLACE INTO athlete(id, username, name, imageUrl, isUser)
+INSERT OR REPLACE INTO athlete(id, username, name, imageUrl, isUser, lastUpdated)
 VALUES ?;
 
 insertRunStats:
-INSERT OR REPLACE INTO runStats(id, recentDistance, recentPace, yearDistance, yearPace, allDistance, allPace)
+INSERT OR REPLACE INTO runStats(id, recentDistance, recentPace, yearDistance, yearPace, allDistance, allPace, lastUpdated)
 VALUES ?;
 
 selectUser:
