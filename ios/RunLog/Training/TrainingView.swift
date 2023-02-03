@@ -26,13 +26,9 @@ struct TrainingView: View {
                 }
             }
             .navigationBarTitle(Copy.activities_title)
-            .navigationBarItems(trailing:
-                NavigationLink(destination: ProfileView()) {
-                    Image(systemName: "person.circle.fill")
-                        .renderingMode(.template)
-                        .foregroundColor(Color.asset(.primary))
-                }
-            )
+            .navigationBarItems(trailing: NavigationLink(destination: ProfileView()) {
+                ProfileNavigation(image: viewModel.profileImage)
+            })
             .onAppear {
                 load()
             }
@@ -42,6 +38,23 @@ struct TrainingView: View {
     private func load() {
         viewModel.setDarkMode(colorScheme == .dark)
         viewModel.load()
+    }
+}
+
+private struct ProfileNavigation: View {
+    var image: String?
+
+    var body: some View {
+        if let image {
+            LazyImage(url: URL(string: image))
+                .frame(width: 28, height: 28)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+        } else {
+            Image(systemName: "person.circle.fill")
+                .renderingMode(.template)
+                .foregroundColor(Color.asset(.primary))
+        }
     }
 }
 

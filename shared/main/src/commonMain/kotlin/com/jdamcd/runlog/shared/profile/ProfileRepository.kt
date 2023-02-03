@@ -7,13 +7,15 @@ import com.jdamcd.runlog.shared.database.AthleteDao
 import com.jdamcd.runlog.shared.util.MultiLog
 import com.jdamcd.runlog.shared.util.RefreshState
 import com.jdamcd.runlog.shared.util.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 internal class ProfileRepository(
     private val stravaApi: StravaApi,
     private val dao: AthleteDao,
-    private val mapper: ProfileMapper
+    private val mapper: AthleteMapper
 ) : StravaProfile {
 
     override suspend fun refresh(): RefreshState {
@@ -43,6 +45,12 @@ internal class ProfileRepository(
             it?.let {
                 Result.Data(mapper.dbToUi(it))
             } ?: Result.Empty
+        }
+    }
+
+    override suspend fun userImageUrl(): String? {
+        return withContext(Dispatchers.Default) {
+            dao.userImageUrl()
         }
     }
 }

@@ -23,7 +23,7 @@ import kotlinx.serialization.json.Json
 
 interface StravaApi {
     suspend fun tokenRefresh(refreshToken: String): ApiToken
-    suspend fun tokenExchange(code: String)
+    suspend fun tokenExchange(code: String): ApiDetailedAthlete
     suspend fun activities(pageSize: Int = 100, page: Int = 1): List<ApiSummaryActivity>
     suspend fun activity(id: Long): ApiDetailedActivity
     suspend fun athlete(): ApiDetailedAthlete
@@ -86,13 +86,15 @@ internal class KtorStravaApi(private val tokenProvider: TokenProvider) : StravaA
         }.body()
     }
 
-    override suspend fun tokenExchange(code: String) {
-        client.post("$BASE_URL/oauth/token") {
+    override suspend fun tokenExchange(code: String): ApiDetailedAthlete {
+        val result = client.post("$BASE_URL/oauth/token") {
             parameter("code", code)
             parameter("client_id", BuildKonfig.CLIENT_ID)
             parameter("client_secret", BuildKonfig.CLIENT_SECRET)
             parameter("grant_type", "authorization_code")
-        }.body<ApiToken>().let { tokenProvider.store(it.access_token, it.refresh_token) }
+        }.body<ApiTokenWithAthlete>()
+        tokenProvider.store(result.access_token, result.refresh_token)
+        return result.athlete
     }
 
     override suspend fun activities(pageSize: Int, page: Int): List<ApiSummaryActivity> =

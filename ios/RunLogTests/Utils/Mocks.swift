@@ -4,7 +4,6 @@ import RunLogShared
 class ActivityMock: StravaActivity {
     var activities: Result<NSArray> = ResultError(error: KotlinThrowable())
     var activityDetails: Result<ActivityDetails> = ResultError(error: KotlinThrowable())
-    var loginResult: LoginResult = .Success()
 
     var darkModeImages = false
 
@@ -27,6 +26,7 @@ class ActivityMock: StravaActivity {
 
 class ProfileMock: StravaProfile {
     var refreshState = RefreshState.loading
+    var userImageUrl: String?
 
     private var callCount = 0
     var profile: [Result<AthleteProfile>] = []
@@ -42,6 +42,10 @@ class ProfileMock: StravaProfile {
 
     func profileFlow() -> Kotlinx_coroutines_coreFlow {
         NSObject() as! Kotlinx_coroutines_coreFlow
+    }
+
+    func userImageUrl() async throws -> String? {
+        userImageUrl
     }
 }
 

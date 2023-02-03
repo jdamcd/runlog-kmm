@@ -47,7 +47,8 @@ private struct ProfileDetailsView: View {
                 LazyImage(url: URL(string: imageUrl))
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())
-                    .padding(.top)
+                    .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+                    .padding(.vertical)
             }
             Text(profile.name)
                 .font(.headline)

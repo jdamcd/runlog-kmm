@@ -13,7 +13,7 @@ import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
 import kotlinx.datetime.Clock
 
-internal class ProfileMapper(private val clock: Clock) {
+internal class AthleteMapper(private val clock: Clock) {
 
     fun athleteToDb(
         athlete: ApiDetailedAthlete,

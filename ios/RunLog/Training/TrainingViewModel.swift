@@ -3,15 +3,21 @@ import RunLogShared
 
 @MainActor
 class TrainingViewModel: ObservableObject {
+    @Published var profileImage: String? = nil
     @Published var state: TrainingState = .loading
 
     private let stravaActivity: StravaActivity
+    private let stravaProfile: StravaProfile
 
-    init(stravaActivity: StravaActivity = IosDI().stravaActivity()) {
+    init(stravaActivity: StravaActivity = IosDI().stravaActivity(),
+         stravaProfile: StravaProfile = IosDI().stravaProfile())
+    {
         self.stravaActivity = stravaActivity
+        self.stravaProfile = stravaProfile
     }
 
     func load() {
+        getProfileImage()
         if !state.isLoaded {
             state = .loading
             getActivities()
@@ -20,6 +26,12 @@ class TrainingViewModel: ObservableObject {
 
     func refresh() {
         getActivities()
+    }
+
+    private func getProfileImage() {
+        Task {
+            profileImage = try await stravaProfile.userImageUrl()
+        }
     }
 
     private func getActivities() {

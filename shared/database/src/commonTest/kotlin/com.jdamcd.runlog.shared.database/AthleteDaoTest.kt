@@ -19,11 +19,20 @@ class AthleteDaoTest {
     }
 
     @Test
-    fun `inserts user`() {
+    fun `inserts user with stats`() {
         dao.insert(athlete(), runStats())
 
         val user = dao.user()
         user?.id shouldBe 123L
+    }
+
+    @Test
+    fun `inserts user without stats`() {
+        val imageUrl = "image.url/123"
+        dao.insert(athlete(imageUrl = imageUrl))
+
+        dao.user() shouldBe null
+        dao.userImageUrl() shouldBe imageUrl
     }
 
     @Test

@@ -9,6 +9,13 @@ data class ApiToken(
 )
 
 @Serializable
+data class ApiTokenWithAthlete(
+    val access_token: String,
+    val refresh_token: String,
+    val athlete: ApiDetailedAthlete
+)
+
+@Serializable
 data class ApiSummaryActivity(
     val id: Long,
     val name: String,

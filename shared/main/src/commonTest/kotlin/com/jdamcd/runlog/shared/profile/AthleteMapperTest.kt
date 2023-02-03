@@ -13,13 +13,13 @@ import kotlinx.datetime.Instant
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class ProfileMapperTest {
+class AthleteMapperTest {
 
-    private lateinit var mapper: ProfileMapper
+    private lateinit var mapper: AthleteMapper
 
     @BeforeTest
     fun setUp() {
-        mapper = ProfileMapper(MockClock)
+        mapper = AthleteMapper(MockClock)
     }
 
     @Test

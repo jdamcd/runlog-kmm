@@ -8,6 +8,7 @@ interface StravaProfile {
     suspend fun profile(): Result<AthleteProfile>
     fun profileFlow(): Flow<Result<AthleteProfile>>
     suspend fun refresh(): RefreshState
+    suspend fun userImageUrl(): String?
 }
 
 data class AthleteProfile(

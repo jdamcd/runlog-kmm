@@ -42,6 +42,10 @@ selectUser:
 SELECT * FROM athleteWithStats
 WHERE isUser = 1;
 
+selectUserImageUrl:
+SELECT imageUrl FROM athlete
+WHERE isUser = 1;
+
 deleteAll {
     DELETE FROM athlete;
     DELETE FROM runStats;
