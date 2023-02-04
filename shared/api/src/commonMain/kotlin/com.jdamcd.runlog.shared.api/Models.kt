@@ -59,7 +59,7 @@ data class ApiSplit(
     val distance: Float,
     val elapsed_time: Int,
     val moving_time: Int,
-    val elevation_difference: Float,
+    val elevation_difference: Float?,
     val average_heartrate: Float?,
     val pace_zone: Int
 )

@@ -110,7 +110,7 @@ internal class ActivityMapper {
                 isPartial = it.distance < 950, // Not always returned as exactly 1000m
                 elapsedDuration = formatDuration(it.elapsed_time),
                 movingDuration = formatDuration(it.moving_time),
-                elevation = it.elevation_difference.roundToInt(),
+                elevation = it.elevation_difference?.roundToInt(),
                 averageHeartrate = it.average_heartrate?.roundToInt(),
                 pace = formatPace(paceSeconds, withUnit = false),
                 paceSeconds = paceSeconds,
@@ -122,7 +122,8 @@ internal class ActivityMapper {
         return if (mappedSplits.size >= 2) {
             KmSplits(
                 splits = mappedSplits,
-                hasHeartrate = mappedSplits[0].averageHeartrate != null
+                hasHeartrate = mappedSplits[0].averageHeartrate != null,
+                hasElevation = mappedSplits[0].elevation != null
             )
         } else {
             null

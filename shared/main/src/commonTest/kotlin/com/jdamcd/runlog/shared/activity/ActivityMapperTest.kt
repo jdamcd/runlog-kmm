@@ -132,7 +132,8 @@ class ActivityMapperTest {
                         visualisation = 1.0f
                     )
                 ),
-                hasHeartrate = true
+                hasHeartrate = true,
+                hasElevation = true
             )
         )
     }

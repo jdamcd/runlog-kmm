@@ -281,13 +281,15 @@ private fun SplitsList(splitsInfo: KmSplits) {
             )
         }
         Row {
-            Text(
-                text = stringResource(R.string.activity_split_elevation),
-                style = MaterialTheme.typography.body2,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.End,
-                modifier = Modifier.width(80.dp)
-            )
+            if (splitsInfo.hasElevation) {
+                Text(
+                    text = stringResource(R.string.activity_split_elevation),
+                    style = MaterialTheme.typography.body2,
+                    fontWeight = FontWeight.Light,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.width(80.dp)
+                )
+            }
             if (splitsInfo.hasHeartrate) {
                 Text(
                     text = stringResource(R.string.activity_split_hr),
@@ -346,12 +348,14 @@ private fun SplitItem(split: Split) {
                 .weight(1f)
         )
         Row {
-            Text(
-                text = "${split.elevation}",
-                style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.End,
-                modifier = Modifier.width(48.dp)
-            )
+            split.elevation?.let {
+                Text(
+                    text = "${split.elevation}",
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.width(48.dp)
+                )
+            }
             split.averageHeartrate?.let {
                 Text(
                     text = "$it",
@@ -479,7 +483,8 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
                         visualisation = 0.7f
                     )
                 ),
-                hasHeartrate = true
+                hasHeartrate = true,
+                hasElevation = true
             )
         )
     )

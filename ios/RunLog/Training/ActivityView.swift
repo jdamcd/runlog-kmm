@@ -189,10 +189,12 @@ private struct SplitsList: View {
                 .padding(.leading, 4)
                 .frame(width: 76, alignment: .leading)
             Spacer()
-            Text(Copy.activity_split_elevation)
-                .font(.footnote)
-                .fontWeight(.light)
-                .frame(width: 68, alignment: .trailing)
+            if splitsInfo.hasElevation {
+                Text(Copy.activity_split_elevation)
+                    .font(.footnote)
+                    .fontWeight(.light)
+                    .frame(width: 68, alignment: .trailing)
+            }
             if splitsInfo.hasHeartrate {
                 Text(Copy.activity_split_hr)
                     .font(.footnote)
@@ -228,8 +230,10 @@ private struct SplitItem: View {
                 .padding(.leading, 4)
                 .frame(width: 72, alignment: .leading)
             SplitBar(value: split.visualisation)
-            Text("\(split.elevation)")
-                .frame(width: 48, alignment: .trailing)
+            if let elevation = split.elevation {
+                Text("\(elevation)")
+                    .frame(width: 48, alignment: .trailing)
+            }
             if let avgHr = split.averageHeartrate {
                 Text("\(avgHr)")
                     .frame(width: 48, alignment: .trailing)
@@ -347,7 +351,8 @@ struct ActivityView_Previews: PreviewProvider {
                             paceZone: 2,
                             visualisation: 0.7
                         )],
-                        hasHeartrate: true
+                        hasHeartrate: true,
+                        hasElevation: true
                     )
                 ),
                 openOnWeb: { URL(string: "example.com")! })
