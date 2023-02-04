@@ -36,7 +36,7 @@ extension ActivityDetails {
                         pace: "4:00 /k",
                         start: "",
                         mapUrl: nil,
-                        splitsInfo: nil)
+                        splits: [])
     }
 }
 

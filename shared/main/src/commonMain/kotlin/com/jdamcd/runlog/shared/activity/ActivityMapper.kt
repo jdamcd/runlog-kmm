@@ -4,7 +4,6 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
-import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
 import com.jdamcd.runlog.shared.api.ApiDetailedActivity
 import com.jdamcd.runlog.shared.api.ApiPolylineMap
@@ -63,7 +62,7 @@ internal class ActivityMapper {
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
             start = mapStartTime(activity.start_date_local),
             mapUrl = mapMap(activity.map),
-            splitsInfo = mapSplits(activity.splits_metric)
+            splits = mapSplits(activity.splits_metric)
         )
     }
 
@@ -94,7 +93,7 @@ internal class ActivityMapper {
             ?.let { MapboxStatic.makeUrl(it.summary_polyline, darkMode = darkModeImages) }
     }
 
-    private fun mapSplits(splits: List<ApiSplit>?): KmSplits? {
+    private fun mapSplits(splits: List<ApiSplit>?): List<Split> {
         val paces = splits?.associateBy(
             { it.split },
             { calculatePace(it.distance, it.moving_time) }
@@ -110,8 +109,8 @@ internal class ActivityMapper {
                 isPartial = it.distance < 950, // Not always returned as exactly 1000m
                 elapsedDuration = formatDuration(it.elapsed_time),
                 movingDuration = formatDuration(it.moving_time),
-                elevation = it.elevation_difference?.roundToInt(),
-                averageHeartrate = it.average_heartrate?.roundToInt(),
+                elevation = it.elevation_difference?.roundToInt()?.toString() ?: "-",
+                averageHeartrate = it.average_heartrate?.roundToInt()?.toString() ?: "-",
                 pace = formatPace(paceSeconds, withUnit = false),
                 paceSeconds = paceSeconds,
                 paceZone = it.pace_zone,
@@ -120,13 +119,9 @@ internal class ActivityMapper {
         }.orEmpty()
 
         return if (mappedSplits.size >= 2) {
-            KmSplits(
-                splits = mappedSplits,
-                hasHeartrate = mappedSplits[0].averageHeartrate != null,
-                hasElevation = mappedSplits[0].elevation != null
-            )
+            mappedSplits
         } else {
-            null
+            emptyList()
         }
     }
 

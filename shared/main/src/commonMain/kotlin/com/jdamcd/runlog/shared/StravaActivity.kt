@@ -41,13 +41,7 @@ data class ActivityDetails(
     val pace: String,
     val start: String,
     val mapUrl: String?,
-    val splitsInfo: KmSplits?
-)
-
-data class KmSplits(
-    val splits: List<Split>,
-    val hasHeartrate: Boolean,
-    val hasElevation: Boolean
+    val splits: List<Split>
 )
 
 data class Split(
@@ -56,8 +50,8 @@ data class Split(
     val isPartial: Boolean,
     val elapsedDuration: String,
     val movingDuration: String,
-    val elevation: Int?,
-    val averageHeartrate: Int?,
+    val elevation: String,
+    val averageHeartrate: String,
     val pace: String,
     val paceSeconds: Int,
     val paceZone: Int,

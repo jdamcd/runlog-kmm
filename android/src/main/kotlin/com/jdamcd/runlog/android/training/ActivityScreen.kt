@@ -50,7 +50,6 @@ import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
-import com.jdamcd.runlog.shared.KmSplits
 import com.jdamcd.runlog.shared.Split
 import kotlinx.coroutines.flow.StateFlow
 
@@ -119,8 +118,8 @@ private fun ActivityContent(
         }
         DescriptionHeader(activity)
         SummaryStats(activity)
-        activity.splitsInfo?.let {
-            SplitsList(it)
+        if (activity.splits.isNotEmpty()) {
+            SplitsList(activity.splits)
         }
         WebLink(onClickLink)
     }
@@ -256,7 +255,7 @@ private fun StatBox(@StringRes title: Int, stat: String) {
 }
 
 @Composable
-private fun SplitsList(splitsInfo: KmSplits) {
+private fun SplitsList(splits: List<Split>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -281,29 +280,25 @@ private fun SplitsList(splitsInfo: KmSplits) {
             )
         }
         Row {
-            if (splitsInfo.hasElevation) {
-                Text(
-                    text = stringResource(R.string.activity_split_elevation),
-                    style = MaterialTheme.typography.body2,
-                    fontWeight = FontWeight.Light,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.width(80.dp)
-                )
-            }
-            if (splitsInfo.hasHeartrate) {
-                Text(
-                    text = stringResource(R.string.activity_split_hr),
-                    style = MaterialTheme.typography.body2,
-                    fontWeight = FontWeight.Light,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.width(60.dp)
-                )
-            }
+            Text(
+                text = stringResource(R.string.activity_split_elevation),
+                style = MaterialTheme.typography.body2,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.End,
+                modifier = Modifier.width(80.dp)
+            )
+            Text(
+                text = stringResource(R.string.activity_split_hr),
+                style = MaterialTheme.typography.body2,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.End,
+                modifier = Modifier.width(60.dp)
+            )
         }
     }
     Column(modifier = Modifier.padding(top = 6.dp)) {
-        for (split in splitsInfo.splits) {
-            SplitItem(split = split)
+        for (split in splits) {
+            SplitItem(split)
         }
     }
 }
@@ -348,22 +343,18 @@ private fun SplitItem(split: Split) {
                 .weight(1f)
         )
         Row {
-            split.elevation?.let {
-                Text(
-                    text = "${split.elevation}",
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.width(48.dp)
-                )
-            }
-            split.averageHeartrate?.let {
-                Text(
-                    text = "$it",
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.width(60.dp)
-                )
-            }
+            Text(
+                text = split.elevation,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.End,
+                modifier = Modifier.width(48.dp)
+            )
+            Text(
+                text = split.averageHeartrate,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.End,
+                modifier = Modifier.width(60.dp)
+            )
         }
     }
 }
@@ -415,76 +406,72 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
             pace = "4:54 /km",
             start = "FRIDAY 25 NOV @ 2:23PM",
             mapUrl = "",
-            splitsInfo = KmSplits(
-                splits = listOf(
-                    Split(
-                        number = 1,
-                        distance = "1k",
-                        isPartial = false,
-                        elapsedDuration = "5:03",
-                        movingDuration = "5:03",
-                        elevation = 14,
-                        averageHeartrate = 145,
-                        pace = "5:03",
-                        paceSeconds = 303,
-                        paceZone = 2,
-                        visualisation = 1.0f
-                    ),
-                    Split(
-                        number = 2,
-                        distance = "1k",
-                        isPartial = false,
-                        elapsedDuration = "5:04",
-                        movingDuration = "5:04",
-                        elevation = 12,
-                        averageHeartrate = 159,
-                        pace = "5:04",
-                        paceSeconds = 304,
-                        paceZone = 2,
-                        visualisation = 1.0f
-                    ),
-                    Split(
-                        number = 3,
-                        distance = "1k",
-                        isPartial = false,
-                        elapsedDuration = "5:06",
-                        movingDuration = "5:06",
-                        elevation = -15,
-                        averageHeartrate = 158,
-                        pace = "5:06",
-                        paceSeconds = 306,
-                        paceZone = 1,
-                        visualisation = 0.9f
-                    ),
-                    Split(
-                        number = 4,
-                        distance = "1k",
-                        isPartial = false,
-                        elapsedDuration = "5:23",
-                        movingDuration = "4:35",
-                        elevation = -6,
-                        averageHeartrate = 150,
-                        pace = "5:22",
-                        paceSeconds = 322,
-                        paceZone = 2,
-                        visualisation = 0.8f
-                    ),
-                    Split(
-                        number = 5,
-                        distance = "0.5",
-                        isPartial = true,
-                        elapsedDuration = "6:16",
-                        movingDuration = "4:41",
-                        elevation = -5,
-                        averageHeartrate = 143,
-                        pace = "6:16",
-                        paceSeconds = 376,
-                        paceZone = 2,
-                        visualisation = 0.7f
-                    )
+            splits = listOf(
+                Split(
+                    number = 1,
+                    distance = "1k",
+                    isPartial = false,
+                    elapsedDuration = "5:03",
+                    movingDuration = "5:03",
+                    elevation = "14",
+                    averageHeartrate = "145",
+                    pace = "5:03",
+                    paceSeconds = 303,
+                    paceZone = 2,
+                    visualisation = 1.0f
                 ),
-                hasHeartrate = true,
-                hasElevation = true
+                Split(
+                    number = 2,
+                    distance = "1k",
+                    isPartial = false,
+                    elapsedDuration = "5:04",
+                    movingDuration = "5:04",
+                    elevation = "12",
+                    averageHeartrate = "159",
+                    pace = "5:04",
+                    paceSeconds = 304,
+                    paceZone = 2,
+                    visualisation = 1.0f
+                ),
+                Split(
+                    number = 3,
+                    distance = "1k",
+                    isPartial = false,
+                    elapsedDuration = "5:06",
+                    movingDuration = "5:06",
+                    elevation = "-15",
+                    averageHeartrate = "158",
+                    pace = "5:06",
+                    paceSeconds = 306,
+                    paceZone = 1,
+                    visualisation = 0.9f
+                ),
+                Split(
+                    number = 4,
+                    distance = "1k",
+                    isPartial = false,
+                    elapsedDuration = "5:23",
+                    movingDuration = "4:35",
+                    elevation = "-6",
+                    averageHeartrate = "150",
+                    pace = "5:22",
+                    paceSeconds = 322,
+                    paceZone = 2,
+                    visualisation = 0.8f
+                ),
+                Split(
+                    number = 5,
+                    distance = "0.5",
+                    isPartial = true,
+                    elapsedDuration = "6:16",
+                    movingDuration = "4:41",
+                    elevation = "-5",
+                    averageHeartrate = "143",
+                    pace = "6:16",
+                    paceSeconds = 376,
+                    paceZone = 2,
+                    visualisation = 0.7f
+                )
             )
         )
     )

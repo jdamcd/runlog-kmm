@@ -45,8 +45,8 @@ private struct ActivityDetailsView: View {
                     DescriptionHeader(activity: activity)
                     SummaryStats(activity: activity)
                         .padding(.horizontal)
-                    if let splitsInfo = activity.splitsInfo {
-                        SplitsList(splitsInfo: splitsInfo)
+                    if !activity.splits.isEmpty {
+                        SplitsList(splits: activity.splits)
                     }
                     ActivityFooter(openOnWeb: openOnWeb)
                         .padding(.top, 28)
@@ -174,7 +174,7 @@ private struct StatBox: View {
 }
 
 private struct SplitsList: View {
-    var splitsInfo: KmSplits
+    var splits: [Split]
 
     var body: some View {
         HStack(spacing: 0) {
@@ -189,24 +189,20 @@ private struct SplitsList: View {
                 .padding(.leading, 4)
                 .frame(width: 76, alignment: .leading)
             Spacer()
-            if splitsInfo.hasElevation {
-                Text(Copy.activity_split_elevation)
-                    .font(.footnote)
-                    .fontWeight(.light)
-                    .frame(width: 68, alignment: .trailing)
-            }
-            if splitsInfo.hasHeartrate {
-                Text(Copy.activity_split_hr)
-                    .font(.footnote)
-                    .fontWeight(.light)
-                    .frame(width: 48, alignment: .trailing)
-            }
+            Text(Copy.activity_split_elevation)
+                .font(.footnote)
+                .fontWeight(.light)
+                .frame(width: 68, alignment: .trailing)
+            Text(Copy.activity_split_hr)
+                .font(.footnote)
+                .fontWeight(.light)
+                .frame(width: 48, alignment: .trailing)
         }.padding(.vertical, 12)
             .padding(.horizontal)
             .background(.regularMaterial)
             .padding(.bottom, 2)
 
-        ForEach(splitsInfo.splits, id: \.number) { split in
+        ForEach(splits, id: \.number) { split in
             SplitItem(split: split)
         }
         .padding(.horizontal)
@@ -230,14 +226,10 @@ private struct SplitItem: View {
                 .padding(.leading, 4)
                 .frame(width: 72, alignment: .leading)
             SplitBar(value: split.visualisation)
-            if let elevation = split.elevation {
-                Text("\(elevation)")
-                    .frame(width: 48, alignment: .trailing)
-            }
-            if let avgHr = split.averageHeartrate {
-                Text("\(avgHr)")
-                    .frame(width: 48, alignment: .trailing)
-            }
+            Text(split.elevation)
+                .frame(width: 48, alignment: .trailing)
+            Text(split.averageHeartrate)
+                .frame(width: 48, alignment: .trailing)
         }.padding(.vertical, 2)
     }
 }
@@ -285,75 +277,71 @@ struct ActivityView_Previews: PreviewProvider {
                     pace: "4:54 /km",
                     start: "FRIDAY 25 NOV @ 2:23PM",
                     mapUrl: "",
-                    splitsInfo: KmSplits(
-                        splits: [Split(
-                            number: 1,
-                            distance: "1k",
-                            isPartial: false,
-                            elapsedDuration: "5:03",
-                            movingDuration: "5:03",
-                            elevation: 14,
-                            averageHeartrate: 145,
-                            pace: "5:03",
-                            paceSeconds: 303,
-                            paceZone: 2,
-                            visualisation: 1.0
-                        ),
-                        Split(
-                            number: 2,
-                            distance: "1k",
-                            isPartial: false,
-                            elapsedDuration: "5:04",
-                            movingDuration: "5:04",
-                            elevation: 12,
-                            averageHeartrate: 159,
-                            pace: "5:04",
-                            paceSeconds: 304,
-                            paceZone: 2,
-                            visualisation: 1.0
-                        ),
-                        Split(
-                            number: 3,
-                            distance: "1k",
-                            isPartial: false,
-                            elapsedDuration: "5:06",
-                            movingDuration: "5:06",
-                            elevation: -15,
-                            averageHeartrate: 158,
-                            pace: "5:06",
-                            paceSeconds: 306,
-                            paceZone: 1,
-                            visualisation: 0.9
-                        ),
-                        Split(
-                            number: 4,
-                            distance: "1k",
-                            isPartial: false,
-                            elapsedDuration: "5:23",
-                            movingDuration: "4:35",
-                            elevation: -6,
-                            averageHeartrate: 150,
-                            pace: "5:22",
-                            paceSeconds: 322,
-                            paceZone: 2,
-                            visualisation: 0.8
-                        ),
-                        Split(
-                            number: 5,
-                            distance: "0.5",
-                            isPartial: true,
-                            elapsedDuration: "6:16",
-                            movingDuration: "4:41",
-                            elevation: -5,
-                            averageHeartrate: 143,
-                            pace: "6:16",
-                            paceSeconds: 376,
-                            paceZone: 2,
-                            visualisation: 0.7
-                        )],
-                        hasHeartrate: true,
-                        hasElevation: true
-                    )
+                    splits: [Split(
+                        number: 1,
+                        distance: "1k",
+                        isPartial: false,
+                        elapsedDuration: "5:03",
+                        movingDuration: "5:03",
+                        elevation: "14",
+                        averageHeartrate: "145",
+                        pace: "5:03",
+                        paceSeconds: 303,
+                        paceZone: 2,
+                        visualisation: 1.0
+                    ),
+                    Split(
+                        number: 2,
+                        distance: "1k",
+                        isPartial: false,
+                        elapsedDuration: "5:04",
+                        movingDuration: "5:04",
+                        elevation: "12",
+                        averageHeartrate: "159",
+                        pace: "5:04",
+                        paceSeconds: 304,
+                        paceZone: 2,
+                        visualisation: 1.0
+                    ),
+                    Split(
+                        number: 3,
+                        distance: "1k",
+                        isPartial: false,
+                        elapsedDuration: "5:06",
+                        movingDuration: "5:06",
+                        elevation: "-15",
+                        averageHeartrate: "158",
+                        pace: "5:06",
+                        paceSeconds: 306,
+                        paceZone: 1,
+                        visualisation: 0.9
+                    ),
+                    Split(
+                        number: 4,
+                        distance: "1k",
+                        isPartial: false,
+                        elapsedDuration: "5:23",
+                        movingDuration: "4:35",
+                        elevation: "-6",
+                        averageHeartrate: "150",
+                        pace: "5:22",
+                        paceSeconds: 322,
+                        paceZone: 2,
+                        visualisation: 0.8
+                    ),
+                    Split(
+                        number: 5,
+                        distance: "0.5",
+                        isPartial: true,
+                        elapsedDuration: "6:16",
+                        movingDuration: "4:41",
+                        elevation: "-5",
+                        averageHeartrate: "143",
+                        pace: "6:16",
+                        paceSeconds: 376,
+                        paceZone: 2,
+                        visualisation: 0.7
+                    )]
                 ),
                 openOnWeb: { URL(string: "example.com")! })
         }
