@@ -5,6 +5,7 @@ import com.jdamcd.runlog.android.util.TestCoroutinesRule
 import com.jdamcd.runlog.android.util.activityCard1
 import com.jdamcd.runlog.android.util.activityCard2
 import com.jdamcd.runlog.shared.StravaActivity
+import com.jdamcd.runlog.shared.StravaProfile
 import com.jdamcd.runlog.shared.util.Result
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -21,12 +22,13 @@ class TrainingViewModelTest {
     @get:Rule val coroutineRule = TestCoroutinesRule()
 
     private val stravaActivity: StravaActivity = mockk()
+    private val stravaProfile: StravaProfile = mockk()
 
     private lateinit var viewModel: TrainingViewModel
 
     @Before
     fun setUp() {
-        viewModel = TrainingViewModel(stravaActivity)
+        viewModel = TrainingViewModel(stravaActivity, stravaProfile)
     }
 
     @Test
@@ -34,7 +36,7 @@ class TrainingViewModelTest {
         val activities = listOf(activityCard1)
         coEvery { stravaActivity.activities() } returns Result.Data(activities)
 
-        viewModel.flow.test {
+        viewModel.contentFlow.test {
             viewModel.load()
 
             awaitItem() shouldBe TrainingState.Loading
@@ -44,10 +46,25 @@ class TrainingViewModelTest {
     }
 
     @Test
+    fun `load emits profile image URL for status bar`() = runTest {
+        val imageUrl = "image.url/123"
+        coEvery { stravaProfile.userImageUrl() } returns imageUrl
+        coEvery { stravaActivity.activities() } returns Result.Error(Throwable())
+
+        viewModel.statusFlow.test {
+            viewModel.load()
+
+            awaitItem() shouldBe StatusBarState.NoProfileImage
+            awaitItem() shouldBe StatusBarState.ProfileImage(imageUrl)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
     fun `load failure emits loading then error`() = runTest {
         coEvery { stravaActivity.activities() } returns Result.Error(Throwable())
 
-        viewModel.flow.test {
+        viewModel.contentFlow.test {
             viewModel.load()
 
             awaitItem() shouldBe TrainingState.Loading
@@ -62,7 +79,7 @@ class TrainingViewModelTest {
         val refresh = listOf(activityCard1, activityCard2)
         coEvery { stravaActivity.activities() } returns Result.Data(load) andThen Result.Data(refresh)
 
-        viewModel.flow.test {
+        viewModel.contentFlow.test {
             viewModel.load()
 
             awaitItem() shouldBe TrainingState.Loading
@@ -82,7 +99,7 @@ class TrainingViewModelTest {
         val activities = listOf(activityCard1)
         coEvery { stravaActivity.activities() } returns Result.Data(activities)
 
-        viewModel.flow.test {
+        viewModel.contentFlow.test {
             viewModel.refresh()
 
             awaitItem() shouldBe TrainingState.Loading

@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.android.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -89,7 +90,7 @@ private fun ProfileContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 20.dp, start = 8.dp, end = 8.dp),
+            .padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -97,15 +98,20 @@ private fun ProfileContent(
             AsyncImage(
                 model = it,
                 modifier = Modifier
+                    .padding(vertical = 20.dp)
                     .size(100.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .border(
+                        width = 1.dp,
+                        shape = CircleShape,
+                        color = MaterialTheme.colors.onBackground
+                    ),
                 contentDescription = null
             )
         }
         Text(
             text = profile.name,
-            style = MaterialTheme.typography.h6,
-            modifier = Modifier.padding(top = 8.dp)
+            style = MaterialTheme.typography.h6
         )
         Text(
             text = profile.username,

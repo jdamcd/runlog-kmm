@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.StravaActivity
+import com.jdamcd.runlog.shared.StravaProfile
 import com.jdamcd.runlog.shared.util.ifError
 import com.jdamcd.runlog.shared.util.ifSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,27 +16,32 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TrainingViewModel @Inject constructor(
-    private val stravaActivity: StravaActivity
+    private val stravaActivity: StravaActivity,
+    private val stravaProfile: StravaProfile
 ) : ViewModel(), LifecycleObserver {
 
-    private val _mutableFlow = MutableStateFlow<TrainingState>(TrainingState.Loading)
-    val flow = _mutableFlow as StateFlow<TrainingState>
+    private val _statusFlow = MutableStateFlow<StatusBarState>(StatusBarState.NoProfileImage)
+    val statusFlow = _statusFlow as StateFlow<StatusBarState>
+
+    private val _contentFlow = MutableStateFlow<TrainingState>(TrainingState.Loading)
+    val contentFlow = _contentFlow as StateFlow<TrainingState>
 
     init {
         load()
     }
 
     fun load() {
-        _mutableFlow.value = TrainingState.Loading
+        _contentFlow.value = TrainingState.Loading
         getActivities()
+        getProfileImage()
     }
 
     fun refresh() {
-        val state = _mutableFlow.value
-        if (state is TrainingState.Data) {
-            _mutableFlow.value = TrainingState.Refreshing(state.activityCards)
+        val state = _contentFlow.value
+        _contentFlow.value = if (state is TrainingState.Data) {
+            TrainingState.Refreshing(state.activityCards)
         } else {
-            _mutableFlow.value = TrainingState.Loading
+            TrainingState.Loading
         }
         getActivities()
     }
@@ -47,8 +53,16 @@ class TrainingViewModel @Inject constructor(
     private fun getActivities() {
         viewModelScope.launch {
             val result = stravaActivity.activities()
-            result.ifSuccess { _mutableFlow.value = TrainingState.Data(it) }
-            result.ifError { _mutableFlow.value = TrainingState.Error }
+            result.ifSuccess { _contentFlow.value = TrainingState.Data(it) }
+            result.ifError { _contentFlow.value = TrainingState.Error }
+        }
+    }
+
+    private fun getProfileImage() {
+        viewModelScope.launch {
+            stravaProfile.userImageUrl()?.let {
+                _statusFlow.value = StatusBarState.ProfileImage(it)
+            }
         }
     }
 }
@@ -62,4 +76,9 @@ sealed class TrainingState {
     fun isRefreshing(): Boolean {
         return this is Refreshing
     }
+}
+
+sealed class StatusBarState {
+    object NoProfileImage : StatusBarState()
+    data class ProfileImage(val url: String) : StatusBarState()
 }

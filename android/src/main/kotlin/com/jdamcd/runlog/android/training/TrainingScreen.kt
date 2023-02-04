@@ -1,5 +1,6 @@
 package com.jdamcd.runlog.android.training
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -8,8 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -56,22 +59,41 @@ fun TrainingScreen(
     navigateToProfile: () -> Unit
 ) {
     viewModel.setDarkTheme(isSystemInDarkTheme())
+    val statusBarState: StatusBarState by viewModel.statusFlow.collectAsState()
     hostAppBar(
         AppBarState(
             title = stringResource(R.string.activities_title),
             actions = {
                 IconButton(onClick = navigateToProfile) {
-                    Icon(
-                        imageVector = Icons.Rounded.AccountCircle,
-                        contentDescription = stringResource(R.string.profile_title),
-                        tint = MaterialTheme.colors.onPrimary
-                    )
+                    when (statusBarState) {
+                        StatusBarState.NoProfileImage -> {
+                            Icon(
+                                imageVector = Icons.Rounded.AccountCircle,
+                                contentDescription = stringResource(R.string.profile_title),
+                                tint = MaterialTheme.colors.onPrimary
+                            )
+                        }
+                        is StatusBarState.ProfileImage -> {
+                            AsyncImage(
+                                model = (statusBarState as StatusBarState.ProfileImage).url,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape)
+                                    .border(
+                                        width = 1.dp,
+                                        shape = CircleShape,
+                                        color = MaterialTheme.colors.onPrimary
+                                    )
+                            )
+                        }
+                    }
                 }
             }
         )
     )
     TrainingList(
-        stateFlow = viewModel.flow,
+        stateFlow = viewModel.contentFlow,
         onItemClick = { navigateToActivity(it) },
         onRetryClick = { viewModel.load() },
         onPullRefresh = { viewModel.refresh() }
@@ -133,7 +155,6 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
                 .fillMaxWidth()
         ) {
             val (icons) = createRefs()
-
             ActivitySummary(activity)
             ActivityIcons(
                 type = activity.type,
