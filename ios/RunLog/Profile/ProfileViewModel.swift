@@ -4,8 +4,10 @@ import SwiftUI
 
 @MainActor
 class ProfileViewModel: ObservableObject {
-    @Published var state: ProfileState = .loading
+    static let sharedInstance = ProfileViewModel()
 
+    @Published var state: ProfileState = .loading
+    
     private let stravaProfile: StravaProfile
 
     init(stravaProfile: StravaProfile = IosDI().stravaProfile()) {

@@ -4,7 +4,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var viewModel = ProfileViewModel()
+    @ObservedObject var viewModel = ProfileViewModel.sharedInstance
 
     var body: some View {
         ZStack {
