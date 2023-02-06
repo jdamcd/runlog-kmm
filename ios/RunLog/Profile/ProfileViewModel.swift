@@ -7,7 +7,7 @@ class ProfileViewModel: ObservableObject {
     static let sharedInstance = ProfileViewModel()
 
     @Published var state: ProfileState = .loading
-    
+
     private let stravaProfile: StravaProfile
 
     init(stravaProfile: StravaProfile = IosDI().stravaProfile()) {

@@ -28,9 +28,7 @@ struct ProfileView: View {
                     .foregroundColor(Color.asset(.primary))
             }
         )
-        .onAppear {
-            load()
-        }
+        .onAppear(perform: load)
     }
 
     private func load() {

@@ -14,7 +14,7 @@ struct ActivityView: View {
             case .loading:
                 ProgressView()
             case .error:
-                Button(action: { viewModel.load(id: id) }) {
+                Button(action: load) {
                     Text(Copy.retry)
                 }
             case let .data(activity):
@@ -23,10 +23,12 @@ struct ActivityView: View {
                     openOnWeb: { viewModel.linkUrl(id: id) }
                 )
             }
-        }.onAppear {
-            viewModel.setDarkMode(colorScheme == .dark)
-            viewModel.load(id: id)
-        }
+        }.onAppear(perform: load)
+    }
+
+    private func load() {
+        viewModel.setDarkMode(colorScheme == .dark)
+        viewModel.load(id: id)
     }
 }
 

@@ -29,9 +29,7 @@ struct TrainingView: View {
             .navigationBarItems(trailing: NavigationLink(destination: ProfileView()) {
                 ProfileNavigation(image: viewModel.profileImage)
             })
-            .onAppear {
-                load()
-            }
+            .onAppear(perform: load)
         }.accentColor(Color.asset(.primary))
     }
 
