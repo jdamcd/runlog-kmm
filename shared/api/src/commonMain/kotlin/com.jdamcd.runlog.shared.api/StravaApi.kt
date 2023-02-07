@@ -67,7 +67,7 @@ internal class KtorStravaApi(private val tokenProvider: TokenProvider) : StravaA
         }
         if (DebugConfig.isDebug) {
             install(Logging) {
-                level = LogLevel.ALL
+                level = LogLevel.INFO
                 logger = object : Logger {
                     override fun log(message: String) {
                         MultiLog.debug(message)

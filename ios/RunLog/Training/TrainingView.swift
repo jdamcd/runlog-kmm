@@ -30,6 +30,9 @@ struct TrainingView: View {
                 ProfileNavigation(image: viewModel.profileImage)
             })
             .onAppear(perform: load)
+            .onReceive(NotificationCenter.default.publisher(
+                for: UIApplication.willEnterForegroundNotification
+            )) { _ in viewModel.refresh() }
         }.accentColor(Color.asset(.primary))
     }
 

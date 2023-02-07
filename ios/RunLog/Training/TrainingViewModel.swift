@@ -25,7 +25,9 @@ class TrainingViewModel: ObservableObject {
     }
 
     func refresh() {
-        getActivities()
+        if state != .loading {
+            getActivities()
+        }
     }
 
     private func getProfileImage() {

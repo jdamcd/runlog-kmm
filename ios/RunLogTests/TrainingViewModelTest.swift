@@ -20,6 +20,7 @@ final class TrainingViewModelTest: XCTestCase {
 
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .data([activity]))
+        XCTAssertEqual(mockActivity.callCount, 1)
     }
 
     func testLoadFailureSetsLoadingThenError() {
@@ -29,6 +30,7 @@ final class TrainingViewModelTest: XCTestCase {
 
         XCTAssertEqual(viewModel.state, .loading)
         waitUntil(viewModel.$state, equals: .error)
+        XCTAssertEqual(mockActivity.callCount, 1)
     }
 
     func testRefreshUpdatesDataWithoutLoadingState() {
@@ -49,16 +51,16 @@ final class TrainingViewModelTest: XCTestCase {
 
         XCTAssertEqual(viewModel.state, .data([activity1]))
         waitUntil(viewModel.$state, equals: .data([activity2]))
+        XCTAssertEqual(mockActivity.callCount, 2)
     }
 
-    func testRefreshLoadsIfNotLoaded() {
-        let activity = ActivityCard.with(id: 1)
-        mockActivity.activities = ResultData(value: NSArray(array: [activity]))
+    func testRefreshDoesNothingIfNotLoaded() {
+        XCTAssertEqual(viewModel.state, .loading)
 
         viewModel.refresh()
-
+        
         XCTAssertEqual(viewModel.state, .loading)
-        waitUntil(viewModel.$state, equals: .data([activity]))
+        XCTAssertEqual(mockActivity.callCount, 0)
     }
 
     func testSetDarkModeUpdatesInteractor() {

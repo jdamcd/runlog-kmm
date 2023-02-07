@@ -6,13 +6,17 @@ class ActivityMock: StravaActivity {
     var activityDetails: Result<ActivityDetails> = ResultError(error: KotlinThrowable())
 
     var darkModeImages = false
+    
+    var callCount = 0
 
     func activities() async throws -> Result<NSArray> {
-        activities
+        callCount += 1
+        return activities
     }
 
     func activityDetails(id _: Int64) async throws -> Result<ActivityDetails> {
-        activityDetails
+        callCount += 1
+        return activityDetails
     }
 
     func linkUrl(id: Int64) -> String {
