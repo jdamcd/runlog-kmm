@@ -1,8 +1,10 @@
 object Version {
     // Build
     const val kotlin = "1.8.0"
-    const val androidGradle = "7.4.0"
+    const val androidGradle = "7.4.1"
     const val buildKonfig = "0.13.3"
+    const val spotless = "6.14.1"
+    const val ktlint = "0.47.1"
 
     // Shared
     const val ktor = "2.1.2"

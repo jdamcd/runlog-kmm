@@ -6,7 +6,7 @@ class ActivityMock: StravaActivity {
     var activityDetails: Result<ActivityDetails> = ResultError(error: KotlinThrowable())
 
     var darkModeImages = false
-    
+
     var callCount = 0
 
     func activities() async throws -> Result<NSArray> {

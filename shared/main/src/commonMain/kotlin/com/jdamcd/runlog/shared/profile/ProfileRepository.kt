@@ -13,15 +13,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class ProfileRepository(
-    private val stravaApi: StravaApi,
+    private val api: StravaApi,
     private val dao: AthleteDao,
     private val mapper: AthleteMapper
 ) : StravaProfile {
 
     override suspend fun refresh(): RefreshState {
         return try {
-            val athlete = stravaApi.athlete()
-            val stats = stravaApi.athleteStats(athlete.id)
+            val athlete = api.athlete()
+            val stats = api.athleteStats(athlete.id)
 
             dao.insert(
                 mapper.athleteToDb(athlete, isUser = true),

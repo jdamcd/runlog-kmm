@@ -58,7 +58,7 @@ final class TrainingViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.state, .loading)
 
         viewModel.refresh()
-        
+
         XCTAssertEqual(viewModel.state, .loading)
         XCTAssertEqual(mockActivity.callCount, 0)
     }
