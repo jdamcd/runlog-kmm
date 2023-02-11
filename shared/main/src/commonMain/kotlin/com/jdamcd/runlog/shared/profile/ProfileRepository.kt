@@ -4,7 +4,6 @@ import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.StravaProfile
 import com.jdamcd.runlog.shared.api.StravaApi
 import com.jdamcd.runlog.shared.database.AthleteDao
-import com.jdamcd.runlog.shared.util.MultiLog
 import com.jdamcd.runlog.shared.util.RefreshState
 import com.jdamcd.runlog.shared.util.Result
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +28,6 @@ internal class ProfileRepository(
             )
             RefreshState.SUCCESS
         } catch (e: Exception) {
-            MultiLog.error("Failed to update profile: ${e.message}")
             RefreshState.ERROR
         }
     }

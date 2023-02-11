@@ -2,10 +2,10 @@ package com.jdamcd.runlog.shared.profile
 
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
+import com.jdamcd.runlog.shared.util.athleteDbModel
 import com.jdamcd.runlog.shared.util.athleteModel
 import com.jdamcd.runlog.shared.util.athleteStatsModel
 import comjdamcdrunlogshareddatabase.Athlete
-import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
 import io.kotest.matchers.shouldBe
 import kotlinx.datetime.Clock
@@ -69,24 +69,9 @@ class AthleteMapperTest {
             )
         )
     }
-
-    private fun athleteDbModel() = AthleteWithStats(
-        id = 123L,
-        username = "jdamcd",
-        name = "Jamie McDonald",
-        imageUrl = "image.url",
-        isUser = true,
-        lastUpdated = 456L,
-        recentDistance = 100_000.0f,
-        recentPace = 333,
-        yearDistance = 1_000_000.0f,
-        yearPace = 333,
-        allDistance = 5_000_000.0f,
-        allPace = 333
-    )
 }
 
-private object MockClock : Clock {
+object MockClock : Clock {
     override fun now(): Instant {
         return Instant.fromEpochSeconds(456L)
     }

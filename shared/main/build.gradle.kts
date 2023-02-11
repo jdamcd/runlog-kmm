@@ -47,6 +47,9 @@ kotlin {
         val androidUnitTest by getting {
             dependencies {
                 implementation(Dependency.kotestAssert)
+                implementation(Dependency.mockk)
+                implementation(Dependency.coroutinesTest)
+                implementation(Dependency.turbine)
             }
         }
         val iosX64Main by getting
