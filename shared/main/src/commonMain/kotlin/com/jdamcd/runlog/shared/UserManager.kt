@@ -11,7 +11,7 @@ interface UserManager {
     fun logOut()
 }
 
-class UserManagerImpl internal constructor(
+class PersistingUserManager internal constructor(
     private val userState: PersistingUserState,
     private val database: DatabaseUtil
 ) : UserManager {

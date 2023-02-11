@@ -7,13 +7,13 @@ import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
 import kotlinx.coroutines.flow.Flow
 
-interface AthleteDao {
+interface AthleteDao : Dao {
     fun insert(athlete: Athlete)
     fun insert(athlete: Athlete, runStats: RunStats)
     fun user(): AthleteWithStats?
     fun userImageUrl(): String?
     fun userFlow(): Flow<AthleteWithStats?>
-    fun clear()
+    override fun clear()
 }
 
 internal class SqlAthleteDao(database: RunLogDB) : AthleteDao {

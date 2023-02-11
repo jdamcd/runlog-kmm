@@ -32,7 +32,7 @@ fun commonModule() = module {
     single<StravaLogin> { LoginInteractor(get(), get(), get()) }
     single<StravaActivity> { ActivityInteractor(get(), get()) }
     single<StravaProfile> { ProfileRepository(get(), get(), get()) }
-    single<UserManager> { UserManagerImpl(get(), get()) }
+    single<UserManager> { PersistingUserManager(get(), get()) }
 }
 
 expect fun platformModule(): Module

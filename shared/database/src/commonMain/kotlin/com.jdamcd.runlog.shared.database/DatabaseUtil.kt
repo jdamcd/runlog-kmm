@@ -15,3 +15,7 @@ class DatabaseUtil(
         }
     }
 }
+
+interface Dao {
+    fun clear()
+}

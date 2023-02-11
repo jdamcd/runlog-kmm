@@ -1,10 +1,14 @@
 package com.jdamcd.runlog.shared.database
 
-class ActivityDao(database: RunLogDB) {
+interface ActivityDao : Dao {
+    override fun clear()
+}
+
+class SqlActivityDao(database: RunLogDB) : ActivityDao {
 
     private val queries = database.activityQueries
 
-    internal fun clear() {
+    override fun clear() {
         queries.deleteAll()
     }
 }
