@@ -4,6 +4,8 @@ import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.StravaProfile
 import com.jdamcd.runlog.shared.api.StravaApi
 import com.jdamcd.runlog.shared.database.AthleteDao
+import com.jdamcd.runlog.shared.util.Log
+import com.jdamcd.runlog.shared.util.MultiLog
 import com.jdamcd.runlog.shared.util.RefreshState
 import com.jdamcd.runlog.shared.util.Result
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +16,8 @@ import kotlinx.coroutines.withContext
 internal class ProfileRepository(
     private val api: StravaApi,
     private val dao: AthleteDao,
-    private val mapper: AthleteMapper
+    private val mapper: AthleteMapper,
+    private val log: Log = MultiLog()
 ) : StravaProfile {
 
     override suspend fun refresh(): RefreshState {
@@ -26,8 +29,10 @@ internal class ProfileRepository(
                 mapper.athleteToDb(athlete, isUser = true),
                 mapper.runStatsToDb(athlete.id, stats)
             )
+            log.debug("Profile refreshed successfully")
             RefreshState.SUCCESS
         } catch (e: Exception) {
+            log.debug("Profile refresh failed: ${e.message}")
             RefreshState.ERROR
         }
     }

@@ -5,8 +5,8 @@ import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.Split
-import com.jdamcd.runlog.shared.util.activityModel
-import com.jdamcd.runlog.shared.util.detailedActivityModel
+import com.jdamcd.runlog.shared.testutil.activityModel
+import com.jdamcd.runlog.shared.testutil.detailedActivityModel
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
 import kotlin.test.Test

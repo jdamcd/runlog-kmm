@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.util
+package com.jdamcd.runlog.shared.testutil
 
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 

@@ -4,11 +4,13 @@ import app.cash.turbine.test
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.api.StravaApi
 import com.jdamcd.runlog.shared.database.AthleteDao
+import com.jdamcd.runlog.shared.testutil.MockClock
+import com.jdamcd.runlog.shared.testutil.MockLog
+import com.jdamcd.runlog.shared.testutil.athleteDbModel
+import com.jdamcd.runlog.shared.testutil.athleteModel
+import com.jdamcd.runlog.shared.testutil.athleteStatsModel
 import com.jdamcd.runlog.shared.util.RefreshState
 import com.jdamcd.runlog.shared.util.Result
-import com.jdamcd.runlog.shared.util.athleteDbModel
-import com.jdamcd.runlog.shared.util.athleteModel
-import com.jdamcd.runlog.shared.util.athleteStatsModel
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
@@ -36,7 +38,7 @@ class ProfileRepositoryTest {
 
     @Before
     fun setUp() {
-        repository = ProfileRepository(api, dao, mapper)
+        repository = ProfileRepository(api, dao, mapper, MockLog())
     }
 
     @Test

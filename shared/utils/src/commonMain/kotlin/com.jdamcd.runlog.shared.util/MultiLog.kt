@@ -1,18 +1,24 @@
 package com.jdamcd.runlog.shared.util
 
-object MultiLog {
+interface Log {
+    fun debug(message: String)
+    fun error(message: String)
+}
 
-    private const val TAG = "RunLogShared"
+class MultiLog : Log {
+
     private val output = LogOutput()
 
-    fun debug(message: String) {
+    override fun debug(message: String) {
         output.debug(TAG, message)
     }
 
-    fun error(message: String) {
+    override fun error(message: String) {
         output.error(TAG, message)
     }
 }
+
+private const val TAG = "RunLogShared"
 
 expect class LogOutput() {
     fun debug(tag: String, message: String)

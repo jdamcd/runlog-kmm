@@ -1,4 +1,4 @@
-package com.jdamcd.runlog.shared.util
+package com.jdamcd.runlog.shared.testutil
 
 import com.jdamcd.runlog.shared.api.ApiActivityStats
 import com.jdamcd.runlog.shared.api.ApiActivityTotal

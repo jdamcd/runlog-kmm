@@ -2,24 +2,25 @@ package com.jdamcd.runlog.shared.profile
 
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
-import com.jdamcd.runlog.shared.util.athleteDbModel
-import com.jdamcd.runlog.shared.util.athleteModel
-import com.jdamcd.runlog.shared.util.athleteStatsModel
+import com.jdamcd.runlog.shared.testutil.MockClock
+import com.jdamcd.runlog.shared.testutil.athleteDbModel
+import com.jdamcd.runlog.shared.testutil.athleteModel
+import com.jdamcd.runlog.shared.testutil.athleteStatsModel
 import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.RunStats
 import io.kotest.matchers.shouldBe
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class AthleteMapperTest {
 
     private lateinit var mapper: AthleteMapper
+    private val clock = MockClock
 
     @BeforeTest
     fun setUp() {
-        mapper = AthleteMapper(MockClock)
+        clock.epochSeconds = 456L
+        mapper = AthleteMapper(clock)
     }
 
     @Test
@@ -68,11 +69,5 @@ class AthleteMapperTest {
                 pace = "5:33 /km"
             )
         )
-    }
-}
-
-object MockClock : Clock {
-    override fun now(): Instant {
-        return Instant.fromEpochSeconds(456L)
     }
 }

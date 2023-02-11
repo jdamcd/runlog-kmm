@@ -1,6 +1,7 @@
 package com.jdamcd.runlog.shared.api
 
 import com.jdamcd.runlog.shared.util.DebugConfig
+import com.jdamcd.runlog.shared.util.Log
 import com.jdamcd.runlog.shared.util.MultiLog
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -31,7 +32,10 @@ interface StravaApi {
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-internal class KtorStravaApi(private val tokenProvider: TokenProvider) : StravaApi {
+internal class KtorStravaApi(
+    private val tokenProvider: TokenProvider,
+    private val log: Log = MultiLog()
+) : StravaApi {
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -57,10 +61,10 @@ internal class KtorStravaApi(private val tokenProvider: TokenProvider) : StravaA
         }
         HttpResponseValidator {
             handleResponseExceptionWithRequest { exception, _ ->
-                MultiLog.error(exception.stackTraceToString())
+                log.error(exception.stackTraceToString())
                 val clientException = exception as? ClientRequestException ?: return@handleResponseExceptionWithRequest
                 if (clientException.response.status == HttpStatusCode.Unauthorized) {
-                    MultiLog.debug("Unhandled 401")
+                    log.debug("Unhandled 401")
                     throw AuthException("Unhandled 401", clientException)
                 }
             }
@@ -70,7 +74,7 @@ internal class KtorStravaApi(private val tokenProvider: TokenProvider) : StravaA
                 level = LogLevel.INFO
                 logger = object : Logger {
                     override fun log(message: String) {
-                        MultiLog.debug(message)
+                        log.debug(message)
                     }
                 }
             }
