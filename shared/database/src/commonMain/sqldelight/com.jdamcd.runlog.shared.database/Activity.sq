@@ -1,14 +1,19 @@
 CREATE TABLE activity (
     id INTEGER NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    isPrivate INTEGER AS Boolean DEFAULT 0,
+    type TEXT NOT NULL,
+    subtype TEXT NOT NULL,
+    distance REAL AS Float NOT NULL,
+    duration INTEGER NOT NULL,
+    pace INTEGER NOT NULL,
+    start TEXT NOT NULL,
+    mapPolyline TEXT,
+    lastUpdated INTEGER NOT NULL
 );
 
-insert:
-INSERT OR REPLACE INTO activity(id, name)
-VALUES (?, ?);
-
-insertFullActivity:
-INSERT INTO activity(id, name)
+insertActivity:
+INSERT OR REPLACE INTO activity(id, name, isPrivate, type, subtype, distance, duration, pace, start, mapPolyline, lastUpdated)
 VALUES ?;
 
 selectAll:
