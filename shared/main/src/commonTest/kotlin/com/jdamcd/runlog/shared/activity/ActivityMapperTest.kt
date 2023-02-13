@@ -5,6 +5,7 @@ import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.Split
+import com.jdamcd.runlog.shared.testutil.MockClock
 import com.jdamcd.runlog.shared.testutil.activityModel
 import com.jdamcd.runlog.shared.testutil.detailedActivityModel
 import io.kotest.matchers.shouldBe
@@ -17,7 +18,7 @@ class ActivityMapperTest {
 
     @BeforeTest
     fun setUp() {
-        mapper = ActivityMapper()
+        mapper = ActivityMapper(MockClock)
     }
 
     @Test

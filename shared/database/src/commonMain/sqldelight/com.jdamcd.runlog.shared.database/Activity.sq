@@ -1,12 +1,12 @@
 CREATE TABLE activity (
     id INTEGER NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
-    isPrivate INTEGER AS Boolean DEFAULT 0,
+    isPrivate INTEGER AS Boolean NOT NULL DEFAULT 0,
     type TEXT NOT NULL,
     subtype TEXT NOT NULL,
     distance REAL AS Float NOT NULL,
-    duration INTEGER NOT NULL,
-    pace INTEGER NOT NULL,
+    duration INTEGER AS Int NOT NULL,
+    pace INTEGER AS Int NOT NULL,
     start TEXT NOT NULL,
     mapPolyline TEXT,
     lastUpdated INTEGER NOT NULL

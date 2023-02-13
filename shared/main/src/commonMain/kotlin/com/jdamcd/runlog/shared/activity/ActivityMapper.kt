@@ -16,14 +16,34 @@ import com.jdamcd.runlog.shared.util.Formatter.formatKm
 import com.jdamcd.runlog.shared.util.Formatter.formatPace
 import com.jdamcd.runlog.shared.util.calculatePace
 import com.jdamcd.runlog.shared.util.formatDate
+import comjdamcdrunlogshareddatabase.Activity
+import kotlinx.datetime.Clock
 import kotlin.math.roundToInt
 
-internal class ActivityMapper {
+internal class ActivityMapper(private val clock: Clock) {
 
     private val datePattern = "EEEE dd MMM @ h:mma"
     private val privateEmoji = "\uD83D\uDD12"
 
     var darkModeImages = false
+
+    fun activityToDb(activity: ApiSummaryActivity): Activity {
+        val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
+        val paceTime = if (subtype.isRace()) activity.elapsed_time else activity.moving_time
+        return Activity(
+            id = activity.id,
+            name = activity.name,
+            isPrivate = activity.private,
+            type = mapType(activity.type).name,
+            subtype = subtype.name,
+            distance = activity.distance,
+            duration = activity.elapsed_time,
+            pace = calculatePace(activity.distance, paceTime),
+            start = activity.start_date_local,
+            mapPolyline = extractPolyline(activity.map),
+            lastUpdated = clock.now().epochSeconds
+        )
+    }
 
     fun mapActivityCard(activity: ApiSummaryActivity): ActivityCard {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
@@ -31,7 +51,7 @@ internal class ActivityMapper {
             id = activity.id,
             name = mapName(activity.name, activity.private),
             type = mapType(activity.type),
-            subtype = subtype,
+            subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype(),
             distance = formatKm(activity.distance),
             duration = mapDuration(activity.elapsed_time, activity.moving_time, subtype.isRace()),
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
@@ -88,9 +108,12 @@ internal class ActivityMapper {
         return startDateLocal.formatDate(datePattern).uppercase()
     }
 
+    private fun extractPolyline(map: ApiPolylineMap?): String? {
+        return map?.takeIf { it.summary_polyline.isNotEmpty() }?.summary_polyline
+    }
+
     private fun mapMap(map: ApiPolylineMap?): String? {
-        return map?.takeIf { it.summary_polyline.isNotEmpty() }
-            ?.let { MapboxStatic.makeUrl(it.summary_polyline, darkMode = darkModeImages) }
+        return extractPolyline(map)?.let { MapboxStatic.makeUrl(it, darkMode = darkModeImages) }
     }
 
     private fun mapSplits(splits: List<ApiSplit>?): List<Split> {

@@ -26,8 +26,7 @@ class ActivityDaoTest {
         val activity1 = activity(id = 123L)
         val activity2 = activity(id = 456L)
 
-        dao.insert(activity1)
-        dao.insert(activity2)
+        dao.insert(listOf(activity1, activity2))
 
         dao.allActivities() shouldBe listOf(activity1, activity2)
     }

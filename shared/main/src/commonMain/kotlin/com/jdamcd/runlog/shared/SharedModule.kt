@@ -27,10 +27,10 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 
 fun commonModule() = module {
     single<Clock> { Clock.System }
-    single { ActivityMapper() }
+    single { ActivityMapper(get()) }
     single { AthleteMapper(get()) }
     single<StravaLogin> { LoginInteractor(get(), get(), get()) }
-    single<StravaActivity> { ActivityInteractor(get(), get()) }
+    single<StravaActivity> { ActivityInteractor(get(), get(), get()) }
     single<StravaProfile> { ProfileRepository(get(), get(), get()) }
     single<UserManager> { PersistingUserManager(get(), get()) }
 }

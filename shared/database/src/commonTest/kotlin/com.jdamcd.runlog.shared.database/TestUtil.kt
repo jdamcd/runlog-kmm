@@ -29,12 +29,12 @@ fun runStats() = RunStats(
 
 fun activity(id: Long = 123L) = Activity(
     id = id,
-    name = "Run",
+    name = "Morning Eun",
     isPrivate = false,
-    type = "Run",
-    subtype = "Run",
+    type = "RUN",
+    subtype = "DEFAULT",
     distance = 10_000.0f,
-    duration = 1000L,
+    duration = 3330,
     pace = 333,
     start = "2020-01-01T00:00:00Z",
     mapPolyline = "polylineABCXYZ",
