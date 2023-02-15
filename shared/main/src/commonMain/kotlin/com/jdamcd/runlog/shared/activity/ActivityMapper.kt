@@ -27,7 +27,7 @@ internal class ActivityMapper(private val clock: Clock) {
 
     var darkModeImages = false
 
-    fun activityToDb(activity: ApiSummaryActivity): Activity {
+    fun summaryApiToDb(activity: ApiSummaryActivity): Activity {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         val paceTime = if (subtype.isRace()) activity.elapsed_time else activity.moving_time
         return Activity(
@@ -37,30 +37,27 @@ internal class ActivityMapper(private val clock: Clock) {
             type = mapType(activity.type).name,
             subtype = subtype.name,
             distance = activity.distance,
-            duration = activity.elapsed_time,
+            duration = paceTime,
             pace = calculatePace(activity.distance, paceTime),
             start = activity.start_date_local,
-            mapPolyline = extractPolyline(activity.map),
+            mapPolyline = mapPolyline(activity.map),
             lastUpdated = clock.now().epochSeconds
         )
     }
 
-    fun mapActivityCard(activity: ApiSummaryActivity): ActivityCard {
-        val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
-        return ActivityCard(
-            id = activity.id,
-            name = mapName(activity.name, activity.private),
-            type = mapType(activity.type),
-            subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype(),
-            distance = formatKm(activity.distance),
-            duration = mapDuration(activity.elapsed_time, activity.moving_time, subtype.isRace()),
-            pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
-            start = mapStartTime(activity.start_date_local),
-            mapUrl = mapMap(activity.map)
-        )
-    }
+    fun summaryDbToUi(activity: Activity) = ActivityCard(
+        id = activity.id,
+        name = mapName(activity.name, activity.isPrivate),
+        type = ActivityType.valueOf(activity.type),
+        subtype = ActivitySubtype.valueOf(activity.subtype),
+        distance = formatKm(activity.distance),
+        duration = formatDuration(activity.duration),
+        pace = formatPace(activity.pace),
+        start = formatStartTime(activity.start),
+        mapUrl = activity.mapPolyline?.let { MapboxStatic.makeUrl(it, darkMode = darkModeImages) }
+    )
 
-    fun mapActivityDetails(activity: ApiDetailedActivity): ActivityDetails {
+    fun mapDetailedActivity(activity: ApiDetailedActivity): ActivityDetails {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         return ActivityDetails(
             id = activity.id,
@@ -80,19 +77,14 @@ internal class ActivityMapper(private val clock: Clock) {
             averageHeartrate = activity.average_heartrate?.roundToInt(),
             maxHeartrate = activity.max_heartrate?.roundToInt(),
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
-            start = mapStartTime(activity.start_date_local),
-            mapUrl = mapMap(activity.map),
+            start = formatStartTime(activity.start_date_local),
+            mapUrl = generateMapUrl(activity.map),
             splits = mapSplits(activity.splits_metric)
         )
     }
 
     private fun mapName(name: String, private: Boolean) =
         if (private) "$privateEmoji $name" else name
-
-    private fun mapDuration(elapsedTime: Int, movingTime: Int, isRace: Boolean): String {
-        val time = if (isRace) elapsedTime else movingTime
-        return formatDuration(time)
-    }
 
     private fun mapPace(
         elapsedTime: Int,
@@ -104,16 +96,16 @@ internal class ActivityMapper(private val clock: Clock) {
         return formatPace(calculatePace(distanceMetres, time))
     }
 
-    private fun mapStartTime(startDateLocal: String): String {
+    private fun formatStartTime(startDateLocal: String): String {
         return startDateLocal.formatDate(datePattern).uppercase()
     }
 
-    private fun extractPolyline(map: ApiPolylineMap?): String? {
+    private fun mapPolyline(map: ApiPolylineMap?): String? {
         return map?.takeIf { it.summary_polyline.isNotEmpty() }?.summary_polyline
     }
 
-    private fun mapMap(map: ApiPolylineMap?): String? {
-        return extractPolyline(map)?.let { MapboxStatic.makeUrl(it, darkMode = darkModeImages) }
+    private fun generateMapUrl(map: ApiPolylineMap?): String? {
+        return mapPolyline(map)?.let { MapboxStatic.makeUrl(it, darkMode = darkModeImages) }
     }
 
     private fun mapSplits(splits: List<ApiSplit>?): List<Split> {

@@ -8,6 +8,7 @@ import com.jdamcd.runlog.shared.Split
 import com.jdamcd.runlog.shared.testutil.MockClock
 import com.jdamcd.runlog.shared.testutil.activityModel
 import com.jdamcd.runlog.shared.testutil.detailedActivityModel
+import comjdamcdrunlogshareddatabase.Activity
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -15,15 +16,69 @@ import kotlin.test.Test
 class ActivityMapperTest {
 
     private lateinit var mapper: ActivityMapper
+    private val clock = MockClock
 
     @BeforeTest
     fun setUp() {
+        clock.epochSeconds = 456L
         mapper = ActivityMapper(MockClock)
     }
 
     @Test
-    fun `maps default activity`() {
-        mapper.mapActivityCard(activityModel()) shouldBe ActivityCard(
+    fun `maps default ApiSummaryActivity to DB model`() {
+        mapper.summaryApiToDb(activityModel()) shouldBe Activity(
+            id = 123L,
+            name = "my activity",
+            isPrivate = false,
+            type = "RUN",
+            subtype = "DEFAULT",
+            distance = 10_100.0f,
+            duration = 2400, // moving time
+            pace = 238, // moving pace
+            start = "2022-10-25T17:58:50Z",
+            mapPolyline = "abc",
+            lastUpdated = 456L
+        )
+    }
+
+    @Test
+    fun `maps race ApiSummaryActivity to DB model`() {
+        mapper.summaryApiToDb(activityModel(workout_type = 1)) shouldBe Activity(
+            id = 123L,
+            name = "my activity",
+            isPrivate = false,
+            type = "RUN",
+            subtype = "RACE",
+            distance = 10_100.0f,
+            duration = 2460, // elapsed time
+            pace = 244, // elapsed pace
+            start = "2022-10-25T17:58:50Z",
+            mapPolyline = "abc",
+            lastUpdated = 456L
+        )
+    }
+
+    @Test
+    fun `maps ApiSummaryActivity with no map to DB model`() {
+        mapper.summaryApiToDb(activityModel(map = null)) shouldBe Activity(
+            id = 123L,
+            name = "my activity",
+            isPrivate = false,
+            type = "RUN",
+            subtype = "DEFAULT",
+            distance = 10_100.0f,
+            duration = 2400, // moving time
+            pace = 238, // moving pace
+            start = "2022-10-25T17:58:50Z",
+            mapPolyline = null,
+            lastUpdated = 456L
+        )
+    }
+
+    @Test
+    fun `maps DB Activity to UI model`() {
+        val dbModel = mapper.summaryApiToDb(activityModel(map = null))
+        mapper.summaryDbToUi(dbModel) shouldBe ActivityCard(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
@@ -37,53 +92,8 @@ class ActivityMapperTest {
     }
 
     @Test
-    fun `maps race activity using elapsed time`() {
-        mapper.mapActivityCard(activityModel(workout_type = 1)) shouldBe ActivityCard(
-            id = 123L,
-            name = "my activity",
-            type = ActivityType.RUN,
-            subtype = ActivitySubtype.RACE,
-            distance = "10.1k",
-            duration = "41:00",
-            pace = "4:04 /km",
-            start = "TUESDAY 25 OCT @ 5:58PM",
-            mapUrl = null
-        )
-    }
-
-    @Test
-    fun `maps long run activity`() {
-        mapper.mapActivityCard(activityModel(workout_type = 2)) shouldBe ActivityCard(
-            id = 123L,
-            name = "my activity",
-            type = ActivityType.RUN,
-            subtype = ActivitySubtype.LONG,
-            distance = "10.1k",
-            duration = "40:00",
-            pace = "3:58 /km",
-            start = "TUESDAY 25 OCT @ 5:58PM",
-            mapUrl = null
-        )
-    }
-
-    @Test
-    fun `maps workout activity`() {
-        mapper.mapActivityCard(activityModel(workout_type = 3)) shouldBe ActivityCard(
-            id = 123L,
-            name = "my activity",
-            type = ActivityType.RUN,
-            subtype = ActivitySubtype.WORKOUT,
-            distance = "10.1k",
-            duration = "40:00",
-            pace = "3:58 /km",
-            start = "TUESDAY 25 OCT @ 5:58PM",
-            mapUrl = null
-        )
-    }
-
-    @Test
     fun `maps detailed activity`() {
-        mapper.mapActivityDetails(detailedActivityModel()) shouldBe ActivityDetails(
+        mapper.mapDetailedActivity(detailedActivityModel()) shouldBe ActivityDetails(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,

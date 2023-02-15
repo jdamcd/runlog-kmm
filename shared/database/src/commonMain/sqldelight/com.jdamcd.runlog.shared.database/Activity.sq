@@ -17,7 +17,8 @@ INSERT OR REPLACE INTO activity(id, name, isPrivate, type, subtype, distance, du
 VALUES ?;
 
 selectAll:
-SELECT * FROM activity;
+SELECT * FROM activity
+ORDER BY start DESC;
 
 deleteAll:
 DELETE FROM activity;

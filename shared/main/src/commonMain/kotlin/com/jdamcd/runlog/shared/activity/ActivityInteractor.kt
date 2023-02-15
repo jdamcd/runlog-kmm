@@ -17,15 +17,13 @@ internal class ActivityInteractor(
 
     // TODO: Separate read and write paths
     override suspend fun activities(): Result<List<ActivityCard>> = tryCall {
-        val result = api.activities()
-        dao.insert(result.map { mapper.activityToDb(it) })
-
-        Result.Data(result.map { mapper.mapActivityCard(it) })
+        dao.insert(api.activities().map { mapper.summaryApiToDb(it) })
+        Result.Data(dao.allActivities().map { mapper.summaryDbToUi(it) })
     }
 
     override suspend fun activityDetails(id: Long): Result<ActivityDetails> = tryCall {
         val activityDetails = api.activity(id)
-        Result.Data(mapper.mapActivityDetails(activityDetails))
+        Result.Data(mapper.mapDetailedActivity(activityDetails))
     }
 
     override fun linkUrl(id: Long) = StravaUrl.linkUrl(id)

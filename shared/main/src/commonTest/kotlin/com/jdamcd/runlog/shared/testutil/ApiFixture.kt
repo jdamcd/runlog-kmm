@@ -9,7 +9,10 @@ import com.jdamcd.runlog.shared.api.ApiSplit
 import com.jdamcd.runlog.shared.api.ApiSummaryActivity
 import kotlin.math.roundToInt
 
-fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
+fun activityModel(
+    workout_type: Int? = null,
+    map: ApiPolylineMap? = map()
+) = ApiSummaryActivity(
     id = 123L,
     name = "my activity",
     private = false,
@@ -19,7 +22,11 @@ fun activityModel(workout_type: Int? = null) = ApiSummaryActivity(
     moving_time = 2400,
     elapsed_time = 2460,
     start_date_local = "2022-10-25T17:58:50Z",
-    map = null
+    map = map
+)
+
+fun map() = ApiPolylineMap(
+    summary_polyline = "abc"
 )
 
 fun detailedActivityModel() = ApiDetailedActivity(
