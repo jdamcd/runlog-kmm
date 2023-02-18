@@ -2,6 +2,7 @@ package com.jdamcd.runlog.shared
 
 import com.jdamcd.runlog.shared.activity.ActivityInteractor
 import com.jdamcd.runlog.shared.activity.ActivityMapper
+import com.jdamcd.runlog.shared.activity.ActivityRepository
 import com.jdamcd.runlog.shared.api.apiModule
 import com.jdamcd.runlog.shared.database.dbModule
 import com.jdamcd.runlog.shared.login.LoginInteractor
@@ -30,7 +31,8 @@ fun commonModule() = module {
     single { ActivityMapper(get()) }
     single { AthleteMapper(get()) }
     single<StravaLogin> { LoginInteractor(get(), get(), get()) }
-    single<StravaActivity> { ActivityInteractor(get(), get(), get()) }
+    single { ActivityRepository(get(), get(), get()) }
+    single<StravaActivity> { ActivityInteractor(get()) }
     single<StravaProfile> { ProfileRepository(get(), get(), get()) }
     single<UserManager> { PersistingUserManager(get(), get()) }
 }
