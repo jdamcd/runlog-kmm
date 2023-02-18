@@ -15,20 +15,22 @@ internal class ActivityInteractor(
     private val mapper: ActivityMapper
 ) : StravaActivity {
 
+    var darkMode = false
+
     // TODO: Separate read and write paths
     override suspend fun activities(): Result<List<ActivityCard>> = tryCall {
         dao.insert(api.activities().map { mapper.summaryApiToDb(it) })
-        Result.Data(dao.allActivities().map { mapper.summaryDbToUi(it) })
+        Result.Data(dao.allActivities().map { mapper.summaryDbToUi(it, darkMode) })
     }
 
     override suspend fun activityDetails(id: Long): Result<ActivityDetails> = tryCall {
         val activityDetails = api.activity(id)
-        Result.Data(mapper.mapDetailedActivity(activityDetails))
+        Result.Data(mapper.detailApiToUi(activityDetails, darkMode))
     }
 
     override fun linkUrl(id: Long) = StravaUrl.linkUrl(id)
 
     override fun requestDarkModeImages(enabled: Boolean) {
-        mapper.darkModeImages = enabled
+        darkMode = enabled
     }
 }

@@ -93,7 +93,7 @@ class ActivityMapperTest {
 
     @Test
     fun `maps detailed activity`() {
-        mapper.mapDetailedActivity(detailedActivityModel()) shouldBe ActivityDetails(
+        mapper.detailApiToUi(detailedActivityModel()) shouldBe ActivityDetails(
             id = 123L,
             name = "my activity",
             type = ActivityType.RUN,
