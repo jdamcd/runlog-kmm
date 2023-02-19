@@ -30,7 +30,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class ProfileRepositoryTest {
 
-    private lateinit var repository: ProfileRepository
+    private lateinit var repo: ProfileRepository
 
     private val api: StravaApi = mockk()
     private val dao: AthleteDao = mockk()
@@ -38,7 +38,7 @@ class ProfileRepositoryTest {
 
     @Before
     fun setUp() {
-        repository = ProfileRepository(api, dao, mapper, MockLog())
+        repo = ProfileRepository(api, dao, mapper, MockLog())
     }
 
     @Test
@@ -47,7 +47,7 @@ class ProfileRepositoryTest {
         coEvery { api.athleteStats(123L) } returns athleteStatsModel()
         every { dao.insert(any(), any()) } just runs
 
-        repository.refresh() shouldBe RefreshState.SUCCESS
+        repo.refresh() shouldBe RefreshState.SUCCESS
     }
 
     @Test
@@ -55,7 +55,7 @@ class ProfileRepositoryTest {
         coEvery { api.athlete() } returns athleteModel()
         coEvery { api.athleteStats(123L) } throws Exception()
 
-        repository.refresh() shouldBe RefreshState.ERROR
+        repo.refresh() shouldBe RefreshState.ERROR
 
         verify(exactly = 0) { dao.insert(any(), any()) }
     }
@@ -66,21 +66,21 @@ class ProfileRepositoryTest {
         coEvery { api.athleteStats(123L) } returns athleteStatsModel()
         every { dao.insert(any(), any()) } throws Exception()
 
-        repository.refresh() shouldBe RefreshState.ERROR
+        repo.refresh() shouldBe RefreshState.ERROR
     }
 
     @Test
     fun `profile returns user from DB`() = runTest {
         every { dao.user() } returns athleteDbModel()
 
-        repository.profile() should beOfType<Result.Data<AthleteProfile>>()
+        repo.profile() should beOfType<Result.Data<AthleteProfile>>()
     }
 
     @Test
     fun `profile returns empty if user is not in DB`() = runTest {
         every { dao.user() } returns null
 
-        repository.profile() shouldBe Result.Empty
+        repo.profile() shouldBe Result.Empty
     }
 
     @Test
@@ -88,7 +88,7 @@ class ProfileRepositoryTest {
         val flow = MutableSharedFlow<AthleteWithStats?>()
         every { dao.userFlow() } returns flow
 
-        repository.profileFlow().test {
+        repo.profileFlow().test {
             flow.emit(athleteDbModel())
             awaitItem() should beOfType<Result.Data<AthleteProfile>>()
             cancelAndConsumeRemainingEvents()
@@ -100,7 +100,7 @@ class ProfileRepositoryTest {
         val flow = MutableSharedFlow<AthleteWithStats?>()
         every { dao.userFlow() } returns flow
 
-        repository.profileFlow().test {
+        repo.profileFlow().test {
             flow.emit(null)
             awaitItem() shouldBe Result.Empty
             cancelAndConsumeRemainingEvents()
@@ -112,13 +112,13 @@ class ProfileRepositoryTest {
         val url = "image.url/123"
         every { dao.userImageUrl() } returns url
 
-        repository.userImageUrl() shouldBe url
+        repo.userImageUrl() shouldBe url
     }
 
     @Test
     fun `userImageUrl returns null if not stored`() = runTest {
         every { dao.userImageUrl() } returns null
 
-        repository.userImageUrl() shouldBe null
+        repo.userImageUrl() shouldBe null
     }
 }

@@ -32,15 +32,17 @@ internal class ProfileRepository(
             log.debug("Profile refreshed successfully")
             RefreshState.SUCCESS
         } catch (e: Exception) {
-            log.debug("Profile refresh failed: ${e.message}")
+            log.error("Profile refresh failed: ${e.message}")
             RefreshState.ERROR
         }
     }
 
     override suspend fun profile(): Result<AthleteProfile> {
-        return dao.user()?.let {
-            Result.Data(mapper.dbToUi(it))
-        } ?: Result.Empty
+        return withContext(Dispatchers.Default) {
+            dao.user()?.let {
+                Result.Data(mapper.dbToUi(it))
+            } ?: Result.Empty
+        }
     }
 
     override fun profileFlow(): Flow<Result<AthleteProfile>> {

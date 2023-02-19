@@ -12,6 +12,7 @@ internal class ActivityInteractor(
 ) : StravaActivity {
 
     override suspend fun activities(): Result<List<ActivityCard>> = tryCall {
+        repo.refresh()
         repo.activities()
     }
 

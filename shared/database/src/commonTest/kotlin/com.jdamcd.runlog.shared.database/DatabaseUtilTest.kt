@@ -23,7 +23,7 @@ class DatabaseUtilTest {
     @Test
     fun `clears all data`() = runTest {
         athleteDao.insert(athlete(), runStats())
-        activityDao.insert(activity())
+        activityDao.insert(listOf(activity()))
 
         dbUtil.clear()
 

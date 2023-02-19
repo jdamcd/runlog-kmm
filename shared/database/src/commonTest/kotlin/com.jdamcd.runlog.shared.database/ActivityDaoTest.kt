@@ -1,5 +1,6 @@
 package com.jdamcd.runlog.shared.database
 
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -16,7 +17,7 @@ class ActivityDaoTest {
 
     @Test
     fun `inserts activity`() {
-        dao.insert(activity())
+        dao.insert(listOf(activity()))
 
         dao.allActivities() shouldBe listOf(activity())
     }
@@ -32,8 +33,20 @@ class ActivityDaoTest {
     }
 
     @Test
+    fun `insert updates activity by ID if already stored`() {
+        val activity1 = activity(id = 123L)
+        val activity2 = activity(id = 456L)
+        val activity3 = activity(id = 123L, isPrivate = true)
+
+        dao.insert(listOf(activity1, activity2))
+        dao.insert(listOf(activity3))
+
+        dao.allActivities() shouldContainExactlyInAnyOrder listOf(activity2, activity3)
+    }
+
+    @Test
     fun `deletes all activities`() {
-        dao.insert(activity())
+        dao.insert(listOf(activity()))
 
         dao.clear()
 

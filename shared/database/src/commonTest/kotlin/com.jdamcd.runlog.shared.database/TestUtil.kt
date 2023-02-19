@@ -27,10 +27,10 @@ fun runStats() = RunStats(
     lastUpdated = 456L
 )
 
-fun activity(id: Long = 123L) = Activity(
+fun activity(id: Long = 123L, isPrivate: Boolean = false) = Activity(
     id = id,
-    name = "Morning Eun",
-    isPrivate = false,
+    name = "Morning Run",
+    isPrivate = isPrivate,
     type = "RUN",
     subtype = "DEFAULT",
     distance = 10_000.0f,
