@@ -11,19 +11,13 @@ internal class ActivityInteractor(
     private val repo: ActivityRepository
 ) : StravaActivity {
 
-    var darkMode = false
-
     override suspend fun activities(): Result<List<ActivityCard>> = tryCall {
-        repo.activities(darkMode)
+        repo.activities()
     }
 
     override suspend fun activityDetails(id: Long): Result<ActivityDetails> = tryCall {
-        repo.activityDetails(id, darkMode)
+        repo.activityDetails(id)
     }
 
     override fun linkUrl(id: Long) = StravaUrl.linkUrl(id)
-
-    override fun requestDarkModeImages(enabled: Boolean) {
-        darkMode = enabled
-    }
 }

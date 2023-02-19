@@ -5,6 +5,7 @@ import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
 import com.jdamcd.runlog.shared.AthleteProfile
 import com.jdamcd.runlog.shared.AthleteStats
+import com.jdamcd.runlog.shared.ImageUrl
 
 val activityCard1 = ActivityCard(
     id = 123,
@@ -15,7 +16,7 @@ val activityCard1 = ActivityCard(
     duration = "40:00",
     pace = "3:58 /km",
     start = "TUESDAY 25 OCT @ 5:58PM",
-    mapUrl = "map.url/123"
+    mapUrl = ImageUrl("map.url/123")
 )
 
 val activityCard2 = ActivityCard(
@@ -27,7 +28,7 @@ val activityCard2 = ActivityCard(
     duration = "40:00",
     pace = "3:58 /km",
     start = "TUESDAY 25 OCT @ 5:58PM",
-    mapUrl = "map.url/123"
+    mapUrl = ImageUrl("map.url/123")
 )
 
 val athleteProfile = AthleteProfile(

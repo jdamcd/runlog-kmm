@@ -6,7 +6,6 @@ interface StravaActivity {
     suspend fun activities(): Result<List<ActivityCard>>
     suspend fun activityDetails(id: Long): Result<ActivityDetails>
     fun linkUrl(id: Long): String
-    fun requestDarkModeImages(enabled: Boolean)
 }
 
 data class ActivityCard(
@@ -18,7 +17,7 @@ data class ActivityCard(
     val duration: String,
     val pace: String,
     val start: String,
-    val mapUrl: String?
+    val mapUrl: ImageUrl?
 )
 
 data class ActivityDetails(
@@ -40,7 +39,7 @@ data class ActivityDetails(
     val maxHeartrate: Int?,
     val pace: String,
     val start: String,
-    val mapUrl: String?,
+    val mapUrl: ImageUrl?,
     val splits: List<Split>
 )
 
@@ -56,6 +55,11 @@ data class Split(
     val paceSeconds: Int,
     val paceZone: Int,
     val visualisation: Float // Relative size 0.0 - 1.0
+)
+
+data class ImageUrl(
+    val default: String,
+    val darkMode: String = default
 )
 
 enum class ActivityType {

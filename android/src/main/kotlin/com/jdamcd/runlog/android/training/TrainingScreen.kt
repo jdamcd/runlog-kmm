@@ -49,6 +49,7 @@ import com.jdamcd.runlog.android.ui.previewBackground
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
+import com.jdamcd.runlog.shared.ImageUrl
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -58,7 +59,6 @@ fun TrainingScreen(
     navigateToActivity: (Long) -> Unit,
     navigateToProfile: () -> Unit
 ) {
-    viewModel.setDarkTheme(isSystemInDarkTheme())
     val statusBarState: StatusBarState by viewModel.statusFlow.collectAsState()
     hostAppBar(
         AppBarState(
@@ -168,7 +168,7 @@ private fun ActivityItem(activity: ActivityCard, onItemClick: (Long) -> Unit) {
 
         activity.mapUrl?.let {
             AsyncImage(
-                model = it,
+                model = if (isSystemInDarkTheme()) it.darkMode else it.default,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -261,7 +261,7 @@ private class ActivityItemsProvider : PreviewParameterProvider<List<ActivityCard
                 duration = "2:59:59",
                 pace = "4:16 /km",
                 start = "SUNDAY 6 NOV @ 9:11AM",
-                mapUrl = "example.com"
+                mapUrl = ImageUrl("")
             ),
             ActivityCard(
                 id = 2,

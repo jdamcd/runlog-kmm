@@ -3,7 +3,6 @@ import RunLogShared
 import SwiftUI
 
 struct ActivityView: View {
-    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel = ActivityViewModel()
 
     var id: Int64
@@ -27,12 +26,12 @@ struct ActivityView: View {
     }
 
     private func load() {
-        viewModel.setDarkMode(colorScheme == .dark)
         viewModel.load(id: id)
     }
 }
 
 private struct ActivityDetailsView: View {
+    @Environment(\.colorScheme) var colorScheme
     var activity: ActivityDetails
     var openOnWeb: () -> URL
 
@@ -40,7 +39,8 @@ private struct ActivityDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 if let map = activity.mapUrl {
-                    LazyImage(url: URL(string: map))
+                    let mapUrl = colorScheme == .dark ? map.darkMode : map.default_
+                    LazyImage(url: URL(string: mapUrl))
                         .aspectRatio(2.5, contentMode: ContentMode.fit)
                 }
                 VStack(alignment: .leading) {
@@ -278,7 +278,7 @@ struct ActivityView_Previews: PreviewProvider {
                     maxHeartrate: 167,
                     pace: "4:54 /km",
                     start: "FRIDAY 25 NOV @ 2:23PM",
-                    mapUrl: "",
+                    mapUrl: ImageUrl(default: "", darkMode: ""),
                     splits: [Split(
                         number: 1,
                         distance: "1k",

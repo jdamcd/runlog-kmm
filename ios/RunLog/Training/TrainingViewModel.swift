@@ -47,10 +47,6 @@ class TrainingViewModel: ObservableObject {
             }
         }
     }
-
-    func setDarkMode(_ isEnabled: Bool) {
-        stravaActivity.requestDarkModeImages(enabled: isEnabled)
-    }
 }
 
 enum TrainingState: Equatable {

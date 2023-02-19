@@ -32,10 +32,6 @@ class ActivityViewModel: ObservableObject {
     func linkUrl(id: Int64) -> URL {
         URL(string: stravaActivity.linkUrl(id: id))!
     }
-
-    func setDarkMode(_ isEnabled: Bool) {
-        stravaActivity.requestDarkModeImages(enabled: isEnabled)
-    }
 }
 
 enum ActivityState: Equatable {

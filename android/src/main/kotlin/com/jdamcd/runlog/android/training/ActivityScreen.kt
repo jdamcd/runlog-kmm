@@ -50,6 +50,7 @@ import com.jdamcd.runlog.android.ui.stravaBrand
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
+import com.jdamcd.runlog.shared.ImageUrl
 import com.jdamcd.runlog.shared.Split
 import kotlinx.coroutines.flow.StateFlow
 
@@ -60,7 +61,6 @@ fun ActivityScreen(
     openLink: (String) -> Unit
 ) {
     var screenTitle by rememberSaveable { mutableStateOf("") }
-    viewModel.setDarkTheme(isSystemInDarkTheme())
     hostAppBar(
         AppBarState(title = screenTitle)
     )
@@ -108,7 +108,7 @@ private fun ActivityContent(
     ) {
         activity.mapUrl?.let {
             AsyncImage(
-                model = it,
+                model = if (isSystemInDarkTheme()) it.darkMode else it.default,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -405,7 +405,7 @@ private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails
             maxHeartrate = 167,
             pace = "4:54 /km",
             start = "FRIDAY 25 NOV @ 2:23PM",
-            mapUrl = "",
+            mapUrl = ImageUrl(""),
             splits = listOf(
                 Split(
                     number = 1,

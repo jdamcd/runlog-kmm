@@ -4,6 +4,7 @@ import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.ActivityDetails
 import com.jdamcd.runlog.shared.ActivitySubtype
 import com.jdamcd.runlog.shared.ActivityType
+import com.jdamcd.runlog.shared.ImageUrl
 import com.jdamcd.runlog.shared.Split
 import com.jdamcd.runlog.shared.api.ApiDetailedActivity
 import com.jdamcd.runlog.shared.api.ApiPolylineMap
@@ -43,7 +44,7 @@ internal class ActivityMapper(private val clock: Clock) {
         )
     }
 
-    fun summaryDbToUi(activity: Activity, darkMode: Boolean = false) = ActivityCard(
+    fun summaryDbToUi(activity: Activity) = ActivityCard(
         id = activity.id,
         name = mapName(activity.name, activity.isPrivate),
         type = ActivityType.valueOf(activity.type),
@@ -52,10 +53,10 @@ internal class ActivityMapper(private val clock: Clock) {
         duration = formatDuration(activity.duration),
         pace = formatPace(activity.pace),
         start = formatStartTime(activity.start),
-        mapUrl = activity.mapPolyline?.let { MapboxStatic.makeUrl(it, darkMode = darkMode) }
+        mapUrl = activity.mapPolyline?.let { pathToImageUrl(it) }
     )
 
-    fun detailApiToUi(activity: ApiDetailedActivity, darkMode: Boolean = false): ActivityDetails {
+    fun detailApiToUi(activity: ApiDetailedActivity): ActivityDetails {
         val subtype = ApiWorkoutType.map(activity.workout_type).toActivitySubtype()
         return ActivityDetails(
             id = activity.id,
@@ -76,7 +77,7 @@ internal class ActivityMapper(private val clock: Clock) {
             maxHeartrate = activity.max_heartrate?.roundToInt(),
             pace = mapPace(activity.elapsed_time, activity.moving_time, activity.distance, subtype.isRace()),
             start = formatStartTime(activity.start_date_local),
-            mapUrl = generateMapUrl(activity.map, darkMode),
+            mapUrl = mapPolyline(activity.map)?.let { pathToImageUrl(it) },
             splits = mapSplits(activity.splits_metric)
         )
     }
@@ -102,9 +103,10 @@ internal class ActivityMapper(private val clock: Clock) {
         return map?.takeIf { it.summary_polyline.isNotEmpty() }?.summary_polyline
     }
 
-    private fun generateMapUrl(map: ApiPolylineMap?, darkMode: Boolean): String? {
-        return mapPolyline(map)?.let { MapboxStatic.makeUrl(it, darkMode = darkMode) }
-    }
+    private fun pathToImageUrl(path: String) = ImageUrl(
+        default = MapboxStatic.makeUrl(path),
+        darkMode = MapboxStatic.makeUrl(path, darkMode = true)
+    )
 
     private fun mapSplits(splits: List<ApiSplit>?): List<Split> {
         val paces = splits?.associateBy(

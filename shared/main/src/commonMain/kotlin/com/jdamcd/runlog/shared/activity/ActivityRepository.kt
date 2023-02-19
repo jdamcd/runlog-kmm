@@ -13,13 +13,13 @@ internal class ActivityRepository(
 ) {
 
     // TODO: Separate read and write paths
-    suspend fun activities(darkMode: Boolean): Result<List<ActivityCard>> {
+    suspend fun activities(): Result<List<ActivityCard>> {
         dao.insert(api.activities().map { mapper.summaryApiToDb(it) })
-        return Result.Data(dao.allActivities().map { mapper.summaryDbToUi(it, darkMode) })
+        return Result.Data(dao.allActivities().map { mapper.summaryDbToUi(it) })
     }
 
-    suspend fun activityDetails(id: Long, darkMode: Boolean): Result<ActivityDetails> {
+    suspend fun activityDetails(id: Long): Result<ActivityDetails> {
         val activityDetails = api.activity(id)
-        return Result.Data(mapper.detailApiToUi(activityDetails, darkMode))
+        return Result.Data(mapper.detailApiToUi(activityDetails))
     }
 }

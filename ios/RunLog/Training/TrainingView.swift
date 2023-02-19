@@ -4,7 +4,6 @@ import SwiftUI
 
 struct TrainingView: View {
     @ObservedObject var viewModel = TrainingViewModel()
-    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         NavigationView {
@@ -37,7 +36,6 @@ struct TrainingView: View {
     }
 
     private func load() {
-        viewModel.setDarkMode(colorScheme == .dark)
         viewModel.load()
     }
 }
@@ -75,6 +73,7 @@ private struct ActivitiesList: View {
 }
 
 private struct ActivityItem: View {
+    @Environment(\.colorScheme) var colorScheme
     var activity: ActivityCard
 
     var body: some View {
@@ -90,7 +89,8 @@ private struct ActivityItem: View {
                 }
             }
             if let map = activity.mapUrl {
-                LazyImage(url: URL(string: map))
+                let mapUrl = colorScheme == .dark ? map.darkMode : map.default_
+                LazyImage(url: URL(string: mapUrl))
                     .aspectRatio(2.5, contentMode: ContentMode.fit)
                     .cornerRadius(6)
             }
@@ -161,7 +161,7 @@ struct ActivitiesView_Previews: PreviewProvider {
                     duration: "2:59:59",
                     pace: "4:16 /km",
                     start: "SUNDAY 6 NOV @ 9:11AM",
-                    mapUrl: "example.com"
+                    mapUrl: ImageUrl(default: "", darkMode: "")
                 ),
                 ActivityCard(
                     id: 2,
