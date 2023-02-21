@@ -1,10 +1,14 @@
 package com.jdamcd.runlog.shared
 
+import com.jdamcd.runlog.shared.util.RefreshState
 import com.jdamcd.runlog.shared.util.Result
+import kotlinx.coroutines.flow.Flow
 
 interface StravaActivity {
     suspend fun activities(): Result<List<ActivityCard>>
+    fun activitiesFlow(): Flow<List<ActivityCard>>
     suspend fun activityDetails(id: Long): Result<ActivityDetails>
+    suspend fun refresh(): RefreshState
     fun linkUrl(id: Long): String
 }
 

@@ -95,7 +95,7 @@ fun TrainingScreen(
     TrainingList(
         stateFlow = viewModel.contentFlow,
         onItemClick = { navigateToActivity(it) },
-        onRetryClick = { viewModel.load() },
+        onRetryClick = { viewModel.refresh() },
         onPullRefresh = { viewModel.refresh() }
     )
 }
@@ -108,7 +108,7 @@ private fun TrainingList(
     onRetryClick: () -> Unit,
     onPullRefresh: () -> Unit
 ) {
-    val state: TrainingState by stateFlow.collectAsState()
+    val state: TrainingState by stateFlow.collectAsState(TrainingState.Loading)
     val refreshState = rememberPullRefreshState(state.isRefreshing(), onPullRefresh)
     Box(modifier = Modifier.pullRefresh(refreshState)) {
         when (state) {

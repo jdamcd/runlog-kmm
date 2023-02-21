@@ -86,19 +86,21 @@ class ActivityRepositoryTest {
 
         repo.activitiesFlow().test {
             flow.emit(dbActivities)
-            awaitItem() shouldBe beOfType<Result.Data<List<ActivityCard>>>()
+            val result = awaitItem()
+            result.size shouldBe 1
+            result[0].id shouldBe 123L
             cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
-    fun `activitiesFlow emits empty result if none stored`() = runTest {
+    fun `activitiesFlow emits empty list if none stored`() = runTest {
         val flow = MutableSharedFlow<List<Activity>>()
         every { dao.allActivitiesFlow() } returns flow
 
         repo.activitiesFlow().test {
             flow.emit(emptyList())
-            awaitItem() shouldBe Result.Empty
+            awaitItem() shouldBe emptyList()
             cancelAndConsumeRemainingEvents()
         }
     }

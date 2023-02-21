@@ -2,6 +2,7 @@ import Foundation
 import RunLogShared
 
 class ActivityMock: StravaActivity {
+    var refreshState = RefreshState.loading
     var activities: Result<NSArray> = ResultError(error: KotlinThrowable())
     var activityDetails: Result<ActivityDetails> = ResultError(error: KotlinThrowable())
 
@@ -12,6 +13,14 @@ class ActivityMock: StravaActivity {
     func activities() async throws -> Result<NSArray> {
         callCount += 1
         return activities
+    }
+
+    func activitiesFlow() -> Kotlinx_coroutines_coreFlow {
+        NSObject() as! Kotlinx_coroutines_coreFlow
+    }
+
+    func refresh() async throws -> RefreshState {
+        refreshState
     }
 
     func activityDetails(id _: Int64) async throws -> Result<ActivityDetails> {
