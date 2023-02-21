@@ -22,8 +22,8 @@ class TrainingViewModel @Inject constructor(
     private val stravaProfile: StravaProfile
 ) : ViewModel(), LifecycleObserver {
 
-    private val _statusBarFlow = MutableStateFlow<StatusBarState>(StatusBarState.NoProfileImage)
-    val statusFlow = _statusBarFlow as StateFlow<StatusBarState>
+    private val _toolbarFlow = MutableStateFlow<ToolbarState>(ToolbarState.NoProfileImage)
+    val toolbarFlow = _toolbarFlow as StateFlow<ToolbarState>
 
     private val _refreshState = MutableStateFlow(RefreshState.LOADING)
 
@@ -59,7 +59,7 @@ class TrainingViewModel @Inject constructor(
     private fun getProfileImage() {
         viewModelScope.launch {
             stravaProfile.userImageUrl()?.let {
-                _statusBarFlow.value = StatusBarState.ProfileImage(it)
+                _toolbarFlow.value = ToolbarState.ProfileImage(it)
             }
         }
     }
@@ -76,7 +76,7 @@ sealed class TrainingState {
     }
 }
 
-sealed class StatusBarState {
-    object NoProfileImage : StatusBarState()
-    data class ProfileImage(val url: String) : StatusBarState()
+sealed class ToolbarState {
+    object NoProfileImage : ToolbarState()
+    data class ProfileImage(val url: String) : ToolbarState()
 }

@@ -71,8 +71,8 @@ class TrainingViewModelTest {
 
         val viewModel = TrainingViewModel(stravaActivity, stravaProfile)
 
-        viewModel.statusFlow.test {
-            awaitItem() shouldBe StatusBarState.ProfileImage(imageUrl)
+        viewModel.toolbarFlow.test {
+            awaitItem() shouldBe ToolbarState.ProfileImage(imageUrl)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -83,8 +83,8 @@ class TrainingViewModelTest {
 
         val viewModel = TrainingViewModel(stravaActivity, stravaProfile)
 
-        viewModel.statusFlow.test {
-            awaitItem() shouldBe StatusBarState.NoProfileImage
+        viewModel.toolbarFlow.test {
+            awaitItem() shouldBe ToolbarState.NoProfileImage
             cancelAndConsumeRemainingEvents()
         }
     }
