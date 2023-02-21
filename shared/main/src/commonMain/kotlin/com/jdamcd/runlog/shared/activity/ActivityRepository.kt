@@ -39,11 +39,9 @@ internal class ActivityRepository(
         }
     }
 
-    fun activitiesFlow(): Flow<Result<List<ActivityCard>>> {
+    fun activitiesFlow(): Flow<List<ActivityCard>> {
         return dao.allActivitiesFlow().map { list ->
-            list.map { mapper.summaryDbToUi(it) }.let { mapped ->
-                if (mapped.isEmpty()) Result.Empty else Result.Data(mapped)
-            }
+            list.map { mapper.summaryDbToUi(it) }
         }
     }
 

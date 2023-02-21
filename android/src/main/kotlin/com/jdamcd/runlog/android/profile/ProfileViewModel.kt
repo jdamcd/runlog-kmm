@@ -20,10 +20,10 @@ class ProfileViewModel @Inject constructor(
     private val stravaProfile: StravaProfile
 ) : ViewModel(), LifecycleObserver {
 
-    private val refreshState = MutableStateFlow(RefreshState.LOADING)
+    private val _refreshState = MutableStateFlow(RefreshState.LOADING)
 
     val flow = stravaProfile.profileFlow()
-        .combine(refreshState) { profile, refreshState ->
+        .combine(_refreshState) { profile, refreshState ->
             when (profile) {
                 is Result.Data -> ProfileState.Data(profile.value)
                 else -> when (refreshState) {
@@ -37,9 +37,9 @@ class ProfileViewModel @Inject constructor(
     init { refresh() }
 
     fun refresh() {
-        refreshState.value = RefreshState.LOADING
+        _refreshState.value = RefreshState.LOADING
         viewModelScope.launch {
-            refreshState.value = stravaProfile.refresh()
+            _refreshState.value = stravaProfile.refresh()
         }
     }
 }

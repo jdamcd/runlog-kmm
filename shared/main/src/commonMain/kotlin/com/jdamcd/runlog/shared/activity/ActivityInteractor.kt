@@ -16,9 +16,13 @@ internal class ActivityInteractor(
         repo.activities()
     }
 
+    override fun activitiesFlow() = repo.activitiesFlow()
+
     override suspend fun activityDetails(id: Long): Result<ActivityDetails> = tryCall {
         repo.activityDetails(id)
     }
+
+    override suspend fun refresh() = repo.refresh()
 
     override fun linkUrl(id: Long) = StravaUrl.linkUrl(id)
 }

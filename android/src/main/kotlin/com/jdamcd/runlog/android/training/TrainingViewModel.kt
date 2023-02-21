@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.jdamcd.runlog.shared.ActivityCard
 import com.jdamcd.runlog.shared.StravaActivity
 import com.jdamcd.runlog.shared.StravaProfile
-import com.jdamcd.runlog.shared.util.ifError
-import com.jdamcd.runlog.shared.util.ifSuccess
+import com.jdamcd.runlog.shared.util.RefreshState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,44 +22,44 @@ class TrainingViewModel @Inject constructor(
     private val stravaProfile: StravaProfile
 ) : ViewModel(), LifecycleObserver {
 
-    private val _statusFlow = MutableStateFlow<StatusBarState>(StatusBarState.NoProfileImage)
-    val statusFlow = _statusFlow as StateFlow<StatusBarState>
+    private val _toolbarFlow = MutableStateFlow<ToolbarState>(ToolbarState.NoProfileImage)
+    val toolbarFlow = _toolbarFlow as StateFlow<ToolbarState>
 
-    private val _contentFlow = MutableStateFlow<TrainingState>(TrainingState.Loading)
-    val contentFlow = _contentFlow as StateFlow<TrainingState>
+    private val _refreshState = MutableStateFlow(RefreshState.LOADING)
+
+    val contentFlow = stravaActivity.activitiesFlow()
+        .combine(_refreshState) { activities, refreshState ->
+            if (activities.isEmpty()) {
+                when (refreshState) {
+                    RefreshState.LOADING, RefreshState.SUCCESS -> TrainingState.Loading
+                    RefreshState.ERROR -> TrainingState.Error
+                }
+            } else {
+                if (refreshState == RefreshState.LOADING) {
+                    TrainingState.Refreshing(activities)
+                } else {
+                    TrainingState.Data(activities)
+                }
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TrainingState.Loading)
 
     init {
-        load()
-    }
-
-    fun load() {
-        _contentFlow.value = TrainingState.Loading
-        getActivities()
+        refresh()
         getProfileImage()
     }
 
     fun refresh() {
-        val state = _contentFlow.value
-        _contentFlow.value = if (state is TrainingState.Data) {
-            TrainingState.Refreshing(state.activityCards)
-        } else {
-            TrainingState.Loading
-        }
-        getActivities()
-    }
-
-    private fun getActivities() {
+        _refreshState.value = RefreshState.LOADING
         viewModelScope.launch {
-            val result = stravaActivity.activities()
-            result.ifSuccess { _contentFlow.value = TrainingState.Data(it) }
-            result.ifError { _contentFlow.value = TrainingState.Error }
+            _refreshState.value = stravaActivity.refresh()
         }
     }
 
     private fun getProfileImage() {
         viewModelScope.launch {
             stravaProfile.userImageUrl()?.let {
-                _statusFlow.value = StatusBarState.ProfileImage(it)
+                _toolbarFlow.value = ToolbarState.ProfileImage(it)
             }
         }
     }
@@ -74,7 +76,7 @@ sealed class TrainingState {
     }
 }
 
-sealed class StatusBarState {
-    object NoProfileImage : StatusBarState()
-    data class ProfileImage(val url: String) : StatusBarState()
+sealed class ToolbarState {
+    object NoProfileImage : ToolbarState()
+    data class ProfileImage(val url: String) : ToolbarState()
 }

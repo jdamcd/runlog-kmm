@@ -59,23 +59,23 @@ fun TrainingScreen(
     navigateToActivity: (Long) -> Unit,
     navigateToProfile: () -> Unit
 ) {
-    val statusBarState: StatusBarState by viewModel.statusFlow.collectAsState()
+    val toolbarState: ToolbarState by viewModel.toolbarFlow.collectAsState()
     hostAppBar(
         AppBarState(
             title = stringResource(R.string.activities_title),
             actions = {
                 IconButton(onClick = navigateToProfile) {
-                    when (statusBarState) {
-                        StatusBarState.NoProfileImage -> {
+                    when (toolbarState) {
+                        ToolbarState.NoProfileImage -> {
                             Icon(
                                 imageVector = Icons.Rounded.AccountCircle,
                                 contentDescription = stringResource(R.string.profile_title),
                                 tint = MaterialTheme.colors.onPrimary
                             )
                         }
-                        is StatusBarState.ProfileImage -> {
+                        is ToolbarState.ProfileImage -> {
                             AsyncImage(
-                                model = (statusBarState as StatusBarState.ProfileImage).url,
+                                model = (toolbarState as ToolbarState.ProfileImage).url,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(32.dp)
@@ -95,7 +95,7 @@ fun TrainingScreen(
     TrainingList(
         stateFlow = viewModel.contentFlow,
         onItemClick = { navigateToActivity(it) },
-        onRetryClick = { viewModel.load() },
+        onRetryClick = { viewModel.refresh() },
         onPullRefresh = { viewModel.refresh() }
     )
 }
@@ -108,7 +108,7 @@ private fun TrainingList(
     onRetryClick: () -> Unit,
     onPullRefresh: () -> Unit
 ) {
-    val state: TrainingState by stateFlow.collectAsState()
+    val state: TrainingState by stateFlow.collectAsState(TrainingState.Loading)
     val refreshState = rememberPullRefreshState(state.isRefreshing(), onPullRefresh)
     Box(modifier = Modifier.pullRefresh(refreshState)) {
         when (state) {
