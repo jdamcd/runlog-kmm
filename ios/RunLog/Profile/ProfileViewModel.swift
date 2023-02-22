@@ -1,6 +1,5 @@
 import Foundation
 import RunLogShared
-import SwiftUI
 
 @MainActor
 class ProfileViewModel: ObservableObject {

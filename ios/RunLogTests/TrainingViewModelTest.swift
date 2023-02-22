@@ -46,6 +46,7 @@ final class TrainingViewModelTest: XCTestCase {
         // Refresh
         let activity2 = ActivityCard.with(id: 2)
         mockActivity.activities = ResultData(value: NSArray(array: [activity2]))
+        mockActivity.refreshState = .success
 
         viewModel.refresh()
 

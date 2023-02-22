@@ -14,37 +14,57 @@ class TrainingViewModel: ObservableObject {
     {
         self.stravaActivity = stravaActivity
         self.stravaProfile = stravaProfile
-    }
-
-    func load() {
         getProfileImage()
-        if !state.isLoaded {
-            state = .loading
-            getActivities()
-        }
     }
 
     func refresh() {
         if state != .loading {
-            getActivities()
+            Task {
+                if await refresh() == RefreshState.success {
+                    await loadData()
+                }
+            }
+        }
+    }
+
+    func load() {
+        if !state.isLoaded {
+            state = .loading
+            Task {
+                await loadData()
+                if await refresh() == RefreshState.success {
+                    await loadData()
+                } else if state == .loading {
+                    state = .error
+                }
+            }
+        }
+    }
+
+    private func loadData() async {
+        do {
+            let result = try await stravaActivity.activities()
+            if let result = result as? ResultData<NSArray> {
+                state = .data(result.value as! [ActivityCard])
+            } else if result is ResultError {
+                state = .error
+            }
+        } catch {
+            state = .error
+        }
+    }
+
+    private func refresh() async -> RefreshState {
+        do {
+            return try await stravaActivity.refresh()
+        } catch {
+            return RefreshState.error
         }
     }
 
     private func getProfileImage() {
         Task {
             profileImage = try await stravaProfile.userImageUrl()
-        }
-    }
-
-    private func getActivities() {
-        Task {
-            let result = try await stravaActivity.activities()
-            if let result = result as? ResultData<NSArray> {
-                let items = result.value as! [ActivityCard]
-                state = .data(items)
-            } else if result is ResultError {
-                state = .error
-            }
         }
     }
 }
