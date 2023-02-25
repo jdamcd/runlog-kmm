@@ -19,7 +19,7 @@ class ActivityDaoTest {
     fun `inserts activity`() {
         dao.insert(listOf(activity()))
 
-        dao.allActivities() shouldBe listOf(activity())
+        dao.latestActivities() shouldBe listOf(activity())
     }
 
     @Test
@@ -29,7 +29,7 @@ class ActivityDaoTest {
 
         dao.insert(listOf(activity1, activity2))
 
-        dao.allActivities() shouldBe listOf(activity1, activity2)
+        dao.latestActivities() shouldBe listOf(activity1, activity2)
     }
 
     @Test
@@ -41,7 +41,7 @@ class ActivityDaoTest {
         dao.insert(listOf(activity1, activity2))
         dao.insert(listOf(activity3))
 
-        dao.allActivities() shouldContainExactlyInAnyOrder listOf(activity2, activity3)
+        dao.latestActivities() shouldContainExactlyInAnyOrder listOf(activity2, activity3)
     }
 
     @Test
@@ -50,6 +50,6 @@ class ActivityDaoTest {
 
         dao.clear()
 
-        dao.allActivities() shouldBe emptyList()
+        dao.latestActivities() shouldBe emptyList()
     }
 }

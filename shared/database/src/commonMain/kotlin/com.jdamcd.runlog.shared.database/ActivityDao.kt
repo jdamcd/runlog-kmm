@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.map
 
 interface ActivityDao : Dao {
     fun insert(activities: List<Activity>)
-    fun allActivities(): List<Activity>
-    fun allActivitiesFlow(): Flow<List<Activity>>
+    fun latestActivities(): List<Activity>
+    fun latestActivitiesFlow(): Flow<List<Activity>>
     override fun clear()
 }
 
@@ -22,9 +22,9 @@ class SqlActivityDao(database: RunLogDB) : ActivityDao {
         }
     }
 
-    override fun allActivities() = queries.selectAll().executeAsList()
+    override fun latestActivities() = queries.selectLatest().executeAsList()
 
-    override fun allActivitiesFlow() = queries.selectAll().asFlow().map {
+    override fun latestActivitiesFlow() = queries.selectLatest().asFlow().map {
         it.executeAsList()
     }
 

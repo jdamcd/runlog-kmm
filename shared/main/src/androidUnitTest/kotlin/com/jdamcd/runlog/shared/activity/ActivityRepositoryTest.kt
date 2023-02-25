@@ -13,6 +13,7 @@ import comjdamcdrunlogshareddatabase.Activity
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beOfType
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -33,6 +34,8 @@ class ActivityRepositoryTest {
     private val dao: ActivityDao = mockk()
     private val mapper: ActivityMapper = ActivityMapper(MockClock)
 
+    private val dbActivity = mapper.summaryApiToDb(activityModel())
+
     @Before
     fun setUp() {
         repo = ActivityRepository(api, dao, mapper, MockLog())
@@ -40,7 +43,8 @@ class ActivityRepositoryTest {
 
     @Test
     fun `refresh success fetches activities and saves to DB`() = runTest {
-        coEvery { api.activities() } returns listOf(activityModel())
+        every { dao.latestActivities() } returns listOf(dbActivity) // Not empty
+        coEvery { api.activities(pageSize = 20) } returns listOf(activityModel())
         every { dao.insert(any()) } just runs
 
         repo.refresh() shouldBe RefreshState.SUCCESS
@@ -64,16 +68,28 @@ class ActivityRepositoryTest {
     }
 
     @Test
+    fun `fullSync fetches and stores until empty page`() = runTest {
+        coEvery { api.activities(pageSize = 200, page = 1) } returns listOf(activityModel())
+        coEvery { api.activities(pageSize = 200, page = 2) } returns listOf(activityModel())
+        coEvery { api.activities(pageSize = 200, page = 3) } returns emptyList()
+        every { dao.insert(any()) } just runs
+
+        repo.fullSync()
+
+        coVerify(exactly = 3) { api.activities(any(), any()) }
+        verify(exactly = 2) { dao.insert(any()) }
+    }
+
+    @Test
     fun `activities returns activities from DB`() = runTest {
-        val dbActivities = listOf(mapper.summaryApiToDb(activityModel()))
-        every { dao.allActivities() } returns dbActivities
+        every { dao.latestActivities() } returns listOf(dbActivity)
 
         repo.activities() shouldBe beOfType<Result.Data<List<ActivityCard>>>()
     }
 
     @Test
     fun `activities returns empty result if none stored`() = runTest {
-        every { dao.allActivities() } returns emptyList()
+        every { dao.latestActivities() } returns emptyList()
 
         repo.activities() shouldBe Result.Empty
     }
@@ -81,8 +97,8 @@ class ActivityRepositoryTest {
     @Test
     fun `activitiesFlow emits activities from DB`() = runTest {
         val flow = MutableSharedFlow<List<Activity>>()
-        val dbActivities = listOf(mapper.summaryApiToDb(activityModel()))
-        every { dao.allActivitiesFlow() } returns flow
+        val dbActivities = listOf(dbActivity)
+        every { dao.latestActivitiesFlow() } returns flow
 
         repo.activitiesFlow().test {
             flow.emit(dbActivities)
@@ -96,7 +112,7 @@ class ActivityRepositoryTest {
     @Test
     fun `activitiesFlow emits empty list if none stored`() = runTest {
         val flow = MutableSharedFlow<List<Activity>>()
-        every { dao.allActivitiesFlow() } returns flow
+        every { dao.latestActivitiesFlow() } returns flow
 
         repo.activitiesFlow().test {
             flow.emit(emptyList())

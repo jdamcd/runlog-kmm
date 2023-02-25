@@ -22,7 +22,11 @@ internal class ActivityRepository(
 
     suspend fun refresh(): RefreshState {
         return try {
-            dao.insert(api.activities().map { mapper.summaryApiToDb(it) })
+            if (dao.latestActivities().isEmpty()) {
+                fullSync()
+            } else {
+                dao.insert(api.activities(pageSize = 20).map { mapper.summaryApiToDb(it) })
+            }
             log.debug("Activities refreshed successfully")
             RefreshState.SUCCESS
         } catch (e: Exception) {
@@ -31,16 +35,27 @@ internal class ActivityRepository(
         }
     }
 
+    suspend fun fullSync() {
+        log.debug("Starting full activity sync")
+        var page = 1
+        var activities = api.activities(page = page, pageSize = 200)
+        while (activities.isNotEmpty()) {
+            dao.insert(activities.map { mapper.summaryApiToDb(it) })
+            activities = api.activities(page = ++page, pageSize = 200)
+            log.debug("Fetched page $page, containing ${activities.size} activities")
+        }
+    }
+
     suspend fun activities(): Result<List<ActivityCard>> {
         return withContext(Dispatchers.Default) {
-            dao.allActivities().map { mapper.summaryDbToUi(it) }.let {
+            dao.latestActivities().map { mapper.summaryDbToUi(it) }.let {
                 if (it.isEmpty()) Result.Empty else Result.Data(it)
             }
         }
     }
 
     fun activitiesFlow(): Flow<List<ActivityCard>> {
-        return dao.allActivitiesFlow().map { list ->
+        return dao.latestActivitiesFlow().map { list ->
             list.map { mapper.summaryDbToUi(it) }
         }
     }

@@ -28,6 +28,6 @@ class DatabaseUtilTest {
         dbUtil.clear()
 
         athleteDao.user() shouldBe null
-        activityDao.allActivities() shouldBe emptyList()
+        activityDao.latestActivities() shouldBe emptyList()
     }
 }

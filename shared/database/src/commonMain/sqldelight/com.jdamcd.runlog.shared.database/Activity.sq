@@ -16,9 +16,10 @@ insertActivity:
 INSERT OR REPLACE INTO activity(id, name, isPrivate, type, subtype, distance, duration, pace, start, mapPolyline, lastUpdated)
 VALUES ?;
 
-selectAll:
+selectLatest:
 SELECT * FROM activity
-ORDER BY start DESC;
+ORDER BY start DESC
+LIMIT 100;
 
 deleteAll:
 DELETE FROM activity;
