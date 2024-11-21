@@ -6,6 +6,7 @@ group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
+    jvmToolchain(17)
     android()
 
     listOf(

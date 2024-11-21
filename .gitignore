@@ -170,3 +170,4 @@ fastlane/test_output
 
 iOSInjectionProject/
 ios/RunLog.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+/.kotlin

@@ -6,6 +6,7 @@ group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
+    jvmToolchain(17)
     android()
     iosX64()
     iosArm64()
@@ -41,6 +42,9 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = AndroidVersion.minimum
+    }
+    buildFeatures {
+        buildConfig = true
     }
     namespace = "com.jdamcd.runlog.shared.utils"
 }

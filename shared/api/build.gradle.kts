@@ -11,6 +11,7 @@ group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
+    jvmToolchain(17)
     android()
     iosX64()
     iosArm64()
@@ -83,17 +84,17 @@ buildkonfig {
         buildConfigField(
             FieldSpec.Type.STRING,
             "CLIENT_ID",
-            gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.client_id", "")
+            gradleLocalProperties(rootDir, providers).getProperty("com.jdamcd.runlog.client_id", "")
         )
         buildConfigField(
             FieldSpec.Type.STRING,
             "CLIENT_SECRET",
-            gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.client_secret", "")
+            gradleLocalProperties(rootDir, providers).getProperty("com.jdamcd.runlog.client_secret", "")
         )
         buildConfigField(
             FieldSpec.Type.STRING,
             "MAPBOX_TOKEN",
-            gradleLocalProperties(rootDir).getProperty("com.jdamcd.runlog.mapbox_token", "")
+            gradleLocalProperties(rootDir, providers).getProperty("com.jdamcd.runlog.mapbox_token", "")
         )
     }
 }

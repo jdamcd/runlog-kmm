@@ -7,6 +7,7 @@ group = AppConfig.group
 version = AppVersion.name
 
 kotlin {
+    jvmToolchain(17)
     android()
     iosX64()
     iosArm64()
