@@ -13,48 +13,50 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class ActivityViewModelTest {
 
-    @get:Rule
-    val coroutineRule = TestCoroutinesRule()
+    @get:Rule val coroutineRule = TestCoroutinesRule()
 
     private val stravaActivity: StravaActivity = mockk()
     private val activityDetails: ActivityDetails = mockk()
 
-    private lateinit var viewModel: ActivityViewModel
+    private val savedState = SavedStateHandle(initialState = mapOf("id" to 123L))
 
-    @Before
-    fun setUp() {
-        val state = SavedStateHandle(initialState = mapOf("id" to 123L))
-        viewModel = ActivityViewModel(state, stravaActivity)
+    @Test
+    fun `emits initial loading state`() = runTest {
+        coEvery { stravaActivity.activityDetails(123L) } returns Result.Empty
+
+        val viewModel = ActivityViewModel(savedState, stravaActivity)
+
+        viewModel.flow.test {
+            awaitItem() shouldBe ActivityState.Loading
+            cancelAndConsumeRemainingEvents()
+        }
     }
 
     @Test
-    fun `load success emits loading then data`() = runTest {
+    fun `load success emits data`() = runTest {
         coEvery { stravaActivity.activityDetails(123L) } returns Result.Data(activityDetails)
 
-        viewModel.flow.test {
-            viewModel.load()
+        val viewModel = ActivityViewModel(savedState, stravaActivity)
 
-            awaitItem() shouldBe ActivityState.Loading
+        viewModel.flow.test {
             awaitItem() shouldBe ActivityState.Data(activityDetails)
             cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
-    fun `load failure emits loading then error`() = runTest {
-        coEvery { stravaActivity.activityDetails(123L) } returns Result.Error(Throwable())
+    fun `load failure emits error`() = runTest {
+        coEvery { stravaActivity.activityDetails(123L) } returns Result.Error(Exception())
+
+        val viewModel = ActivityViewModel(savedState, stravaActivity)
 
         viewModel.flow.test {
-            viewModel.load()
-
-            awaitItem() shouldBe ActivityState.Loading
             awaitItem() shouldBe ActivityState.Error
             cancelAndConsumeRemainingEvents()
         }
@@ -63,8 +65,9 @@ class ActivityViewModelTest {
     @Test
     fun `generateLink forwards ID to make URL`() {
         every { stravaActivity.linkUrl(123L) } returns "url/123"
+        coEvery { stravaActivity.activityDetails(123L) } returns Result.Empty
 
-        viewModel.activityWebLink()
+        ActivityViewModel(savedState, stravaActivity).activityWebLink()
 
         verify { stravaActivity.linkUrl(123L) }
     }

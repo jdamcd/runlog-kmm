@@ -7,33 +7,31 @@ spotless = "6.25.0"
 ktlint = "1.4.1"
 
 # Shared
-ktor = "2.1.2"
-coroutines = "1.6.4-native-mt"
-koin = "3.2.2"
+ktor = "3.0.1"
+coroutines = "1.9.0"
+koin = "3.5.6"
 sqlDelight = "1.5.5"
-dateTime = "0.4.0"
+dateTime = "0.6.1"
 
 # Android
 hilt = "2.52"
-hiltCompose = "1.0.0"
-composeBom = "2022.10.00"
+hiltCompose = "1.2.0"
+composeBom = "2024.11.00"
 composeCompiler = "1.5.15"
-constraintLayout = "1.0.1"
-material = "1.7.0"
-splash = "1.0.0"
-ktxCore = "1.9.0"
-ktxActivity = "1.6.0"
-lifecycle = "2.5.1"
-navigationCompose = "2.5.3"
-coil = "2.2.2"
+constraintLayout = "1.1.0"
+material = "1.12.0"
+splash = "1.0.1"
+ktxCore = "1.15.0"
+ktxActivity = "1.9.3"
+lifecycle = "2.8.7"
+navigationCompose = "2.8.4"
+coil = "2.7.0"
 
 # Test
-junit = "4.13.2"
-kotest = "5.5.2"
-mockk = "1.13.3"
-turbine = "0.12.1"
-archTest = "2.1.0"
-coroutinesTest = "1.6.4"
+kotest = "5.9.1"
+mockk = "1.13.13"
+turbine = "1.2.0"
+archTest = "2.2.0"
 
 [libraries]
 # Build
@@ -95,11 +93,10 @@ compose-navigation = { group = "androidx.navigation", name = "navigation-compose
 compose-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayout" }
 
 # Test
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotest = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 arch-test = { group = "androidx.arch.core", name = "core-testing", version.ref = "archTest" }
 
 [bundles]

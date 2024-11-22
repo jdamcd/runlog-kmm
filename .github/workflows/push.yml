@@ -62,7 +62,7 @@ jobs:
           -resultBundlePath TestResults
 
     - name: Publish iOS results
-      uses: kishikawakatsumi/xcresulttool@v1.7.0
+      uses: kishikawakatsumi/xcresulttool@v1.7.1
       if: always()
       with:
         title: iOS results

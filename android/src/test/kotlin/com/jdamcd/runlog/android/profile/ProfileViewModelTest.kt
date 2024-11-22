@@ -29,6 +29,7 @@ class ProfileViewModelTest {
     @Test
     fun `emits initial loading state`() = runTest {
         every { stravaProfile.profileFlow() } returns MutableSharedFlow()
+        coEvery { stravaProfile.refresh() } returns RefreshState.LOADING
 
         val viewModel = ProfileViewModel(stravaProfile)
 
@@ -42,6 +43,7 @@ class ProfileViewModelTest {
     fun `emits loading then data`() = runTest {
         val profileFlow = MutableSharedFlow<Result<AthleteProfile>>()
         every { stravaProfile.profileFlow() } returns profileFlow
+        coEvery { stravaProfile.refresh() } returns RefreshState.LOADING
 
         val viewModel = ProfileViewModel(stravaProfile)
 

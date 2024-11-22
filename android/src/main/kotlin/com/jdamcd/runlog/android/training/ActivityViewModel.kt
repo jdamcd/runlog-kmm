@@ -22,13 +22,12 @@ class ActivityViewModel @Inject constructor(
 ) : ViewModel(),
     LifecycleObserver {
 
-    private val id: Long
+    private val id: Long = savedStateHandle.get<Long>(ROUTE_ACTIVITY_ID)!!
 
     private val _flow = MutableStateFlow<ActivityState>(ActivityState.Loading)
     val flow = _flow as StateFlow<ActivityState>
 
     init {
-        id = savedStateHandle.get<Long>(ROUTE_ACTIVITY_ID)!!
         load()
     }
 
