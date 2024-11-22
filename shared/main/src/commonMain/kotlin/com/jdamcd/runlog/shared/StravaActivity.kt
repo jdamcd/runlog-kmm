@@ -67,11 +67,16 @@ data class ImageUrl(
 )
 
 enum class ActivityType {
-    RUN, CYCLE, CROSS_TRAIN
+    RUN,
+    CYCLE,
+    CROSS_TRAIN
 }
 
 enum class ActivitySubtype {
-    DEFAULT, RACE, WORKOUT, LONG;
+    DEFAULT,
+    RACE,
+    WORKOUT,
+    LONG;
 
     fun isRace() = this == RACE
 }

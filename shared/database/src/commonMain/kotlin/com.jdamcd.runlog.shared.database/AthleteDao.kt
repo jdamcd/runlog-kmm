@@ -31,21 +31,15 @@ internal class SqlAthleteDao(database: RunLogDB) : AthleteDao {
         }
     }
 
-    override fun user(): AthleteWithStats? {
-        return queries.selectUser()
-            .executeAsOneOrNull()
-    }
+    override fun user(): AthleteWithStats? = queries.selectUser()
+        .executeAsOneOrNull()
 
-    override fun userImageUrl(): String? {
-        return queries.selectUserImageUrl()
-            .executeAsOneOrNull()?.imageUrl
-    }
+    override fun userImageUrl(): String? = queries.selectUserImageUrl()
+        .executeAsOneOrNull()?.imageUrl
 
-    override fun userFlow(): Flow<AthleteWithStats?> {
-        return queries.selectUser()
-            .asFlow()
-            .mapToOneOrNull()
-    }
+    override fun userFlow(): Flow<AthleteWithStats?> = queries.selectUser()
+        .asFlow()
+        .mapToOneOrNull()
 
     override fun clear() {
         queries.deleteAll()

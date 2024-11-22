@@ -20,42 +20,34 @@ internal class ProfileRepository(
     private val log: Log = MultiLog()
 ) : StravaProfile {
 
-    override suspend fun refresh(): RefreshState {
-        return try {
-            val athlete = api.athlete()
-            val stats = api.athleteStats(athlete.id)
+    override suspend fun refresh(): RefreshState = try {
+        val athlete = api.athlete()
+        val stats = api.athleteStats(athlete.id)
 
-            dao.insert(
-                mapper.athleteToDb(athlete, isUser = true),
-                mapper.runStatsToDb(athlete.id, stats)
-            )
-            log.debug("Profile refreshed successfully")
-            RefreshState.SUCCESS
-        } catch (e: Exception) {
-            log.error("Profile refresh failed: ${e.message}")
-            RefreshState.ERROR
-        }
+        dao.insert(
+            mapper.athleteToDb(athlete, isUser = true),
+            mapper.runStatsToDb(athlete.id, stats)
+        )
+        log.debug("Profile refreshed successfully")
+        RefreshState.SUCCESS
+    } catch (e: Exception) {
+        log.error("Profile refresh failed: ${e.message}")
+        RefreshState.ERROR
     }
 
-    override suspend fun profile(): Result<AthleteProfile> {
-        return withContext(Dispatchers.Default) {
-            dao.user()?.let {
-                Result.Data(mapper.dbToUi(it))
-            } ?: Result.Empty
-        }
+    override suspend fun profile(): Result<AthleteProfile> = withContext(Dispatchers.Default) {
+        dao.user()?.let {
+            Result.Data(mapper.dbToUi(it))
+        } ?: Result.Empty
     }
 
-    override fun profileFlow(): Flow<Result<AthleteProfile>> {
-        return dao.userFlow().map {
-            it?.let {
-                Result.Data(mapper.dbToUi(it))
-            } ?: Result.Empty
-        }
+    override fun profileFlow(): Flow<Result<AthleteProfile>> = dao.userFlow().map {
+        it?.let {
+            Result.Data(mapper.dbToUi(it))
+        } ?: Result.Empty
     }
 
-    override suspend fun userImageUrl(): String? {
-        return withContext(Dispatchers.Default) {
-            dao.userImageUrl()
-        }
+    override suspend fun userImageUrl(): String? = withContext(Dispatchers.Default) {
+        dao.userImageUrl()
     }
 }

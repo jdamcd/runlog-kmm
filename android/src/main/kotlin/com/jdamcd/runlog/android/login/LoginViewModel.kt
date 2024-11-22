@@ -16,22 +16,23 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val stravaLogin: StravaLogin,
     private val userManager: UserManager
-) : ViewModel(), LifecycleObserver {
+) : ViewModel(),
+    LifecycleObserver {
 
-    private val _mutableFlow = MutableStateFlow<LoginState>(LoginState.Idle)
-    val flow = _mutableFlow as StateFlow<LoginState>
+    private val _flow = MutableStateFlow<LoginState>(LoginState.Idle)
+    val flow = _flow as StateFlow<LoginState>
 
     fun startLogin(): String {
-        _mutableFlow.value = LoginState.Loading
+        _flow.value = LoginState.Loading
         return stravaLogin.loginUrl
     }
 
     fun submitAuthCode(code: String) {
-        _mutableFlow.value = LoginState.Loading
+        _flow.value = LoginState.Loading
         viewModelScope.launch {
             when (stravaLogin.authenticate(code)) {
-                is LoginResult.Success -> _mutableFlow.value = LoginState.Success
-                is LoginResult.Error -> _mutableFlow.value = LoginState.Idle
+                is LoginResult.Success -> _flow.value = LoginState.Success
+                is LoginResult.Error -> _flow.value = LoginState.Idle
             }
         }
     }

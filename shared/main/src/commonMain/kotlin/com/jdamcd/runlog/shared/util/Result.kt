@@ -19,13 +19,13 @@ inline fun <reified T> Result<T>.ifError(callback: (error: Throwable) -> Unit) {
 }
 
 enum class RefreshState {
-    LOADING, SUCCESS, ERROR
+    LOADING,
+    SUCCESS,
+    ERROR
 }
 
-inline fun <T> tryCall(call: () -> Result<T>): Result<T> {
-    return try {
-        call.invoke()
-    } catch (error: Throwable) {
-        Result.Error(error)
-    }
+inline fun <T> tryCall(call: () -> Result<T>): Result<T> = try {
+    call.invoke()
+} catch (error: Throwable) {
+    Result.Error(error)
 }

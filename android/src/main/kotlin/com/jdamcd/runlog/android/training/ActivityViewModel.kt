@@ -19,12 +19,13 @@ import javax.inject.Inject
 class ActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val stravaActivity: StravaActivity
-) : ViewModel(), LifecycleObserver {
+) : ViewModel(),
+    LifecycleObserver {
 
     private val id: Long
 
-    private val _mutableFlow = MutableStateFlow<ActivityState>(ActivityState.Loading)
-    val flow = _mutableFlow as StateFlow<ActivityState>
+    private val _flow = MutableStateFlow<ActivityState>(ActivityState.Loading)
+    val flow = _flow as StateFlow<ActivityState>
 
     init {
         id = savedStateHandle.get<Long>(ROUTE_ACTIVITY_ID)!!
@@ -32,11 +33,11 @@ class ActivityViewModel @Inject constructor(
     }
 
     fun load() {
-        _mutableFlow.value = ActivityState.Loading
+        _flow.value = ActivityState.Loading
         viewModelScope.launch {
             val result = stravaActivity.activityDetails(id)
-            result.ifSuccess { _mutableFlow.value = ActivityState.Data(it) }
-            result.ifError { _mutableFlow.value = ActivityState.Error }
+            result.ifSuccess { _flow.value = ActivityState.Data(it) }
+            result.ifError { _flow.value = ActivityState.Error }
         }
     }
 

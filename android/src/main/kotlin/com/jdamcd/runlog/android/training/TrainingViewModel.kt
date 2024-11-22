@@ -20,15 +20,16 @@ import javax.inject.Inject
 class TrainingViewModel @Inject constructor(
     private val stravaActivity: StravaActivity,
     private val stravaProfile: StravaProfile
-) : ViewModel(), LifecycleObserver {
+) : ViewModel(),
+    LifecycleObserver {
 
     private val _toolbarFlow = MutableStateFlow<ToolbarState>(ToolbarState.NoProfileImage)
     val toolbarFlow = _toolbarFlow as StateFlow<ToolbarState>
 
-    private val _refreshState = MutableStateFlow(RefreshState.LOADING)
+    private val refreshState = MutableStateFlow(RefreshState.LOADING)
 
     val contentFlow = stravaActivity.activitiesFlow()
-        .combine(_refreshState) { activities, refreshState ->
+        .combine(refreshState) { activities, refreshState ->
             if (activities.isEmpty()) {
                 when (refreshState) {
                     RefreshState.LOADING, RefreshState.SUCCESS -> TrainingState.Loading
@@ -50,9 +51,9 @@ class TrainingViewModel @Inject constructor(
     }
 
     fun refresh() {
-        _refreshState.value = RefreshState.LOADING
+        refreshState.value = RefreshState.LOADING
         viewModelScope.launch {
-            _refreshState.value = stravaActivity.refresh()
+            refreshState.value = stravaActivity.refresh()
         }
     }
 
@@ -71,9 +72,7 @@ sealed class TrainingState {
     data class Refreshing(val activityCards: List<ActivityCard>) : TrainingState()
     object Error : TrainingState()
 
-    fun isRefreshing(): Boolean {
-        return this is Refreshing
-    }
+    fun isRefreshing(): Boolean = this is Refreshing
 }
 
 sealed class ToolbarState {

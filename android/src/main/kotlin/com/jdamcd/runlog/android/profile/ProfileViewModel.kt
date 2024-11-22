@@ -18,12 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val stravaProfile: StravaProfile
-) : ViewModel(), LifecycleObserver {
+) : ViewModel(),
+    LifecycleObserver {
 
-    private val _refreshState = MutableStateFlow(RefreshState.LOADING)
+    private val refreshState = MutableStateFlow(RefreshState.LOADING)
 
     val flow = stravaProfile.profileFlow()
-        .combine(_refreshState) { profile, refreshState ->
+        .combine(refreshState) { profile, refreshState ->
             when (profile) {
                 is Result.Data -> ProfileState.Data(profile.value)
                 else -> when (refreshState) {
@@ -34,12 +35,14 @@ class ProfileViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ProfileState.Loading)
 
-    init { refresh() }
+    init {
+        refresh()
+    }
 
     fun refresh() {
-        _refreshState.value = RefreshState.LOADING
+        refreshState.value = RefreshState.LOADING
         viewModelScope.launch {
-            _refreshState.value = stravaProfile.refresh()
+            refreshState.value = stravaProfile.refresh()
         }
     }
 }

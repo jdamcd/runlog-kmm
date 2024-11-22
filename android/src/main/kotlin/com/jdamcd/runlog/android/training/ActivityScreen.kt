@@ -378,11 +378,9 @@ private fun WebLink(onClickLink: () -> Unit) {
     }
 }
 
-private fun hasHeartrateStats(activity: ActivityDetails): Boolean {
-    return activity.effort != null &&
-        activity.averageHeartrate != null &&
-        activity.maxHeartrate != null
-}
+private fun hasHeartrateStats(activity: ActivityDetails): Boolean = activity.effort != null &&
+    activity.averageHeartrate != null &&
+    activity.maxHeartrate != null
 
 private class ActivityContentProvider : PreviewParameterProvider<ActivityDetails> {
     override val values = sequenceOf(

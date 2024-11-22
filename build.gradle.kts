@@ -21,23 +21,30 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
-        google()
-        gradlePluginPortal()
+spotless {
+    kotlin {
+        target("**/*.kt")
+        ktlint(libs.versions.ktlint.get())
+            .editorConfigOverride(
+                mapOf(
+                    "ktlint_code_style" to "intellij_idea",
+                    "ktlint_standard_property-naming" to "disabled",
+                    "ktlint_standard_value-parameter-comment" to "disabled",
+                    "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
+                    "ij_kotlin_allow_trailing_comma" to "false",
+                    "ij_kotlin_allow_trailing_comma_on_call_site" to "false"
+                )
+            )
     }
-
-    apply(plugin = "com.diffplug.spotless")
-
-    spotless {
-        kotlin {
-            target("**/*.kt")
-            ktlint(libs.versions.ktlint.get())
-        }
-        kotlinGradle {
-            target("*.gradle.kts", "additionalScripts/*.gradle.kts")
-            ktlint(libs.versions.ktlint.get())
-        }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint(libs.versions.ktlint.get())
+            .editorConfigOverride(
+                mapOf(
+                    "ktlint_code_style" to "intellij_idea",
+                    "ij_kotlin_allow_trailing_comma" to "false",
+                    "ij_kotlin_allow_trailing_comma_on_call_site" to "false"
+                )
+            )
     }
 }

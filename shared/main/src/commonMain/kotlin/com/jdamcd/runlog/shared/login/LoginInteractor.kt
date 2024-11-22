@@ -13,14 +13,12 @@ internal class LoginInteractor(
     private val mapper: AthleteMapper
 ) : StravaLogin {
 
-    override suspend fun authenticate(code: String): LoginResult {
-        return try {
-            val athlete = api.tokenExchange(code)
-            dao.insert(mapper.athleteToDb(athlete, isUser = true))
-            LoginResult.Success
-        } catch (error: Throwable) {
-            LoginResult.Error(error)
-        }
+    override suspend fun authenticate(code: String): LoginResult = try {
+        val athlete = api.tokenExchange(code)
+        dao.insert(mapper.athleteToDb(athlete, isUser = true))
+        LoginResult.Success
+    } catch (error: Throwable) {
+        LoginResult.Error(error)
     }
 
     override val loginUrl = StravaUrl.loginUrl()

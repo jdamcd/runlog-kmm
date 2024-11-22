@@ -81,14 +81,12 @@ internal class KtorStravaApi(
         }
     }
 
-    override suspend fun tokenRefresh(refreshToken: String): ApiToken {
-        return client.post("$BASE_URL/oauth/token") {
-            parameter("refresh_token", refreshToken)
-            parameter("client_id", BuildKonfig.CLIENT_ID)
-            parameter("client_secret", BuildKonfig.CLIENT_SECRET)
-            parameter("grant_type", "refresh_token")
-        }.body()
-    }
+    override suspend fun tokenRefresh(refreshToken: String): ApiToken = client.post("$BASE_URL/oauth/token") {
+        parameter("refresh_token", refreshToken)
+        parameter("client_id", BuildKonfig.CLIENT_ID)
+        parameter("client_secret", BuildKonfig.CLIENT_SECRET)
+        parameter("grant_type", "refresh_token")
+    }.body()
 
     override suspend fun tokenExchange(code: String): ApiDetailedAthlete {
         val result = client.post("$BASE_URL/oauth/token") {
@@ -101,20 +99,16 @@ internal class KtorStravaApi(
         return result.athlete
     }
 
-    override suspend fun activities(pageSize: Int, page: Int): List<ApiSummaryActivity> =
-        client.get("$BASE_URL/athlete/activities") {
-            parameter("per_page", pageSize)
-            parameter("page", page)
-        }.body()
+    override suspend fun activities(pageSize: Int, page: Int): List<ApiSummaryActivity> = client.get("$BASE_URL/athlete/activities") {
+        parameter("per_page", pageSize)
+        parameter("page", page)
+    }.body()
 
-    override suspend fun activity(id: Long): ApiDetailedActivity =
-        client.get("$BASE_URL/activities/$id").body()
+    override suspend fun activity(id: Long): ApiDetailedActivity = client.get("$BASE_URL/activities/$id").body()
 
-    override suspend fun athlete(): ApiDetailedAthlete =
-        client.get("$BASE_URL/athlete").body()
+    override suspend fun athlete(): ApiDetailedAthlete = client.get("$BASE_URL/athlete").body()
 
-    override suspend fun athleteStats(id: Long): ApiActivityStats =
-        client.get("$BASE_URL/athletes/$id/stats").body()
+    override suspend fun athleteStats(id: Long): ApiActivityStats = client.get("$BASE_URL/athletes/$id/stats").body()
 }
 
 internal const val BASE_URL = "https://www.strava.com/api/v3"

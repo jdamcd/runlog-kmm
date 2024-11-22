@@ -8,9 +8,7 @@ object MockClock : Clock {
 
     var epochSeconds: Long = 123L
 
-    override fun now(): Instant {
-        return Instant.fromEpochSeconds(epochSeconds)
-    }
+    override fun now(): Instant = Instant.fromEpochSeconds(epochSeconds)
 }
 
 class MockLog : Log {

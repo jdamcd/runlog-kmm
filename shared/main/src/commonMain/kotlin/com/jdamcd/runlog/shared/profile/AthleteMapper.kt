@@ -41,8 +41,7 @@ internal class AthleteMapper(private val clock: Clock) {
         lastUpdated = clock.now().epochSeconds
     )
 
-    private fun pace(totals: ApiActivityTotal) =
-        calculatePace(totals.distance, totals.moving_time)
+    private fun pace(totals: ApiActivityTotal) = calculatePace(totals.distance, totals.moving_time)
 
     fun dbToUi(athlete: AthleteWithStats) = AthleteProfile(
         id = athlete.id,

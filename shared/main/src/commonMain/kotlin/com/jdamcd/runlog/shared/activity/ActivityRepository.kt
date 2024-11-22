@@ -20,19 +20,17 @@ internal class ActivityRepository(
     private val log: Log = MultiLog()
 ) {
 
-    suspend fun refresh(): RefreshState {
-        return try {
-            if (dao.latestActivities().isEmpty()) {
-                fullSync()
-            } else {
-                dao.insert(api.activities(pageSize = 20).map { mapper.summaryApiToDb(it) })
-            }
-            log.debug("Activities refreshed successfully")
-            RefreshState.SUCCESS
-        } catch (e: Exception) {
-            log.error("Activities refresh failed: ${e.message}")
-            RefreshState.ERROR
+    suspend fun refresh(): RefreshState = try {
+        if (dao.latestActivities().isEmpty()) {
+            fullSync()
+        } else {
+            dao.insert(api.activities(pageSize = 20).map { mapper.summaryApiToDb(it) })
         }
+        log.debug("Activities refreshed successfully")
+        RefreshState.SUCCESS
+    } catch (e: Exception) {
+        log.error("Activities refresh failed: ${e.message}")
+        RefreshState.ERROR
     }
 
     suspend fun fullSync() {
@@ -46,18 +44,14 @@ internal class ActivityRepository(
         }
     }
 
-    suspend fun activities(): Result<List<ActivityCard>> {
-        return withContext(Dispatchers.Default) {
-            dao.latestActivities().map { mapper.summaryDbToUi(it) }.let {
-                if (it.isEmpty()) Result.Empty else Result.Data(it)
-            }
+    suspend fun activities(): Result<List<ActivityCard>> = withContext(Dispatchers.Default) {
+        dao.latestActivities().map { mapper.summaryDbToUi(it) }.let {
+            if (it.isEmpty()) Result.Empty else Result.Data(it)
         }
     }
 
-    fun activitiesFlow(): Flow<List<ActivityCard>> {
-        return dao.latestActivitiesFlow().map { list ->
-            list.map { mapper.summaryDbToUi(it) }
-        }
+    fun activitiesFlow(): Flow<List<ActivityCard>> = dao.latestActivitiesFlow().map { list ->
+        list.map { mapper.summaryDbToUi(it) }
     }
 
     suspend fun activityDetails(id: Long): Result<ActivityDetails> {

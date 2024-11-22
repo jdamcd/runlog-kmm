@@ -82,8 +82,7 @@ internal class ActivityMapper(private val clock: Clock) {
         )
     }
 
-    private fun mapName(name: String, private: Boolean) =
-        if (private) "$privateEmoji $name" else name
+    private fun mapName(name: String, private: Boolean) = if (private) "$privateEmoji $name" else name
 
     private fun mapPace(
         elapsedTime: Int,
@@ -95,13 +94,9 @@ internal class ActivityMapper(private val clock: Clock) {
         return formatPace(calculatePace(distanceMetres, time))
     }
 
-    private fun formatStartTime(startDateLocal: String): String {
-        return startDateLocal.formatDate(datePattern).uppercase()
-    }
+    private fun formatStartTime(startDateLocal: String): String = startDateLocal.formatDate(datePattern).uppercase()
 
-    private fun mapPolyline(map: ApiPolylineMap?): String? {
-        return map?.takeIf { it.summary_polyline.isNotEmpty() }?.summary_polyline
-    }
+    private fun mapPolyline(map: ApiPolylineMap?): String? = map?.takeIf { it.summary_polyline.isNotEmpty() }?.summary_polyline
 
     private fun pathToImageUrl(path: String) = ImageUrl(
         default = MapboxStatic.makeUrl(path),
@@ -145,12 +140,10 @@ internal class ActivityMapper(private val clock: Clock) {
         return value.coerceIn(0.0f, 1.0f)
     }
 
-    private fun mapType(type: String): ActivityType {
-        return when (type) {
-            "Run" -> ActivityType.RUN
-            "Ride" -> ActivityType.CYCLE
-            else -> ActivityType.CROSS_TRAIN
-        }
+    private fun mapType(type: String): ActivityType = when (type) {
+        "Run" -> ActivityType.RUN
+        "Ride" -> ActivityType.CYCLE
+        else -> ActivityType.CROSS_TRAIN
     }
 
     private enum class ApiWorkoutType(val id: Int) {
@@ -162,13 +155,11 @@ internal class ActivityMapper(private val clock: Clock) {
         RIDE_RACE(11),
         RIDE_WORKOUT(12);
 
-        fun toActivitySubtype(): ActivitySubtype {
-            return when (this.id) {
-                RUN_RACE.id, RIDE_RACE.id -> ActivitySubtype.RACE
-                RUN_WORKOUT.id, RIDE_WORKOUT.id -> ActivitySubtype.WORKOUT
-                RUN_LONG.id -> ActivitySubtype.LONG
-                else -> ActivitySubtype.DEFAULT
-            }
+        fun toActivitySubtype(): ActivitySubtype = when (this.id) {
+            RUN_RACE.id, RIDE_RACE.id -> ActivitySubtype.RACE
+            RUN_WORKOUT.id, RIDE_WORKOUT.id -> ActivitySubtype.WORKOUT
+            RUN_LONG.id -> ActivitySubtype.LONG
+            else -> ActivitySubtype.DEFAULT
         }
 
         companion object {
