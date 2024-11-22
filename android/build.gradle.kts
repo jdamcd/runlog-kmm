@@ -3,42 +3,43 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    alias(libs.plugins.compose.compiler)
 }
 group = "com.jdamcd.runlog"
 version = AppVersion.name
 
 dependencies {
     implementation(project(":shared:main"))
-    implementation(Dependency.Ktx.core)
-    implementation(Dependency.Ktx.activity)
-    implementation(Dependency.Lifecycle.viewModel)
-    implementation(Dependency.material)
-    implementation(Dependency.splash)
-    implementation(Dependency.Hilt.core)
-    implementation(Dependency.Hilt.compose)
-    implementation(Dependency.coil)
-    implementation(Dependency.Koin.android)
-    kapt(Dependency.Hilt.compiler)
-    kapt(Dependency.Lifecycle.compiler)
+    implementation(libs.ktx.core)
+    implementation(libs.ktx.activity)
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.material)
+    implementation(libs.splash)
+    implementation(libs.hilt.core)
+    implementation(libs.hilt.compose)
+    implementation(libs.coil)
+    implementation(libs.koin.android)
+    kapt(libs.hilt.compiler)
+    kapt(libs.lifecycle.compiler)
 
     // Compose
-    implementation(platform(Dependency.Compose.bom))
-    implementation(Dependency.Compose.ui)
-    implementation(Dependency.Compose.activity)
-    implementation(Dependency.Compose.tooling)
-    implementation(Dependency.Compose.foundation)
-    implementation(Dependency.Compose.material)
-    implementation(Dependency.Compose.icons)
-    implementation(Dependency.Compose.iconsExtended)
-    implementation(Dependency.Compose.navigation)
-    implementation(Dependency.Compose.constraintLayout)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.tooling)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material)
+    implementation(libs.compose.icons)
+    implementation(libs.compose.iconsExtended)
+    implementation(libs.compose.navigation)
+    implementation(libs.compose.constraintLayout)
 
     // Tests
-    testImplementation(Dependency.kotestAssert)
-    testImplementation(Dependency.mockk)
-    testImplementation(Dependency.coroutinesTest)
-    testImplementation(Dependency.archTest)
-    testImplementation(Dependency.turbine)
+    testImplementation(libs.kotest)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.arch.test)
+    testImplementation(libs.turbine)
 }
 android {
     compileSdk = AndroidVersion.target
@@ -58,7 +59,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.composeCompiler
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     lint {
         abortOnError = false

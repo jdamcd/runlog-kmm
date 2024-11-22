@@ -7,7 +7,7 @@ version = AppVersion.name
 
 kotlin {
     jvmToolchain(17)
-    android()
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -26,31 +26,29 @@ kotlin {
                 implementation(project(":shared:api"))
                 implementation(project(":shared:database"))
                 implementation(project(":shared:utils"))
-                implementation(Dependency.Koin.core)
-                implementation(Dependency.coroutines)
-                implementation(Dependency.dateTime)
+                implementation(libs.koin.core)
+                implementation(libs.coroutines)
+                implementation(libs.datetime)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(kotlin("test-junit"))
-                implementation(Dependency.kotestAssert)
-                implementation(Dependency.coroutinesTest)
+                implementation(libs.junit)
+                implementation(libs.kotest)
+                implementation(libs.coroutines.test)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.Ktx.core)
+                implementation(libs.ktx.core)
             }
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(Dependency.kotestAssert)
-                implementation(Dependency.mockk)
-                implementation(Dependency.coroutinesTest)
-                implementation(Dependency.turbine)
+                implementation(libs.kotest)
+                implementation(libs.mockk)
+                implementation(libs.coroutines.test)
+                implementation(libs.turbine)
             }
         }
         val iosX64Main by getting
@@ -72,7 +70,7 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
             dependencies {
-                implementation(Dependency.kotestAssert)
+                implementation(libs.kotest)
             }
         }
     }

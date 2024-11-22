@@ -5,19 +5,20 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:${Version.kotlin}")
-        classpath("com.android.tools.build:gradle:${Version.androidGradle}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}")
-        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Version.buildKonfig}")
-        classpath("com.squareup.sqldelight:gradle-plugin:${Version.sqldelight}")
+        classpath(libs.kotlin.gradle)
+        classpath(libs.kotlin.serialization)
+        classpath(libs.android.gradle)
+        classpath(libs.hilt.gradle)
+        classpath(libs.buildkonfig.gradle)
+        classpath(libs.sqldelight.gradle)
     }
 }
 group = "com.jdamcd.runlog"
 version = AppVersion.name
 
 plugins {
-    id("com.diffplug.spotless") version Version.spotless
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.compose.compiler) apply false
 }
 
 allprojects {
@@ -32,11 +33,11 @@ allprojects {
     spotless {
         kotlin {
             target("**/*.kt")
-            ktlint(Version.ktlint)
+            ktlint(libs.versions.ktlint.get())
         }
         kotlinGradle {
             target("*.gradle.kts", "additionalScripts/*.gradle.kts")
-            ktlint(Version.ktlint)
+            ktlint(libs.versions.ktlint.get())
         }
     }
 }

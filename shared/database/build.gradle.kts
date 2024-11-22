@@ -8,7 +8,7 @@ version = AppVersion.name
 
 kotlin {
     jvmToolchain(17)
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -16,28 +16,25 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:utils"))
-                implementation(Dependency.Koin.core)
-                implementation(Dependency.SqlDelight.coroutines)
+                implementation(libs.koin.core)
+                implementation(libs.sqldelight.coroutines)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(kotlin("test-junit"))
-                implementation(Dependency.junit)
-                implementation(Dependency.kotestAssert)
-                implementation(Dependency.coroutinesTest)
+                implementation(libs.junit)
+                implementation(libs.kotest)
+                implementation(libs.coroutines.test)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.SqlDelight.android)
+                implementation(libs.sqldelight.android)
             }
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(Dependency.SqlDelight.jvm)
+                implementation(libs.sqldelight.jvm)
             }
         }
         val iosX64Main by getting
@@ -49,7 +46,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(Dependency.SqlDelight.native)
+                implementation(libs.sqldelight.native)
             }
         }
         val iosX64Test by getting

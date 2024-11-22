@@ -12,7 +12,7 @@ version = AppVersion.name
 
 kotlin {
     jvmToolchain(17)
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -20,27 +20,20 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:utils"))
-                implementation(Dependency.Koin.core)
-                implementation(Dependency.Ktor.core)
-                implementation(Dependency.Ktor.contentNegotiation)
-                implementation(Dependency.Ktor.auth)
-                implementation(Dependency.Ktor.log)
-                implementation(Dependency.Ktor.serialize)
-                implementation(Dependency.coroutines)
+                implementation(libs.koin.core)
+                implementation(libs.bundles.ktor.common)
+                implementation(libs.coroutines)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(kotlin("test-junit"))
-                implementation(Dependency.junit)
-                implementation(Dependency.kotestAssert)
+                implementation(libs.junit)
+                implementation(libs.kotest)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependency.Ktor.android)
+                implementation(libs.ktor.client.android)
             }
         }
         val androidUnitTest by getting
@@ -53,7 +46,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(Dependency.Ktor.ios)
+                implementation(libs.ktor.client.ios)
             }
         }
         val iosX64Test by getting
