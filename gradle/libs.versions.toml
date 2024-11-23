@@ -10,7 +10,7 @@ ktlint = "1.4.1"
 ktor = "3.0.1"
 coroutines = "1.9.0"
 koin = "3.5.6"
-sqlDelight = "1.5.5"
+sqlDelight = "2.0.2"
 dateTime = "0.6.1"
 
 # Android
@@ -18,13 +18,13 @@ hilt = "2.52"
 hiltCompose = "1.2.0"
 composeBom = "2024.11.00"
 composeCompiler = "1.5.15"
+composeNavigation = "2.8.4"
 constraintLayout = "1.1.0"
 material = "1.12.0"
 splash = "1.0.1"
 ktxCore = "1.15.0"
 ktxActivity = "1.9.3"
 lifecycle = "2.8.7"
-navigationCompose = "2.8.4"
 coil = "2.7.0"
 
 # Test
@@ -37,7 +37,6 @@ archTest = "2.2.0"
 # Build
 buildkonfig-gradle = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildKonfig" }
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
-sqldelight-gradle = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
@@ -56,11 +55,12 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
 # SqlDelight
-sqldelight-native = { group = "com.squareup.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
-sqldelight-android = { group = "com.squareup.sqldelight", name = "android-driver", version.ref = "sqlDelight" }
-sqldelight-jvm = { group = "com.squareup.sqldelight", name = "sqlite-driver", version.ref = "sqlDelight" }
-sqldelight-coroutines = { group = "com.squareup.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
+sqldelight-native = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
+sqldelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqlDelight" }
+sqldelight-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqlDelight" }
+sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
 
+# Misc shared
 coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "dateTime" }
 
@@ -89,7 +89,7 @@ compose-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-material = { group = "androidx.compose.material", name = "material" }
 compose-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 compose-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayout" }
 
 # Test
@@ -105,3 +105,4 @@ ktor-common = ["ktor-client-core", "ktor-client-content-negotiation", "ktor-clie
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+sqldelight = {id = "app.cash.sqldelight", version.ref = "sqlDelight" }

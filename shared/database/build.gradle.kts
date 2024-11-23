@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.squareup.sqldelight")
+    alias(libs.plugins.sqldelight)
 }
 group = AppConfig.group
 version = AppVersion.name
@@ -71,7 +71,9 @@ android {
 }
 
 sqldelight {
-    database("RunLogDB") {
-        packageName = "com.jdamcd.runlog.shared.database"
+    databases {
+        create("RunLogDB") {
+            packageName.set("com.jdamcd.runlog.shared.database")
+        }
     }
 }

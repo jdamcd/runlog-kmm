@@ -1,13 +1,11 @@
 package com.jdamcd.runlog.shared.database
 
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class AthleteDaoTest {
 
     private lateinit var dao: SqlAthleteDao

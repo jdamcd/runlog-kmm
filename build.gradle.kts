@@ -10,7 +10,6 @@ buildscript {
         classpath(libs.android.gradle)
         classpath(libs.hilt.gradle)
         classpath(libs.buildkonfig.gradle)
-        classpath(libs.sqldelight.gradle)
     }
 }
 group = "com.jdamcd.runlog"
@@ -19,6 +18,7 @@ version = AppVersion.name
 plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.sqldelight) apply false
 }
 
 spotless {

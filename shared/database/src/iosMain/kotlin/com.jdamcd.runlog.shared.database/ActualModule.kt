@@ -1,6 +1,6 @@
 package com.jdamcd.runlog.shared.database
 
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import org.koin.dsl.module
 
 internal actual fun platformDbModule() = module {

@@ -1,6 +1,6 @@
 package com.jdamcd.runlog.shared.database
 
-import com.squareup.sqldelight.runtime.coroutines.asFlow
+import app.cash.sqldelight.coroutines.asFlow
 import comjdamcdrunlogshareddatabase.Activity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

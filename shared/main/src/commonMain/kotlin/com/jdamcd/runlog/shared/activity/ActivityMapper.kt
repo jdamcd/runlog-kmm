@@ -35,9 +35,9 @@ internal class ActivityMapper(private val clock: Clock) {
             isPrivate = activity.private,
             type = mapType(activity.type).name,
             subtype = subtype.name,
-            distance = activity.distance,
-            duration = paceTime,
-            pace = calculatePace(activity.distance, paceTime),
+            distance = activity.distance.toDouble(),
+            duration = paceTime.toLong(),
+            pace = calculatePace(activity.distance, paceTime).toLong(),
             start = activity.start_date_local,
             mapPolyline = mapPolyline(activity.map),
             lastUpdated = clock.now().epochSeconds
@@ -49,9 +49,9 @@ internal class ActivityMapper(private val clock: Clock) {
         name = mapName(activity.name, activity.isPrivate),
         type = ActivityType.valueOf(activity.type),
         subtype = ActivitySubtype.valueOf(activity.subtype),
-        distance = formatKm(activity.distance),
-        duration = formatDuration(activity.duration),
-        pace = formatPace(activity.pace),
+        distance = formatKm(activity.distance.toFloat()),
+        duration = formatDuration(activity.duration.toInt()),
+        pace = formatPace(activity.pace.toInt()),
         start = formatStartTime(activity.start),
         mapUrl = activity.mapPolyline?.let { pathToImageUrl(it) }
     )
@@ -163,7 +163,7 @@ internal class ActivityMapper(private val clock: Clock) {
         }
 
         companion object {
-            fun map(id: Int?): ApiWorkoutType = values().firstOrNull { it.id == id } ?: RUN_DEFAULT
+            fun map(id: Int?): ApiWorkoutType = entries.firstOrNull { it.id == id } ?: RUN_DEFAULT
         }
     }
 }

@@ -32,12 +32,12 @@ internal class AthleteMapper(private val clock: Clock) {
         activityStats: ApiActivityStats
     ) = RunStats(
         id = id,
-        recentDistance = activityStats.recent_run_totals.distance,
-        recentPace = pace(activityStats.recent_run_totals),
-        yearDistance = activityStats.ytd_run_totals.distance,
-        yearPace = pace(activityStats.ytd_run_totals),
-        allDistance = activityStats.all_run_totals.distance,
-        allPace = pace(activityStats.all_run_totals),
+        recentDistance = activityStats.recent_run_totals.distance.toDouble(),
+        recentPace = pace(activityStats.recent_run_totals).toLong(),
+        yearDistance = activityStats.ytd_run_totals.distance.toDouble(),
+        yearPace = pace(activityStats.ytd_run_totals).toLong(),
+        allDistance = activityStats.all_run_totals.distance.toDouble(),
+        allPace = pace(activityStats.all_run_totals).toLong(),
         lastUpdated = clock.now().epochSeconds
     )
 
@@ -48,9 +48,9 @@ internal class AthleteMapper(private val clock: Clock) {
         username = athlete.username,
         name = athlete.name,
         imageUrl = athlete.imageUrl,
-        recentRuns = mapStats(athlete.recentDistance, athlete.recentPace),
-        yearRuns = mapStats(athlete.yearDistance, athlete.yearPace),
-        allRuns = mapStats(athlete.allDistance, athlete.allPace)
+        recentRuns = mapStats(athlete.recentDistance.toFloat(), athlete.recentPace.toInt()),
+        yearRuns = mapStats(athlete.yearDistance.toFloat(), athlete.yearPace.toInt()),
+        allRuns = mapStats(athlete.allDistance.toFloat(), athlete.allPace.toInt())
     )
 
     private fun mapStats(distance: Float, pace: Int) = AthleteStats(

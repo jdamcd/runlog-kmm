@@ -1,6 +1,6 @@
 package com.jdamcd.runlog.shared.database
 
-import com.squareup.sqldelight.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import org.koin.dsl.module
 
 actual fun platformDbModule() = module {

@@ -32,7 +32,7 @@ class ActivityMapperTest {
             isPrivate = false,
             type = "RUN",
             subtype = "DEFAULT",
-            distance = 10_100.0f,
+            distance = 10_100.0,
             duration = 2400, // moving time
             pace = 238, // moving pace
             start = "2022-10-25T17:58:50Z",
@@ -49,7 +49,7 @@ class ActivityMapperTest {
             isPrivate = false,
             type = "RUN",
             subtype = "RACE",
-            distance = 10_100.0f,
+            distance = 10_100.0,
             duration = 2460, // elapsed time
             pace = 244, // elapsed pace
             start = "2022-10-25T17:58:50Z",
@@ -66,7 +66,7 @@ class ActivityMapperTest {
             isPrivate = false,
             type = "RUN",
             subtype = "DEFAULT",
-            distance = 10_100.0f,
+            distance = 10_100.0,
             duration = 2400, // moving time
             pace = 238, // moving pace
             start = "2022-10-25T17:58:50Z",

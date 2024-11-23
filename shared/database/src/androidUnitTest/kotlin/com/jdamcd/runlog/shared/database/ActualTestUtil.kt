@@ -1,7 +1,7 @@
 package com.jdamcd.runlog.shared.database
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 
 internal actual fun testDbDriver(): SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).apply {
     RunLogDB.Schema.create(this)

@@ -1,3 +1,5 @@
+import kotlin.Boolean;
+
 CREATE TABLE athlete (
     id INTEGER NOT NULL PRIMARY KEY,
     username TEXT NOT NULL,
@@ -9,12 +11,12 @@ CREATE TABLE athlete (
 
 CREATE TABLE runStats (
     id INTEGER NOT NULL PRIMARY KEY,
-    recentDistance REAL AS Float NOT NULL,
-    recentPace INTEGER AS Int NOT NULL,
-    yearDistance REAL AS Float NOT NULL,
-    yearPace INTEGER AS Int NOT NULL,
-    allDistance REAL AS Float NOT NULL,
-    allPace INTEGER AS Int NOT NULL,
+    recentDistance REAL NOT NULL,
+    recentPace INTEGER NOT NULL,
+    yearDistance REAL NOT NULL,
+    yearPace INTEGER NOT NULL,
+    allDistance REAL NOT NULL,
+    allPace INTEGER NOT NULL,
     lastUpdated INTEGER NOT NULL
 );
 

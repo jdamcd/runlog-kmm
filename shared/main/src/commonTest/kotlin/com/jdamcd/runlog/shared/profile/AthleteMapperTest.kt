@@ -39,11 +39,11 @@ class AthleteMapperTest {
     fun `maps ApiActivityStats to DB model`() {
         mapper.runStatsToDb(id = 123L, athleteStatsModel()) shouldBe RunStats(
             id = 123L,
-            recentDistance = 100_000.0f,
+            recentDistance = 100_000.0,
             recentPace = 333,
-            yearDistance = 1_000_000.0f,
+            yearDistance = 1_000_000.0,
             yearPace = 333,
-            allDistance = 5_000_000.0f,
+            allDistance = 5_000_000.0,
             allPace = 333,
             lastUpdated = 456L
         )
