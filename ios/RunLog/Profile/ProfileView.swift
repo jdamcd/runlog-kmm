@@ -42,11 +42,17 @@ private struct ProfileDetailsView: View {
     var body: some View {
         VStack {
             if let imageUrl = profile.imageUrl {
-                LazyImage(url: URL(string: imageUrl))
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.primary, lineWidth: 1))
-                    .padding(.vertical)
+                LazyImage(url: URL(string: imageUrl)) { state in
+                    if let image = state.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+                            .padding(.vertical)
+                    }
+                }
             }
             Text(profile.name)
                 .font(.headline)

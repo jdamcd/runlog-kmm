@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -812,7 +812,7 @@
 			repositoryURL = "https://github.com/kean/Nuke.git";
 			requirement = {
 				kind = exactVersion;
-				version = 11.3.1;
+				version = 12.7.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

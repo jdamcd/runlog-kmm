@@ -40,8 +40,13 @@ private struct ActivityDetailsView: View {
             VStack(alignment: .leading, spacing: 0) {
                 if let map = activity.mapUrl {
                     let mapUrl = colorScheme == .dark ? map.darkMode : map.default_
-                    LazyImage(url: URL(string: mapUrl))
-                        .aspectRatio(2.5, contentMode: ContentMode.fit)
+                    LazyImage(url: URL(string: mapUrl)) { state in
+                        if let image = state.image {
+                            image
+                                .resizable()
+                                .aspectRatio(2.5, contentMode: .fit)
+                        }
+                    }
                 }
                 VStack(alignment: .leading) {
                     DescriptionHeader(activity: activity)

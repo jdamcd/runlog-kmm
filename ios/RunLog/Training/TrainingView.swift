@@ -45,10 +45,16 @@ private struct ProfileNavigation: View {
 
     var body: some View {
         if let image {
-            LazyImage(url: URL(string: image))
-                .frame(width: 28, height: 28)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+            LazyImage(url: URL(string: image)) { state in
+                if let image = state.image {
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 28, height: 28)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+                }
+            }
         } else {
             Image(systemName: "person.circle.fill")
                 .renderingMode(.template)
@@ -90,9 +96,14 @@ private struct ActivityItem: View {
             }
             if let map = activity.mapUrl {
                 let mapUrl = colorScheme == .dark ? map.darkMode : map.default_
-                LazyImage(url: URL(string: mapUrl))
-                    .aspectRatio(2.5, contentMode: ContentMode.fit)
-                    .cornerRadius(6)
+                LazyImage(url: URL(string: mapUrl)) { state in
+                    if let image = state.image {
+                        image
+                            .resizable()
+                            .aspectRatio(2.5, contentMode: .fit)
+                            .cornerRadius(6)
+                    }
+                }
             }
         }
     }
