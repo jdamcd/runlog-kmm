@@ -12,30 +12,20 @@ plugins {
     alias(libs.plugins.hilt) apply false
 }
 
-spotless {
-    kotlin {
-        target("**/*.kt")
-        ktlint(libs.versions.ktlint.get())
-            .editorConfigOverride(
-                mapOf(
-                    "ktlint_code_style" to "intellij_idea",
-                    "ktlint_standard_property-naming" to "disabled",
-                    "ktlint_standard_value-parameter-comment" to "disabled",
-                    "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
-                    "ij_kotlin_allow_trailing_comma" to "false",
-                    "ij_kotlin_allow_trailing_comma_on_call_site" to "false"
-                )
-            )
+subprojects {
+    apply {
+        plugin(rootProject.libs.plugins.spotless.get().pluginId)
     }
-    kotlinGradle {
-        target("*.gradle.kts")
-        ktlint(libs.versions.ktlint.get())
-            .editorConfigOverride(
-                mapOf(
-                    "ktlint_code_style" to "intellij_idea",
-                    "ij_kotlin_allow_trailing_comma" to "false",
-                    "ij_kotlin_allow_trailing_comma_on_call_site" to "false"
-                )
-            )
+    spotless {
+        kotlin {
+            target("**/*.kt")
+            ktlint(libs.versions.ktlint.get())
+                .setEditorConfigPath(rootProject.file(".editorconfig").path)
+        }
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint(libs.versions.ktlint.get())
+                .setEditorConfigPath(rootProject.file(".editorconfig").path)
+        }
     }
 }
