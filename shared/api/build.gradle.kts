@@ -2,13 +2,11 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlinx-serialization")
-    id("com.codingfeline.buildkonfig")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.buildkonfig)
 }
-group = AppConfig.group
-version = AppVersion.name
 
 kotlin {
     jvmToolchain(17)

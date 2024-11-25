@@ -1,12 +1,10 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
 }
-group = "com.jdamcd.runlog"
-version = AppVersion.name
 
 dependencies {
     implementation(project(":shared:main"))
@@ -19,8 +17,8 @@ dependencies {
     implementation(libs.hilt.compose)
     implementation(libs.coil)
     implementation(libs.koin.android)
-    kapt(libs.hilt.compiler)
-    kapt(libs.lifecycle.compiler)
+    ksp(libs.hilt.compiler)
+    ksp(libs.lifecycle.compiler)
 
     // Compose
     implementation(platform(libs.compose.bom))

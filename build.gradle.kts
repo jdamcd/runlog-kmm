@@ -1,24 +1,15 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath(libs.kotlin.gradle)
-        classpath(libs.kotlin.serialization)
-        classpath(libs.android.gradle)
-        classpath(libs.hilt.gradle)
-        classpath(libs.buildkonfig.gradle)
-    }
-}
-group = "com.jdamcd.runlog"
-version = AppVersion.name
-
 plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.sqldelight) apply false
+    alias(libs.plugins.buildkonfig) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.hilt) apply false
 }
 
 spotless {
