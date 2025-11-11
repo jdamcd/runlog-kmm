@@ -58,7 +58,7 @@ jobs:
         xcodebuild test -project ios/RunLog.xcodeproj \
           -scheme RunLog \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6' \
           -resultBundlePath TestResults
 
     - name: Publish iOS results
