@@ -8,14 +8,14 @@ import com.jdamcd.runlog.shared.database.dbModule
 import com.jdamcd.runlog.shared.login.LoginInteractor
 import com.jdamcd.runlog.shared.profile.AthleteMapper
 import com.jdamcd.runlog.shared.profile.ProfileRepository
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
