@@ -38,7 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.jdamcd.runlog.android.R
 import com.jdamcd.runlog.android.main.AppBarState
 import com.jdamcd.runlog.android.ui.ActivityIcons

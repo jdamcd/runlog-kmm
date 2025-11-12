@@ -11,8 +11,10 @@ import com.jdamcd.runlog.shared.util.calculatePace
 import comjdamcdrunlogshareddatabase.Athlete
 import comjdamcdrunlogshareddatabase.AthleteWithStats
 import comjdamcdrunlogshareddatabase.RunStats
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 internal class AthleteMapper(private val clock: Clock) {
 
     fun athleteToDb(

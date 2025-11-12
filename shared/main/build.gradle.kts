@@ -25,7 +25,6 @@ kotlin {
             implementation(project(":shared:utils"))
             implementation(libs.koin.core)
             implementation(libs.coroutines)
-            implementation(libs.datetime)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

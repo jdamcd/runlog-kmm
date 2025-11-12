@@ -18,9 +18,11 @@ import com.jdamcd.runlog.shared.util.Formatter.formatPace
 import com.jdamcd.runlog.shared.util.calculatePace
 import com.jdamcd.runlog.shared.util.formatDate
 import comjdamcdrunlogshareddatabase.Activity
-import kotlinx.datetime.Clock
 import kotlin.math.roundToInt
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 internal class ActivityMapper(private val clock: Clock) {
 
     private val datePattern = "EEEE dd MMM @ h:mma"

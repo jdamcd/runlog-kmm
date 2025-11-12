@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.jdamcd.runlog.shared.activity
 
 import com.jdamcd.runlog.shared.ActivityCard

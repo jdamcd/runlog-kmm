@@ -1,8 +1,10 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.jdamcd.runlog.shared.testutil
 
 import com.jdamcd.runlog.shared.util.Log
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 object MockClock : Clock {
 
