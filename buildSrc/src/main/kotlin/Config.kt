@@ -8,6 +8,6 @@ object AppConfig {
 }
 
 object AndroidVersion {
-    const val minimum = 26
+    const val minimum = 29
     const val target = 36
 }

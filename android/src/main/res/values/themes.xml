@@ -3,7 +3,6 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/themePrimary</item>
         <item name="colorPrimaryDark">@color/themePrimaryDark</item>
-        <item name="android:navigationBarColor">@color/themePrimaryDark</item>
     </style>
 
     <style name="Splash" parent="Theme.SplashScreen">
