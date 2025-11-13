@@ -61,6 +61,7 @@ ktx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
 # Lifecycle
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }

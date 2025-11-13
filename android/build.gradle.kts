@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.hilt.core)
     implementation(libs.hilt.compose)
     implementation(libs.coil)
+    implementation(libs.coil.network)
     implementation(libs.koin.android)
     ksp(libs.hilt.compiler)
     ksp(libs.lifecycle.compiler)
