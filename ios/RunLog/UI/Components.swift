@@ -8,7 +8,7 @@ struct SplitBar: View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle().frame(
-                    width: CGFloat(self.value) * geometry.size.width,
+                    width: CGFloat(value) * geometry.size.width,
                     height: geometry.size.height
                 )
                 .foregroundColor(Color.asset(.accent))

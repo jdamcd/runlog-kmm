@@ -76,8 +76,8 @@ enum TrainingState: Equatable {
 
     var isLoaded: Bool {
         switch self {
-        case .data: return true
-        default: return false
+        case .data: true
+        default: false
         }
     }
 }

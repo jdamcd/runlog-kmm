@@ -38,7 +38,8 @@ struct LoginView: View {
             }.frame(maxHeight: .infinity)
                 .padding(.vertical, 30)
                 .alert(Copy.login_permission_error,
-                       isPresented: $showingPermissionError) {
+                       isPresented: $showingPermissionError)
+                {
                     Button(Copy.button_ok) { showingPermissionError = false }
                 }
         }.onReceive(viewModel.$state) { state in

@@ -45,7 +45,7 @@ final class TrainingViewModelTest: XCTestCase {
 
         // Verify data state before refresh
         XCTAssertEqual(viewModel.state, .data([activity1]))
-        
+
         // Refresh
         let activity2 = ActivityCard.with(id: 2)
         mockActivity.activities = ResultData(value: NSArray(array: [activity2]))
