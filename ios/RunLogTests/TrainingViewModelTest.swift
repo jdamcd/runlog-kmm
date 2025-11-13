@@ -43,6 +43,9 @@ final class TrainingViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.state, TrainingState.loading)
         waitUntil(viewModel.$state, equals: .data([activity1]))
 
+        // Verify data state before refresh
+        XCTAssertEqual(viewModel.state, .data([activity1]))
+        
         // Refresh
         let activity2 = ActivityCard.with(id: 2)
         mockActivity.activities = ResultData(value: NSArray(array: [activity2]))
@@ -50,7 +53,7 @@ final class TrainingViewModelTest: XCTestCase {
 
         viewModel.refresh()
 
-        XCTAssertEqual(viewModel.state, .data([activity1]))
+        // Verify new data after refresh
         waitUntil(viewModel.$state, equals: .data([activity2]))
         XCTAssertEqual(mockActivity.callCount, 2)
     }
