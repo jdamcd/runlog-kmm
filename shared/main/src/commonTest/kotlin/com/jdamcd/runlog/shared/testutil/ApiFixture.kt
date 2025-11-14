@@ -90,5 +90,5 @@ fun athleteStatsModel() = ApiActivityStats(
 fun statsBlock(distance: Float = 100.0f) = ApiActivityTotal(
     count = 123,
     distance = distance,
-    moving_time = (distance / 3).roundToInt()
+    moving_time = (distance / 3).toDouble()
 )

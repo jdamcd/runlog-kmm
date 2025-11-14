@@ -89,5 +89,5 @@ data class ApiActivityStats(
 data class ApiActivityTotal(
     val count: Int,
     val distance: Float,
-    val moving_time: Int
+    val moving_time: Double
 )
