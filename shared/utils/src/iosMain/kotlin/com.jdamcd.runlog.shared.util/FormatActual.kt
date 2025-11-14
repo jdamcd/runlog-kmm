@@ -1,8 +1,10 @@
 package com.jdamcd.runlog.shared.util
 
+import platform.Foundation.ISOCountryCodes
 import platform.Foundation.NSDateFormatter
 import platform.Foundation.NSISO8601DateFormatter
 import platform.Foundation.NSLocale
+import platform.Foundation.NSLocaleIdentifier
 import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSString
@@ -24,7 +26,7 @@ actual fun Float.formatDecimal(pattern: String): String {
 actual fun String.formatDate(pattern: String): String = NSISO8601DateFormatter().dateFromString(this)?.let {
     NSDateFormatter().apply {
         this.timeZone = NSTimeZone.timeZoneWithName("UTC")!!
-        this.locale = NSLocale.autoupdatingCurrentLocale
+        this.locale = NSLocale("en_US")
         this.dateFormat = pattern
     }.stringFromDate(it)
 } ?: ""
