@@ -53,17 +53,13 @@ jobs:
         distribution: 'temurin'
         java-version: '21'
 
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+
     - name: Test
       run: |
-        xcodebuild test -project ios/RunLog.xcodeproj \
+        set -o pipefail && xcodebuild test -project ios/RunLog.xcodeproj \
           -scheme RunLog \
           -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.1' \
-          -resultBundlePath TestResults
-
-    - name: Publish iOS results
-      uses: slidoapp/xcresulttool@v3.1.0
-      if: always()
-      with:
-        title: iOS results
-        path: 'TestResults.xcresult'
+          -resultBundlePath TestResults | xcbeautify --renderer github-actions
