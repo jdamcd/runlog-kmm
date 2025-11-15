@@ -25,7 +25,7 @@ struct ProfileView: View {
                 userAuth.logOut()
             } label: {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
-                    .foregroundColor(Color.asset(.primary))
+                    .renderingMode(.template)
             }
         )
         .onAppear(perform: load)

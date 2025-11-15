@@ -27,7 +27,10 @@ struct TrainingView: View {
             .navigationBarTitle(Copy.activities_title)
             .navigationBarItems(trailing: NavigationLink(destination: ProfileView()) {
                 ProfileNavigation(image: viewModel.profileImage)
-            })
+            }
+            .buttonStyle(.plain)
+            .frame(width: 36, height: 36)
+            )
             .onAppear(perform: load)
             .onReceive(NotificationCenter.default.publisher(
                 for: UIApplication.willEnterForegroundNotification
@@ -47,18 +50,25 @@ private struct ProfileNavigation: View {
         if let image {
             LazyImage(url: URL(string: image)) { state in
                 if let image = state.image {
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 28, height: 28)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+                    if #available(iOS 26.0, *) {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 36, height: 36)
+                            .clipShape(Circle())
+                    } else {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 28, height: 28)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.primary, lineWidth: 1))
+                    }
                 }
             }
         } else {
             Image(systemName: "person.circle.fill")
                 .renderingMode(.template)
-                .foregroundColor(Color.asset(.primary))
         }
     }
 }
