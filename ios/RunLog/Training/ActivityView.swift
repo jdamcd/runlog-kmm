@@ -249,13 +249,23 @@ private struct ActivityFooter: View {
             Spacer()
             Link(destination: openOnWeb()) {
                 Text(Copy.strava_view)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(.regularMaterial)
+                    .padding(12)
                     .foregroundColor(Color.asset(.strava))
-                    .cornerRadius(6)
             }
+            .modifier(GlassButton())
             Spacer()
+        }
+    }
+}
+
+private struct GlassButton: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(.regular.tint(Color.asset(.strava).opacity(0.2)).interactive())
+        } else {
+            content
+                .background(.ultraThinMaterial)
+                .cornerRadius(8)
         }
     }
 }
