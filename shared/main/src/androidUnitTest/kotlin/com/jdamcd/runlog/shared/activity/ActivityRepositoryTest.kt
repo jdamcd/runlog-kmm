@@ -45,8 +45,7 @@ class ActivityRepositoryTest {
 
     @Test
     fun `refresh success fetches activities and saves to DB`() = runTest {
-        every { dao.latestActivities() } returns listOf(dbActivity) // Not empty
-        coEvery { api.activities(pageSize = 20) } returns listOf(activityModel())
+        coEvery { api.activities(pageSize = 100) } returns listOf(activityModel())
         every { dao.insert(any()) } just runs
 
         repo.refresh() shouldBe RefreshState.SUCCESS

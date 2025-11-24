@@ -21,11 +21,7 @@ internal class ActivityRepository(
 ) {
 
     suspend fun refresh(): RefreshState = try {
-        if (dao.latestActivities().isEmpty()) {
-            fullSync()
-        } else {
-            dao.insert(api.activities(pageSize = 20).map { mapper.summaryApiToDb(it) })
-        }
+        dao.insert(api.activities(pageSize = 100).map { mapper.summaryApiToDb(it) })
         log.debug("Activities refreshed successfully")
         RefreshState.SUCCESS
     } catch (e: Exception) {
@@ -33,6 +29,9 @@ internal class ActivityRepository(
         RefreshState.ERROR
     }
 
+    /**
+     * TODO: Background sync at least a year of activities
+     */
     suspend fun fullSync() {
         log.debug("Starting full activity sync")
         var page = 1
